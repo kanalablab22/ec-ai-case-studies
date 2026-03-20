@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "case-studies",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "/Users/kananagai/Downloads/case-studies", "-l", "3847"],
+      "port": 3847
+    }
+  ]
+}
