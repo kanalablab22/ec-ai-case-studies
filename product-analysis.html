@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>商品ページ AI総合分析 | EC × AI LAB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fafaf8;
+      --surface: #ffffff;
+      --surface-alt: #f5f5f0;
+      --border: rgba(0,0,0,0.07);
+      --text: #1a1a1a;
+      --text-secondary: #555555;
+      --text-muted: #999999;
+      --green: #2d8a56;
+      --green-bg: rgba(45,138,86,0.08);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Noto Sans JP', 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250,250,248,0.9);
+      backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    /* ===== HERO ===== */
+    .detail-hero {
+      margin-top: 64px;
+      padding: 80px 48px 60px;
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .detail-hero .badge {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--green);
+      background: var(--green-bg);
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .detail-hero h1 {
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+
+    .detail-hero .lead {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 640px;
+      line-height: 1.9;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 32px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ===== CONTENT ===== */
+    .detail-content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 48px 100px;
+    }
+
+    .section {
+      margin-bottom: 64px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ===== PROBLEM / SOLUTION ===== */
+    .ps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .ps-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+
+    .ps-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ps-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ps-card li {
+      font-size: 15px;
+      color: var(--text-secondary);
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .ps-card li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .ps-card.solution li::before {
+      background: var(--green);
+    }
+
+    /* ===== SCREENSHOT AREA ===== */
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .screenshot-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .screenshot-card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .screenshot-mockup {
+      aspect-ratio: 16 / 10;
+      background: #1a1a2e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .screenshot-mockup img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .slack-mock {
+      background: #1a1a2e;
+      padding: 24px 28px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    .slack-mock .slack-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .slack-mock .slack-icon {
+      width: 32px;
+      height: 32px;
+      background: #4a9c6d;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .slack-mock .slack-bot-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+
+    .slack-mock .slack-time {
+      font-size: 11px;
+      color: #64748b;
+      margin-left: auto;
+    }
+
+    .slack-mock .slack-body {
+      background: rgba(255,255,255,0.06);
+      border-left: 3px solid #4a9c6d;
+      border-radius: 0 8px 8px 0;
+      padding: 14px 16px;
+      font-size: 12.5px;
+      color: #cbd5e1;
+      line-height: 1.7;
+    }
+
+    .slack-mock .slack-body .label {
+      color: #94a3b8;
+    }
+
+    .slack-mock .slack-body .value {
+      color: #f1f5f9;
+      font-weight: 500;
+    }
+
+    .slack-mock .slack-body .alert {
+      color: #fbbf24;
+      font-weight: 600;
+      margin-top: 8px;
+      display: block;
+    }
+
+    .screenshot-caption {
+      padding: 20px 24px;
+    }
+
+    .screenshot-caption h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .screenshot-caption p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== PDF MOCK ===== */
+    .pdf-mock {
+      background: #1a1a2e;
+      padding: 24px 28px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    .pdf-doc {
+      background: #ffffff;
+      border-radius: 4px;
+      width: 75%;
+      padding: 20px 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .pdf-doc .pdf-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #2d8a56;
+    }
+
+    .pdf-doc .pdf-section {
+      margin-bottom: 10px;
+    }
+
+    .pdf-doc .pdf-section-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: #2d8a56;
+      margin-bottom: 4px;
+    }
+
+    .pdf-doc .pdf-line {
+      height: 4px;
+      background: #e5e7eb;
+      border-radius: 2px;
+      margin-bottom: 4px;
+    }
+
+    .pdf-doc .pdf-line.short { width: 60%; }
+    .pdf-doc .pdf-line.medium { width: 80%; }
+
+    /* ===== HOW IT WORKS ===== */
+    .flow-steps {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .flow-step {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-step:first-child {
+      border-radius: var(--radius) 0 0 var(--radius);
+    }
+
+    .flow-step:last-child {
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: '→';
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 24px;
+      height: 24px;
+      background: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .flow-step .step-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .flow-step .step-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .flow-step h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .flow-step p {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== RESULT ===== */
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+    }
+
+    .result-card .result-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+
+    .result-card .result-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .detail-hero { padding: 60px 20px 40px; }
+      .detail-hero h1 { font-size: 28px; }
+      .detail-content { padding: 0 20px 80px; }
+      .ps-grid { grid-template-columns: 1fr; }
+      .screenshot-grid { grid-template-columns: 1fr; }
+      .flow-steps { flex-direction: column; gap: 12px; }
+      .flow-step { border-radius: var(--radius) !important; }
+      .flow-step:not(:last-child)::after { display: none; }
+      .result-grid { grid-template-columns: 1fr; }
+      .meta-row { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">EC × AI LAB</a>
+    <a href="index.html" class="nav-back">← 事例一覧に戻る</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="detail-hero">
+    <span class="badge">AI</span>
+    <h1>商品ページ AI総合分析</h1>
+    <p class="lead">
+      AIエージェントチーム（UXデザイナー・データアナリスト・EC戦略家）の3視点で楽天商品ページを自動分析。競合比較・改善提案をPDFレポートとして出力。
+    </p>
+    <div class="meta-row">
+      <div class="meta-item">
+        <span class="meta-label">カテゴリ</span>
+        <span class="meta-value">AI分析・レポート</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">技術スタック</span>
+        <span class="meta-value">Claude AI / エージェントチーム / PDF出力</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">分析頻度</span>
+        <span class="meta-value">毎日1商品ずつ自動巡回</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">稼働状況</span>
+        <span class="meta-value">運用中</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="detail-content">
+
+    <!-- PROBLEM / SOLUTION -->
+    <div class="section">
+      <div class="section-title">課題と解決策</div>
+      <div class="ps-grid">
+        <div class="ps-card">
+          <h3>😰 Before（課題）</h3>
+          <ul>
+            <li>外注すると1商品5〜10万円のコストがかかる</li>
+            <li>分析に数日〜1週間かかり、改善サイクルが遅い</li>
+            <li>担当者の主観的な判断に偏りやすく、視点が限定的</li>
+          </ul>
+        </div>
+        <div class="ps-card solution">
+          <h3>🎉 After（解決）</h3>
+          <ul>
+            <li>1商品あたり数十円のAPI費用で分析完了</li>
+            <li>毎日1商品ずつ自動巡回し、高速で改善提案</li>
+            <li>3つの専門視点（UX・データ・戦略）で多角的に分析</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREENSHOTS -->
+    <div class="section">
+      <div class="section-title">実際の動作イメージ</div>
+      <div class="screenshot-grid">
+
+        <div class="screenshot-card">
+          <div class="screenshot-mockup">
+            <div class="pdf-mock">
+              <div class="pdf-doc">
+                <div class="pdf-title">📄 商品分析レポート</div>
+                <div class="pdf-section">
+                  <div class="pdf-section-title">🎨 UXデザイン評価</div>
+                  <div class="pdf-line"></div>
+                  <div class="pdf-line medium"></div>
+                  <div class="pdf-line short"></div>
+                </div>
+                <div class="pdf-section">
+                  <div class="pdf-section-title">📊 データ分析</div>
+                  <div class="pdf-line"></div>
+                  <div class="pdf-line short"></div>
+                  <div class="pdf-line medium"></div>
+                </div>
+                <div class="pdf-section">
+                  <div class="pdf-section-title">🎯 EC戦略提案</div>
+                  <div class="pdf-line medium"></div>
+                  <div class="pdf-line"></div>
+                  <div class="pdf-line short"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="screenshot-caption">
+            <h4>PDF分析レポート</h4>
+            <p>3つのAI専門家視点でまとめた分析結果をPDFで自動出力。</p>
+          </div>
+        </div>
+
+        <div class="screenshot-card">
+          <div class="screenshot-mockup">
+            <div class="pdf-mock">
+              <div class="pdf-doc">
+                <div class="pdf-title">📋 競合比較レポート</div>
+                <div class="pdf-section">
+                  <div class="pdf-section-title">🏆 競合A vs 自社</div>
+                  <div class="pdf-line"></div>
+                  <div class="pdf-line medium"></div>
+                </div>
+                <div class="pdf-section">
+                  <div class="pdf-section-title">📈 改善優先度マトリクス</div>
+                  <div class="pdf-line short"></div>
+                  <div class="pdf-line"></div>
+                  <div class="pdf-line medium"></div>
+                </div>
+                <div class="pdf-section">
+                  <div class="pdf-section-title">✅ アクションプラン</div>
+                  <div class="pdf-line medium"></div>
+                  <div class="pdf-line short"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="screenshot-caption">
+            <h4>競合比較分析</h4>
+            <p>競合商品との自動比較で、差別化ポイントと改善策を明確化。</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="section">
+      <div class="section-title">仕組み</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">STEP 01</div>
+          <div class="step-icon">🔗</div>
+          <h4>商品URL入力</h4>
+          <p>分析対象の楽天商品URLを指定</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 02</div>
+          <div class="step-icon">🤖</div>
+          <h4>3エージェント並列分析</h4>
+          <p>UX・データ・戦略の3視点で同時に分析</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 03</div>
+          <div class="step-icon">🔍</div>
+          <h4>競合自動比較</h4>
+          <p>競合商品を自動検索し比較分析</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 04</div>
+          <div class="step-icon">📄</div>
+          <h4>PDFレポート出力</h4>
+          <p>分析結果をPDFにまとめて出力</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="section">
+      <div class="section-title">導入効果</div>
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="result-num">1/10</div>
+          <div class="result-label">分析コストを大幅削減</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">3<span style="font-size: 20px;">視点</span></div>
+          <div class="result-label">AI専門家チームが分析</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">毎日</div>
+          <div class="result-label">自動巡回で継続分析</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
