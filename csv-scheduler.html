@@ -212,9 +212,12 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 24px;
+      align-items: stretch;
     }
 
     .screenshot-card {
+      display: flex;
+      flex-direction: column;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -226,9 +229,10 @@
     }
 
     .screenshot-mockup {
+      flex: 1;
       background: #1a1a2e;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       position: relative;
       padding: 32px 0;
