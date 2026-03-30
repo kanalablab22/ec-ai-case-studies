@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amazon商品画像チェッカー | EC × AI LAB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fafaf8;
+      --surface: #ffffff;
+      --surface-alt: #f5f5f0;
+      --border: rgba(0,0,0,0.07);
+      --text: #1a1a1a;
+      --text-secondary: #555555;
+      --text-muted: #999999;
+      --green: #2d8a56;
+      --green-bg: rgba(45,138,86,0.08);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Noto Sans JP', 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250,250,248,0.9);
+      backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    /* ===== HERO ===== */
+    .detail-hero {
+      margin-top: 64px;
+      padding: 80px 48px 60px;
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .detail-hero .badge {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--green);
+      background: var(--green-bg);
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .detail-hero h1 {
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+
+    .detail-hero .lead {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 640px;
+      line-height: 1.9;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 32px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ===== CONTENT ===== */
+    .detail-content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 48px 100px;
+    }
+
+    .section {
+      margin-bottom: 64px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ===== PROBLEM / SOLUTION ===== */
+    .ps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .ps-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+
+    .ps-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ps-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ps-card li {
+      font-size: 15px;
+      color: var(--text-secondary);
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .ps-card li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .ps-card.solution li::before {
+      background: var(--green);
+    }
+
+    /* ===== SCREENSHOT AREA ===== */
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .screenshot-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .screenshot-card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .screenshot-mockup {
+      flex: 1;
+      background: #1a1a2e;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      position: relative;
+      padding: 32px 0;
+    }
+
+    /* ===== APP MOCK ===== */
+    .app-mock {
+      background: #1a1a2e;
+      padding: 24px 28px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    .app-mock .app-panel {
+      background: rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 18px 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .app-mock .app-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #e2e8f0;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Score Display */
+    .score-display {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .score-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 4px solid #4a9c6d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+    }
+
+    .score-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #4a9c6d;
+    }
+
+    .score-label {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    /* Check Items */
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 6px;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+
+    .check-item .check-icon {
+      font-size: 14px;
+    }
+
+    .check-item .check-name {
+      color: #e2e8f0;
+      flex: 1;
+    }
+
+    .check-item .check-status {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    .check-status.pass {
+      background: rgba(74,156,109,0.15);
+      color: #4a9c6d;
+    }
+
+    .check-status.warn {
+      background: rgba(251,191,36,0.15);
+      color: #fbbf24;
+    }
+
+    .check-status.fail {
+      background: rgba(239,68,68,0.15);
+      color: #ef4444;
+    }
+
+    /* PDF Preview */
+    .pdf-preview {
+      background: rgba(255,255,255,0.08);
+      border-radius: 6px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .pdf-preview .pdf-icon {
+      font-size: 36px;
+      margin-bottom: 8px;
+    }
+
+    .pdf-preview .pdf-title {
+      font-size: 13px;
+      color: #e2e8f0;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .pdf-preview .pdf-desc {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .pdf-preview .pdf-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 6px 16px;
+      background: rgba(74,156,109,0.2);
+      color: #4a9c6d;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .screenshot-caption {
+      padding: 20px 24px;
+    }
+
+    .screenshot-caption h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .screenshot-caption p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .flow-steps {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .flow-step {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-step:first-child {
+      border-radius: var(--radius) 0 0 var(--radius);
+    }
+
+    .flow-step:last-child {
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: '→';
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 24px;
+      height: 24px;
+      background: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .flow-step .step-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .flow-step .step-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .flow-step h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .flow-step p {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== RESULT ===== */
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+    }
+
+    .result-card .result-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+
+    .result-card .result-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .detail-hero { padding: 60px 20px 40px; }
+      .detail-hero h1 { font-size: 28px; }
+      .detail-content { padding: 0 20px 80px; }
+      .ps-grid { grid-template-columns: 1fr; }
+      .screenshot-grid { grid-template-columns: 1fr; }
+      .flow-steps { flex-direction: column; gap: 12px; }
+      .flow-step { border-radius: var(--radius) !important; }
+      .flow-step:not(:last-child)::after { display: none; }
+      .result-grid { grid-template-columns: 1fr; }
+      .meta-row { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">EC × AI LAB</a>
+    <a href="index.html#card-14" class="nav-back">← 事例一覧に戻る</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="detail-hero">
+    <span class="badge">AI-POWERED</span>
+    <h1>Amazon商品画像チェッカー</h1>
+    <p class="lead">
+      商品画像をアップロードするだけで、Amazonガイドライン6項目＋社内品質基準7項目を自動チェック。100点満点のスコアとPDFレポートで、画像品質を効率的に管理。
+    </p>
+    <div class="meta-row">
+      <div class="meta-item">
+        <span class="meta-label">カテゴリ</span>
+        <span class="meta-value">画像チェック・品質管理</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">技術スタック</span>
+        <span class="meta-value">Python / Streamlit / NumPy</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">提供形態</span>
+        <span class="meta-value">Webアプリ（ブラウザで利用可）</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">稼働状況</span>
+        <span class="meta-value">公開中</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="detail-content">
+
+    <!-- PROBLEM / SOLUTION -->
+    <div class="section">
+      <div class="section-title">課題と解決策</div>
+      <div class="ps-grid">
+        <div class="ps-card">
+          <h3>😰 Before（課題）</h3>
+          <ul>
+            <li>Amazon画像ガイドラインを目視で1枚ずつ確認していた</li>
+            <li>白背景の割合や商品面積比を感覚で判断していた</li>
+            <li>チーム内で画像品質の基準がバラバラだった</li>
+          </ul>
+        </div>
+        <div class="ps-card solution">
+          <h3>🎉 After（解決）</h3>
+          <ul>
+            <li>13項目を自動チェックし、合否を瞬時に判定</li>
+            <li>面積比85%などの数値基準で客観的に判定</li>
+            <li>社内ガイドラインを共有し、チーム全体で品質統一</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREENSHOTS -->
+    <div class="section">
+      <div class="section-title">実際の動作イメージ</div>
+      <div class="screenshot-grid">
+
+        <div class="screenshot-card">
+          <div class="screenshot-mockup">
+            <div class="app-mock">
+              <div class="app-title">📏 Amazon公式ガイドラインチェック</div>
+              <div class="app-panel">
+                <div class="score-display">
+                  <div class="score-circle">
+                    <span class="score-num">85</span>
+                  </div>
+                  <div class="score-label">総合スコア / 100</div>
+                </div>
+                <div class="check-item">
+                  <span class="check-icon">📐</span>
+                  <span class="check-name">商品面積比（85%以上）</span>
+                  <span class="check-status pass">合格</span>
+                </div>
+                <div class="check-item">
+                  <span class="check-icon">⬜</span>
+                  <span class="check-name">白背景（RGB 255）</span>
+                  <span class="check-status pass">合格</span>
+                </div>
+                <div class="check-item">
+                  <span class="check-icon">👤</span>
+                  <span class="check-name">影の検出</span>
+                  <span class="check-status warn">注意</span>
+                </div>
+                <div class="check-item">
+                  <span class="check-icon">📏</span>
+                  <span class="check-name">画像サイズ</span>
+                  <span class="check-status pass">合格</span>
+                </div>
+                <div class="check-item">
+                  <span class="check-icon">💡</span>
+                  <span class="check-name">明るさ</span>
+                  <span class="check-status pass">合格</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="screenshot-caption">
+            <h4>ガイドライン自動チェック</h4>
+            <p>Amazonの公式ガイドライン6項目を自動判定。合格・注意・NGの3段階で結果を表示。</p>
+          </div>
+        </div>
+
+        <div class="screenshot-card">
+          <div class="screenshot-mockup">
+            <div class="app-mock">
+              <div class="app-title">📄 PDFレポート出力</div>
+              <div class="app-panel">
+                <div class="check-item">
+                  <span class="check-icon">🎨</span>
+                  <span class="check-name">質感</span>
+                  <span class="check-status pass">合格</span>
+                </div>
+                <div class="check-item">
+                  <span class="check-icon">🧊</span>
+                  <span class="check-name">立体感</span>
+                  <span class="check-status pass">合格</span>
+                </div>
+                <div class="check-item">
+                  <span class="check-icon">📐</span>
+                  <span class="check-name">構図・傾き</span>
+                  <span class="check-status warn">注意</span>
+                </div>
+                <div class="check-item">
+                  <span class="check-icon">✂️</span>
+                  <span class="check-name">エッジ鮮明度</span>
+                  <span class="check-status pass">合格</span>
+                </div>
+                <div style="margin-top: 16px;">
+                  <div class="pdf-preview">
+                    <div class="pdf-icon">📥</div>
+                    <div class="pdf-title">チェックレポート.pdf</div>
+                    <div class="pdf-desc">横型A4 / 日本語対応</div>
+                    <div class="pdf-btn">ダウンロード</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="screenshot-caption">
+            <h4>社内品質チェック + PDF出力</h4>
+            <p>社内独自の品質基準7項目もチェック。結果はPDFレポートでワンクリックダウンロード。</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="section">
+      <div class="section-title">仕組み</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">STEP 01</div>
+          <div class="step-icon">📸</div>
+          <h4>画像アップロード</h4>
+          <p>商品画像をドラッグ＆ドロップ（複数枚OK）</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 02</div>
+          <div class="step-icon">🔍</div>
+          <h4>自動チェック</h4>
+          <p>Amazon公式6項目＋社内基準7項目を解析</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 03</div>
+          <div class="step-icon">💯</div>
+          <h4>スコア表示</h4>
+          <p>100点満点のスコアと合否を即座に表示</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 04</div>
+          <div class="step-icon">📄</div>
+          <h4>PDF出力</h4>
+          <p>横型A4のレポートをワンクリックで生成</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="section">
+      <div class="section-title">導入効果</div>
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="result-num">13<span style="font-size: 20px;">項目</span></div>
+          <div class="result-label">自動チェック項目</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">即時</div>
+          <div class="result-label">チェック結果の表示</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">PDF</div>
+          <div class="result-label">レポート自動出力</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
