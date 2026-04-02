@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RPP CPC自動分析 | EC × AI LAB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fafaf8;
+      --surface: #ffffff;
+      --surface-alt: #f5f5f0;
+      --border: rgba(0,0,0,0.07);
+      --text: #1a1a1a;
+      --text-secondary: #555555;
+      --text-muted: #999999;
+      --green: #2d8a56;
+      --green-bg: rgba(45,138,86,0.08);
+      --blue: #2563eb;
+      --blue-bg: rgba(37,99,235,0.08);
+      --orange: #e67e22;
+      --orange-bg: rgba(230,126,34,0.08);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Noto Sans JP', 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250,250,248,0.9);
+      backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    /* ===== HERO ===== */
+    .detail-hero {
+      margin-top: 64px;
+      padding: 80px 48px 60px;
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .detail-hero .badge {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--blue);
+      background: var(--blue-bg);
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .detail-hero h1 {
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+
+    .detail-hero .lead {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 640px;
+      line-height: 1.9;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 32px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ===== CONTENT ===== */
+    .detail-content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 48px 100px;
+    }
+
+    .section {
+      margin-bottom: 64px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ===== PROBLEM / SOLUTION ===== */
+    .ps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .ps-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+
+    .ps-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ps-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ps-card li {
+      font-size: 15px;
+      color: var(--text-secondary);
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .ps-card li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .ps-card.solution li::before {
+      background: var(--blue);
+    }
+
+    /* ===== SCREENSHOT AREA ===== */
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .screenshot-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .screenshot-card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .screenshot-card.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .screenshot-mockup {
+      aspect-ratio: 16 / 10;
+      background: #1a1a2e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slack-mock {
+      background: #1a1a2e;
+      padding: 24px 28px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    .slack-mock .slack-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .slack-mock .slack-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .slack-mock .slack-bot-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+
+    .slack-mock .slack-time {
+      font-size: 11px;
+      color: #64748b;
+      margin-left: auto;
+    }
+
+    .slack-mock .slack-body {
+      background: rgba(255,255,255,0.06);
+      border-left: 3px solid #2563eb;
+      border-radius: 0 8px 8px 0;
+      padding: 14px 16px;
+      font-size: 12.5px;
+      color: #cbd5e1;
+      line-height: 1.7;
+    }
+
+    .slack-mock .slack-body .label {
+      color: #94a3b8;
+    }
+
+    .slack-mock .slack-body .value {
+      color: #f1f5f9;
+      font-weight: 500;
+    }
+
+    .slack-mock .slack-body .cpc-title {
+      color: #f1f5f9;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .slack-mock .slack-body .cpc-down {
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    .slack-mock .slack-body .cpc-up {
+      color: #fb923c;
+      font-weight: 600;
+    }
+
+    .slack-mock .slack-body .cpc-summary {
+      color: #94a3b8;
+      margin-top: 10px;
+      display: block;
+      font-size: 11.5px;
+    }
+
+    .screenshot-caption {
+      padding: 20px 24px;
+    }
+
+    .screenshot-caption h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .screenshot-caption p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .flow-steps {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .flow-step {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-step:first-child {
+      border-radius: var(--radius) 0 0 var(--radius);
+    }
+
+    .flow-step:last-child {
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: '\2192';
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 24px;
+      height: 24px;
+      background: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .flow-step .step-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .flow-step .step-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .flow-step h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .flow-step p {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== RESULT ===== */
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+    }
+
+    .result-card .result-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--blue);
+      margin-bottom: 4px;
+    }
+
+    .result-card .result-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== FOLDER STRUCTURE ===== */
+    .folder-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .folder-header {
+      background: #1e293b;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .folder-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .folder-dot.red { background: #ef4444; }
+    .folder-dot.yellow { background: #eab308; }
+    .folder-dot.green { background: #22c55e; }
+
+    .folder-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: #94a3b8;
+      margin-left: 8px;
+    }
+
+    .folder-body {
+      padding: 24px;
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 13px;
+      line-height: 2;
+      color: var(--text-secondary);
+    }
+
+    .folder-body .dir {
+      color: var(--blue);
+      font-weight: 600;
+    }
+
+    .folder-body .file {
+      color: var(--text);
+    }
+
+    .folder-body .comment {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .folder-body .highlight {
+      color: var(--blue);
+      font-weight: 600;
+    }
+
+    /* ===== PREREQUISITE ===== */
+    .prereq-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .prereq-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .prereq-content h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .prereq-content p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .prereq-content a {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .prereq-content a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== CPC LOGIC ===== */
+    .logic-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .logic-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+    }
+
+    .logic-card .logic-icon {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+
+    .logic-card h4 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .logic-card .logic-condition {
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 13px;
+      background: var(--surface-alt);
+      padding: 8px 16px;
+      border-radius: 8px;
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .logic-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .logic-card.down {
+      border-top: 3px solid #38bdf8;
+    }
+
+    .logic-card.up {
+      border-top: 3px solid #fb923c;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .detail-hero { padding: 60px 20px 40px; }
+      .detail-hero h1 { font-size: 28px; }
+      .detail-content { padding: 0 20px 80px; }
+      .ps-grid { grid-template-columns: 1fr; }
+      .screenshot-grid { grid-template-columns: 1fr; }
+      .flow-steps { flex-direction: column; gap: 12px; }
+      .flow-step { border-radius: var(--radius) !important; }
+      .flow-step:not(:last-child)::after { display: none; }
+      .result-grid { grid-template-columns: 1fr; }
+      .logic-grid { grid-template-columns: 1fr; }
+      .meta-row { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">EC × AI LAB</a>
+    <a href="index.html#card-15" class="nav-back">&larr; 事例一覧に戻る</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="detail-hero">
+    <span class="badge">OPTIMIZATION</span>
+    <h1>RPP CPC自動分析</h1>
+    <p class="lead">
+      RPP広告に登録された全キーワードのCPC（クリック単価）を
+      楽天が推奨する「目安CPC」と自動で比較。
+      入札単価の見直しポイントをSlackにレコメンドし、
+      RPP画面を1つずつ確認する手間をゼロにしました。
+    </p>
+    <div class="meta-row">
+      <div class="meta-item">
+        <span class="meta-label">カテゴリ</span>
+        <span class="meta-value">CPC最適化・広告分析</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">技術スタック</span>
+        <span class="meta-value">Python / Playwright / CSV解析</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">自動実行</span>
+        <span class="meta-value">毎朝9:35（予算レポートと同時）</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">手動実行</span>
+        <span class="meta-value">ワンクリックでいつでも可能</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">稼働状況</span>
+        <span class="meta-value">稼働中（予算監視に組み込み）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="detail-content">
+
+    <!-- PREREQUISITE -->
+    <div class="section">
+      <div class="section-title">前提条件</div>
+      <div class="prereq-card">
+        <span class="prereq-icon">🔗</span>
+        <div class="prereq-content">
+          <h4>RPP予算監視ツールが必要です</h4>
+          <p>
+            CPC分析は、<a href="rpp-monitoring.html">RPP予算監視ツール</a>の機能として組み込まれています。
+            予算監視が稼働中の状態で、CPC分析が実行される仕組みです。
+            まず予算監視ツールのセットアップを済ませてから、CPC分析をご利用ください。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROBLEM / SOLUTION -->
+    <div class="section">
+      <div class="section-title">課題と解決策</div>
+      <div class="ps-grid">
+        <div class="ps-card">
+          <h3>😰 Before（課題）</h3>
+          <ul>
+            <li>RPP画面で1つずつキーワードのCPCを確認していた</li>
+            <li>目安CPCとの比較をスプレッドシートで手作業していた</li>
+            <li>キーワード数が多いと全件チェックは現実的でなかった</li>
+            <li>入札単価が高すぎ・低すぎに気づくのが遅れていた</li>
+          </ul>
+        </div>
+        <div class="ps-card solution">
+          <h3>🎉 After（解決）</h3>
+          <ul>
+            <li>全キーワードのCSVを自動ダウンロードして一括分析</li>
+            <li>目安CPCとの乖離を自動で判定し、Slackに通知</li>
+            <li>「下げてOK」「上げた方がいいかも」の判断がSlackで完結</li>
+            <li>ワンクリックでいつでも手動実行できる</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CPC LOGIC -->
+    <div class="section">
+      <div class="section-title">判定ロジック</div>
+      <div class="logic-grid">
+        <div class="logic-card down">
+          <div class="logic-icon">⬇️</div>
+          <h4>下げてOK！節約チャンス</h4>
+          <div class="logic-condition">現在CPC &gt; 目安CPC &times; 130%</div>
+          <p>目安CPCより30%以上高く入札している場合。<br>入札単価を下げても表示順位への影響は小さく、広告費を節約できる可能性があります。</p>
+        </div>
+        <div class="logic-card up">
+          <div class="logic-icon">⬆️</div>
+          <h4>上げた方がいいかも</h4>
+          <div class="logic-condition">現在CPC &lt; 目安CPC &times; 80%</div>
+          <p>目安CPCより20%以上低く入札している場合。<br>入札単価が低すぎて、検索結果での露出が不足している可能性があります。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREENSHOTS -->
+    <div class="section">
+      <div class="section-title">実際の通知イメージ</div>
+      <div class="screenshot-grid">
+
+        <div class="screenshot-card full-width">
+          <div class="screenshot-mockup" style="aspect-ratio: 16 / 8;">
+            <div class="slack-mock">
+              <div class="slack-header">
+                <div class="slack-icon" style="background: #2563eb;">📊</div>
+                <span class="slack-bot-name">CPC分析Bot</span>
+                <span class="slack-time">9:36 AM</span>
+              </div>
+              <div class="slack-body">
+                <span class="cpc-title">📊 RPP CPC見直し (2026-04-02)</span><br><br>
+                <span class="cpc-down">⬇️ 下げてOK！節約チャンス (上位3/8件)</span><br>
+                <span class="label">&bull; 商品A | キーワードX：</span><span class="value">今&yen;85 &rarr; 目安CPC&yen;55</span><br>
+                <span class="label">&bull; 商品B | キーワードY：</span><span class="value">今&yen;72 &rarr; 目安CPC&yen;48</span><br>
+                <span class="label">&bull; 商品C | キーワードZ：</span><span class="value">今&yen;120 &rarr; 目安CPC&yen;80</span><br><br>
+                <span class="cpc-up">⬆️ 上げた方がいいかも (上位2/5件)</span><br>
+                <span class="label">&bull; 商品D | キーワードW：</span><span class="value">今&yen;30 &rarr; 目安CPC&yen;50</span><br>
+                <span class="label">&bull; 商品E | キーワードV：</span><span class="value">今&yen;40 &rarr; 目安CPC&yen;60</span><br>
+                <span class="cpc-summary">計85KW中、乖離あり13件 / OK72件</span>
+              </div>
+            </div>
+          </div>
+          <div class="screenshot-caption">
+            <h4>CPC分析レポート</h4>
+            <p>全キーワードのCPCを目安CPCと自動比較。「下げてOK」「上げた方がいいかも」をSlackにまとめて送信。乖離率の大きい順に上位20件ずつ表示されます。</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="section">
+      <div class="section-title">仕組み</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">STEP 01</div>
+          <div class="step-icon">📥</div>
+          <h4>CSVダウンロード</h4>
+          <p>RPP画面から全キーワードのCSVを自動取得</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 02</div>
+          <div class="step-icon">🔍</div>
+          <h4>CPC比較</h4>
+          <p>現在CPCと目安CPCの乖離率を計算</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 03</div>
+          <div class="step-icon">📋</div>
+          <h4>自動分類</h4>
+          <p>「下げてOK」「上げた方がいい」に仕分け</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 04</div>
+          <div class="step-icon">📬</div>
+          <h4>Slack通知</h4>
+          <p>乖離の大きいキーワードをレコメンド送信</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXECUTION METHODS -->
+    <div class="section">
+      <div class="section-title">実行方法</div>
+      <div class="ps-grid">
+        <div class="ps-card solution" style="border-top: 3px solid var(--blue);">
+          <h3>🕘 自動実行（毎朝9:35）</h3>
+          <ul>
+            <li>平日の朝9:35に、予算レポートと同時に自動実行</li>
+            <li>CPC分析の結果がSlackに届くので、出社後すぐに確認可能</li>
+            <li>設定不要 &#8212; 予算監視が動いていれば毎朝自動で分析</li>
+          </ul>
+        </div>
+        <div class="ps-card solution" style="border-top: 3px solid var(--orange);">
+          <h3>🖱️ 手動実行（ワンクリック）</h3>
+          <ul>
+            <li>「CPC分析_今すぐ実行.command」をダブルクリック</li>
+            <li>数十秒でSlackにCPC分析結果が届く</li>
+            <li>入札単価を変更したあとの確認にも便利</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOLDER STRUCTURE -->
+    <div class="section">
+      <div class="section-title">フォルダ構成</div>
+      <div class="folder-card">
+        <div class="folder-header">
+          <div class="folder-dot red"></div>
+          <div class="folder-dot yellow"></div>
+          <div class="folder-dot green"></div>
+          <span class="folder-title">楽天自動化ツール/</span>
+        </div>
+        <div class="folder-body">
+          <span class="dir">01_RPP予算監視_GRAV/</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">main.py</span> <span class="comment">&larr; 予算監視 + CPC分析（GRAV店舗用）</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">CPC分析_今すぐ実行.command</span> <span class="comment">&larr; 手動トリガー</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Run_Tracker.command</span> <span class="comment">&larr; 監視起動用</span><br>
+          <br>
+          <span class="dir">02_RPP予算監視_sopoa/</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">main.py</span> <span class="comment">&larr; 予算監視 + CPC分析（sopoa店舗用）</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">CPC分析_今すぐ実行.command</span> <span class="comment">&larr; 手動トリガー</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Run_Tracker.command</span> <span class="comment">&larr; 監視起動用</span><br>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="section">
+      <div class="section-title">導入効果</div>
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="result-num">1<span style="font-size: 20px;">click</span></div>
+          <div class="result-label">いつでもCPC分析を実行</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">0<span style="font-size: 20px;">分</span></div>
+          <div class="result-label">RPP画面での手動確認</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">85<span style="font-size: 20px;">%</span></div>
+          <div class="result-label">CPC確認作業を削減</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
