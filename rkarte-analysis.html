@@ -553,7 +553,7 @@
           <ul>
             <li>Claude Codeに「昨日のキーワード教えて」と聞くだけで即回答</li>
             <li>毎朝自動で2店舗分のデータを取得、日々蓄積されるので推移分析も可能</li>
-            <li>AppleScriptでChromeの既存セッションを活用し、認証問題をクリア</li>
+            <li>AppleScriptでChromeの既存セッションを活用し、ログイン不要でデータ取得</li>
           </ul>
         </div>
       </div>
@@ -649,8 +649,8 @@
       <div class="section-title">技術的なポイント</div>
       <div class="tech-grid">
         <div class="tech-card">
-          <h4>🔓 認証の壁を突破</h4>
-          <p>R-KarteにはAPIが公開されておらず、Playwrightでの自動ログインも2FA等で困難。AppleScriptでChromeの既存ログインセッションを活用することで、認証問題を完全に回避しました。</p>
+          <h4>🔓 ログイン不要の仕組み</h4>
+          <p>R-KarteにはAPIが公開されていないため、AppleScriptでChromeの既存セッションを活用し、ログイン不要でデータを取得する仕組みを実現。発想の転換でシンプルに解決しました。</p>
           <span class="tech-tag">AppleScript + osascript</span>
         </div>
         <div class="tech-card">
