@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RPP CPC自動分析 | EC × AI LAB</title>
+  <title>RPP CPC自動分析 & 調整 | EC × AI LAB</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -583,6 +583,97 @@
       border-top: 3px solid #fb923c;
     }
 
+    /* ===== DIVIDER ===== */
+    .section-divider {
+      border: none;
+      border-top: 2px solid var(--border);
+      margin: 80px 0 64px;
+    }
+
+    .feature-badge {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #fff;
+      background: #22c55e;
+      padding: 5px 12px;
+      border-radius: 16px;
+      margin-bottom: 12px;
+    }
+
+    .feature-title {
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      letter-spacing: -0.3px;
+    }
+
+    .feature-lead {
+      font-size: 15px;
+      color: var(--text-secondary);
+      max-width: 640px;
+      line-height: 1.9;
+      margin-bottom: 48px;
+    }
+
+    /* ===== SAFETY GRID ===== */
+    .safety-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .safety-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .safety-card .safety-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .safety-card h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .safety-card p {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .slack-mock .slack-body .highlight-green {
+      color: #4ade80;
+      font-weight: 600;
+    }
+
+    .slack-mock .slack-body .highlight-blue {
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    .folder-body .new-badge {
+      display: inline-block;
+      background: rgba(34,197,94,0.12);
+      color: #22c55e;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      margin-left: 4px;
+    }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
       nav { padding: 0 20px; }
@@ -596,6 +687,7 @@
       .flow-step:not(:last-child)::after { display: none; }
       .result-grid { grid-template-columns: 1fr; }
       .logic-grid { grid-template-columns: 1fr; }
+      .safety-grid { grid-template-columns: 1fr; }
       .meta-row { gap: 20px; }
     }
   </style>
@@ -611,17 +703,18 @@
   <!-- HERO -->
   <div class="detail-hero">
     <span class="badge">OPTIMIZATION</span>
-    <h1>RPP CPC自動分析</h1>
+    <h1>RPP CPC自動分析 & 調整</h1>
     <p class="lead">
       RPP広告に登録された全キーワードのCPC（クリック単価）を
       楽天が推奨する「目安CPC」と自動で比較。
       入札単価の見直しポイントをSlackにレコメンドし、
-      RPP画面を1つずつ確認する手間をゼロにしました。
+      さらに「下げてOK」のキーワードはワンクリックで
+      RPP管理画面に自動反映できます。
     </p>
     <div class="meta-row">
       <div class="meta-item">
         <span class="meta-label">カテゴリ</span>
-        <span class="meta-value">CPC最適化・広告分析</span>
+        <span class="meta-value">CPC最適化・分析・自動調整</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">技術スタック</span>
@@ -771,7 +864,145 @@
       </div>
     </div>
 
-    <!-- EXECUTION METHODS -->
+    <!-- ================================================== -->
+    <!-- CPC AUTO ADJUST SECTION -->
+    <!-- ================================================== -->
+    <hr class="section-divider">
+
+    <div class="section" style="margin-bottom: 32px;">
+      <span class="feature-badge">NEW FEATURE</span>
+      <h2 class="feature-title">CPC自動調整</h2>
+      <p class="feature-lead">
+        CPC分析で「下げてOK」と判定されたキーワードのCPCを目安CPCに自動で書き換え。
+        Slackで内容を確認してからワンクリックで適用する「確認してから実行」の安全設計です。
+      </p>
+    </div>
+
+    <!-- ADJUST: HOW IT WORKS -->
+    <div class="section">
+      <div class="section-title">自動調整の仕組み</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">STEP 01</div>
+          <div class="step-icon">📊</div>
+          <h4>CPC分析</h4>
+          <p>「下げてOK」のキーワードを自動検出</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 02</div>
+          <div class="step-icon">📝</div>
+          <h4>CSV生成</h4>
+          <p>目安CPCに書き換えたCSVを自動作成</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 03</div>
+          <div class="step-icon">👀</div>
+          <h4>Slack確認</h4>
+          <p>変更内容を確認し、OKならダブルクリック</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 04</div>
+          <div class="step-icon">🚀</div>
+          <h4>自動アップロード</h4>
+          <p>RPP管理画面にCSVを自動で反映</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADJUST: SLACK NOTIFICATIONS -->
+    <div class="section">
+      <div class="section-title">調整の通知イメージ</div>
+      <div class="screenshot-grid">
+
+        <div class="screenshot-card full-width">
+          <div class="screenshot-mockup" style="aspect-ratio: 16 / 7;">
+            <div class="slack-mock">
+              <div class="slack-header">
+                <div class="slack-icon" style="background: #22c55e;">🔧</div>
+                <span class="slack-bot-name">CPC調整Bot</span>
+                <span class="slack-time">9:36 AM</span>
+              </div>
+              <div class="slack-body" style="border-left-color: #22c55e;">
+                <span class="highlight-green">🔧 CPC自動調整の準備ができました</span><br><br>
+                <span class="label">以下のキーワードCPCを下げます：</span><br>
+                <span class="value">&bull; 商品A | キーワードX：70円 &rarr; 63円（目安CPC）</span><br>
+                <span class="value">&bull; 商品B | キーワードY：59円 &rarr; 45円（目安CPC）</span><br>
+                <span class="value">&bull; 商品C | キーワードZ：95円 &rarr; 72円（目安CPC）</span><br><br>
+                <span class="cpc-summary">適用するには「CPC自動調整_実行.command」をダブルクリック</span>
+              </div>
+            </div>
+          </div>
+          <div class="screenshot-caption">
+            <h4>Step 1: Slackで変更内容を確認</h4>
+            <p>CPC分析後、「下げてOK」のキーワード一覧がSlackに届きます。内容を確認してからダブルクリックで適用。</p>
+          </div>
+        </div>
+
+        <div class="screenshot-card full-width">
+          <div class="screenshot-mockup" style="aspect-ratio: 16 / 7;">
+            <div class="slack-mock">
+              <div class="slack-header">
+                <div class="slack-icon" style="background: #22c55e;">✅</div>
+                <span class="slack-bot-name">CPC調整Bot</span>
+                <span class="slack-time">9:37 AM</span>
+              </div>
+              <div class="slack-body" style="border-left-color: #22c55e;">
+                <span class="highlight-green">✅ CPC自動調整 完了！</span><br><br>
+                <span class="value">3件のキーワードCPCを更新しました</span><br><br>
+                <span class="label">&bull; 商品A | キーワードX：</span><span class="highlight-blue">70円 &rarr; 63円</span><br>
+                <span class="label">&bull; 商品B | キーワードY：</span><span class="highlight-blue">59円 &rarr; 45円</span><br>
+                <span class="label">&bull; 商品C | キーワードZ：</span><span class="highlight-blue">95円 &rarr; 72円</span><br><br>
+                <span class="cpc-summary">RPP管理画面にCSVをアップロード済み</span>
+              </div>
+            </div>
+          </div>
+          <div class="screenshot-caption">
+            <h4>Step 2: 適用完了をSlackで確認</h4>
+            <p>ダブルクリック後、自動でRPP管理画面にCSVがアップロードされ、完了通知がSlackに届きます。</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ADJUST: SAFETY -->
+    <div class="section">
+      <div class="section-title">安全設計</div>
+      <div class="safety-grid">
+        <div class="safety-card">
+          <div class="safety-icon">⬇️</div>
+          <h4>下げるだけ</h4>
+          <p>上げるキーワードは触りません。下げる方向のみ自動調整。</p>
+        </div>
+        <div class="safety-card">
+          <div class="safety-icon">🚫</div>
+          <h4>削除コマンド検出</h4>
+          <p>CSVに「d（削除）」が含まれていたら即停止。キーワード消失事故を防止。</p>
+        </div>
+        <div class="safety-card">
+          <div class="safety-icon">📋</div>
+          <h4>確認してから実行</h4>
+          <p>Slackで確認し、ダブルクリックするまで適用されません。</p>
+        </div>
+        <div class="safety-card">
+          <div class="safety-icon">📦</div>
+          <h4>自動バックアップ</h4>
+          <p>変更前のCSVをbackups/に自動保存。いつでも元に戻せます。</p>
+        </div>
+        <div class="safety-card">
+          <div class="safety-icon">🔢</div>
+          <h4>変更上限あり</h4>
+          <p>1回の実行で最大20件まで。急激な大量変更を防ぎます。</p>
+        </div>
+        <div class="safety-card">
+          <div class="safety-icon">⚡</div>
+          <h4>下げ幅制限</h4>
+          <p>現在CPCの50%未満には下げない＆最低10円を維持。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXECUTION METHODS (updated) -->
     <div class="section">
       <div class="section-title">実行方法</div>
       <div class="ps-grid">
@@ -784,11 +1015,19 @@
           </ul>
         </div>
         <div class="ps-card solution" style="border-top: 3px solid var(--orange);">
-          <h3>🖱️ 手動実行（ワンクリック）</h3>
+          <h3>🖱️ CPC分析（ワンクリック）</h3>
           <ul>
             <li>「CPC分析_今すぐ実行.command」をダブルクリック</li>
             <li>数十秒でSlackにCPC分析結果が届く</li>
-            <li>入札単価を変更したあとの確認にも便利</li>
+            <li>「下げてOK」があれば調整用CSVも自動生成</li>
+          </ul>
+        </div>
+        <div class="ps-card solution" style="border-top: 3px solid #22c55e;">
+          <h3>🔧 CPC調整の適用</h3>
+          <ul>
+            <li>Slackで変更内容を確認</li>
+            <li>「CPC自動調整_実行.command」をダブルクリック</li>
+            <li>数十秒でRPP画面にCSVが自動アップロードされる</li>
           </ul>
         </div>
       </div>
@@ -806,8 +1045,11 @@
         </div>
         <div class="folder-body">
           <span class="dir">01_RPP予算監視_GRAV/</span><br>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">main.py</span> <span class="comment">&larr; 予算監視 + CPC分析（GRAV店舗用）</span><br>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">CPC分析_今すぐ実行.command</span> <span class="comment">&larr; 手動トリガー</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">main.py</span> <span class="comment">&larr; 予算監視 + CPC分析 + CPC調整</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">CPC分析_今すぐ実行.command</span> <span class="comment">&larr; 分析トリガー</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">CPC自動調整_実行.command</span> <span class="new-badge">NEW</span> <span class="comment">&larr; 調整の適用トリガー</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">rpp_upload.csv</span> <span class="new-badge">NEW</span> <span class="comment">&larr; アップロード用CSV</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="dir">backups/</span> <span class="new-badge">NEW</span> <span class="comment">&larr; 変更前CSVのバックアップ</span><br>
           &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Run_Tracker.command</span> <span class="comment">&larr; 監視起動用</span><br>
           <br>
           <span class="dir">02_RPP予算監視_sopoa/</span><br>
@@ -824,15 +1066,15 @@
       <div class="result-grid">
         <div class="result-card">
           <div class="result-num">1<span style="font-size: 20px;">click</span></div>
-          <div class="result-label">いつでもCPC分析を実行</div>
+          <div class="result-label">CPC分析＆調整を実行</div>
         </div>
         <div class="result-card">
-          <div class="result-num">0<span style="font-size: 20px;">分</span></div>
-          <div class="result-label">RPP画面での手動確認</div>
+          <div class="result-num">0<span style="font-size: 20px;">件</span></div>
+          <div class="result-label">CSV事故（自動ブロック）</div>
         </div>
         <div class="result-card">
-          <div class="result-num">85<span style="font-size: 20px;">%</span></div>
-          <div class="result-label">CPC確認作業を削減</div>
+          <div class="result-num">90<span style="font-size: 20px;">%</span></div>
+          <div class="result-label">CPC変更作業を自動化</div>
         </div>
       </div>
     </div>
