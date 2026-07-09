@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>画像圧縮ツール | EC × AI LAB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fafaf8;
+      --surface: #ffffff;
+      --surface-alt: #f5f5f0;
+      --border: rgba(0,0,0,0.07);
+      --text: #1a1a1a;
+      --text-secondary: #555555;
+      --text-muted: #999999;
+      --green: #2d8a56;
+      --green-bg: rgba(45,138,86,0.08);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Noto Sans JP', 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250,250,248,0.9);
+      backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    /* ===== HERO ===== */
+    .detail-hero {
+      margin-top: 64px;
+      padding: 80px 48px 60px;
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .detail-hero .badge {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--green);
+      background: var(--green-bg);
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .detail-hero h1 {
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+
+    .detail-hero .lead {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 640px;
+      line-height: 1.9;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 32px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ===== CONTENT ===== */
+    .detail-content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 48px 100px;
+    }
+
+    .section {
+      margin-bottom: 64px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ===== PROBLEM / SOLUTION ===== */
+    .ps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .ps-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+
+    .ps-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ps-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ps-card li {
+      font-size: 15px;
+      color: var(--text-secondary);
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .ps-card li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .ps-card.solution li::before {
+      background: var(--green);
+    }
+
+    /* ===== SCREENSHOT AREA ===== */
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .screenshot-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .screenshot-card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .screenshot-mockup {
+      aspect-ratio: 16 / 10;
+      background: #1a1a2e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .terminal-mock {
+      background: #1a1a2e;
+      padding: 20px 24px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    }
+
+    .terminal-mock .terminal-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .terminal-mock .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .terminal-mock .terminal-dot.red { background: #ff5f56; }
+    .terminal-mock .terminal-dot.yellow { background: #ffbd2e; }
+    .terminal-mock .terminal-dot.green { background: #27c93f; }
+
+    .terminal-mock .terminal-body {
+      font-size: 11px;
+      color: #a0aec0;
+      line-height: 1.8;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .terminal-mock .terminal-body .prompt {
+      color: #68d391;
+    }
+
+    .terminal-mock .terminal-body .command {
+      color: #e2e8f0;
+    }
+
+    .terminal-mock .terminal-body .output {
+      color: #a0aec0;
+    }
+
+    .terminal-mock .terminal-body .highlight {
+      color: #63b3ed;
+      font-weight: 600;
+    }
+
+    .terminal-mock .terminal-body .success {
+      color: #68d391;
+    }
+
+    .chat-mock {
+      background: #2d2d3f;
+      padding: 20px 24px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    .chat-mock .chat-user {
+      background: rgba(99, 179, 237, 0.15);
+      border-radius: 12px 12px 4px 12px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #bee3f8;
+      align-self: flex-end;
+      max-width: 80%;
+    }
+
+    .chat-mock .chat-ai {
+      background: rgba(104, 211, 145, 0.12);
+      border-radius: 12px 12px 12px 4px;
+      padding: 10px 14px;
+      font-size: 11px;
+      color: #c6f6d5;
+      align-self: flex-start;
+      max-width: 85%;
+      line-height: 1.7;
+    }
+
+    .chat-mock .chat-ai .rank {
+      color: #68d391;
+      font-weight: 600;
+    }
+
+    .screenshot-caption {
+      padding: 20px 24px;
+    }
+
+    .screenshot-caption h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .screenshot-caption p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== BROWSER TOOL MOCK ===== */
+    .tool-mock {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #f4ede4 0%, #e8dcc8 100%);
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    .tool-mock .tool-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #3a2e22;
+    }
+
+    .tool-mock .drop {
+      border: 2px dashed #c8b48f;
+      border-radius: 10px;
+      background: #fdfaf4;
+      padding: 16px;
+      text-align: center;
+      font-size: 12px;
+      color: #8b6f4d;
+      font-weight: 600;
+    }
+
+    .tool-mock .drop .drop-sub {
+      display: block;
+      font-size: 10px;
+      color: #a89878;
+      font-weight: 400;
+      margin-top: 4px;
+    }
+
+    .size-compare {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .size-box {
+      flex: 1;
+      background: #fff;
+      border-radius: 10px;
+      padding: 14px 10px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(120,90,50,0.08);
+    }
+
+    .size-box .size-label {
+      font-size: 10px;
+      color: #a89878;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .size-box .size-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: #3a2e22;
+      line-height: 1.1;
+    }
+
+    .size-box.after .size-num { color: #4a7c2a; }
+
+    .size-box .size-unit {
+      font-size: 12px;
+      font-weight: 600;
+      color: #a89878;
+    }
+
+    .size-arrow {
+      font-size: 22px;
+      color: #8b6f4d;
+      font-weight: 800;
+    }
+
+    .save-pill {
+      align-self: center;
+      background: #e8f5e0;
+      color: #4a7c2a;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 12px;
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .flow-steps {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .flow-step {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-step:first-child {
+      border-radius: var(--radius) 0 0 var(--radius);
+    }
+
+    .flow-step:last-child {
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: '\2192';
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 24px;
+      height: 24px;
+      background: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .flow-step .step-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .flow-step .step-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .flow-step h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .flow-step p {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== TECH DETAIL ===== */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .tech-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .tech-card h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tech-card p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .tech-card .tech-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--surface-alt);
+      color: var(--text-secondary);
+      margin-top: 10px;
+    }
+
+    /* ===== RESULT ===== */
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+    }
+
+    .result-card .result-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+
+    .result-card .result-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .detail-hero { padding: 60px 20px 40px; }
+      .detail-hero h1 { font-size: 28px; }
+      .detail-content { padding: 0 20px 80px; }
+      .ps-grid { grid-template-columns: 1fr; }
+      .screenshot-grid { grid-template-columns: 1fr; }
+      .flow-steps { flex-direction: column; gap: 12px; }
+      .flow-step { border-radius: var(--radius) !important; }
+      .flow-step:not(:last-child)::after { display: none; }
+      .result-grid { grid-template-columns: 1fr; }
+      .tech-grid { grid-template-columns: 1fr; }
+      .meta-row { gap: 20px; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">EC × AI LAB</a>
+    <a href="index.html#card-21" class="nav-back">&larr; 事例一覧に戻る</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="detail-hero">
+    <span class="badge">AUTOMATION</span>
+    <h1>画像圧縮ツール</h1>
+    <p class="lead">
+      楽天RMSの画像容量制限に対応するため、画像をブラウザ上でドラッグ＆ドロップするだけで自動的に軽量化。
+      画質を保ちつつファイルサイズを削減し、面倒な圧縮作業をワンステップで終わらせる仕組みを実現しました。
+    </p>
+    <div class="meta-row">
+      <div class="meta-item">
+        <span class="meta-label">カテゴリ</span>
+        <span class="meta-value">画像最適化・作業効率化</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">技術スタック</span>
+        <span class="meta-value">HTML / JavaScript / Canvas API</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">動作環境</span>
+        <span class="meta-value">ブラウザ内で完結（インストール不要）</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">対応形式</span>
+        <span class="meta-value">JPG / PNG（複数枚まとめて）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="detail-content">
+
+    <!-- PROBLEM / SOLUTION -->
+    <div class="section">
+      <div class="section-title">課題と解決策</div>
+      <div class="ps-grid">
+        <div class="ps-card">
+          <h3>😰 Before（課題）</h3>
+          <ul>
+            <li>楽天RMSには画像1枚あたりの容量制限があり、大きい画像はアップロードできなかった</li>
+            <li>そのたびに別の圧縮アプリやWebサービスに画像をアップして変換する手間が発生</li>
+            <li>1枚ずつ処理するのが面倒で、何十枚もあると時間がかかっていた</li>
+          </ul>
+        </div>
+        <div class="ps-card solution">
+          <h3>🎉 After（解決）</h3>
+          <ul>
+            <li>画像をドラッグ＆ドロップするだけで、目標サイズ以下に自動で軽量化</li>
+            <li>複数枚をまとめて放り込めば、一気に圧縮してくれる</li>
+            <li>処理はすべてブラウザ内で完結。画像はどこにもアップロードされず安心</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREENSHOTS -->
+    <div class="section">
+      <div class="section-title">実際の動作イメージ</div>
+      <div class="screenshot-grid">
+
+        <div class="screenshot-card">
+          <div class="screenshot-mockup">
+            <div class="tool-mock">
+              <div class="tool-head">📦 画像圧縮ツール</div>
+              <div class="drop">
+                📥 ここに画像をドラッグ＆ドロップ
+                <span class="drop-sub">またはクリックで選択（複数枚OK）</span>
+              </div>
+              <div class="size-compare">
+                <div class="size-box before">
+                  <div class="size-label">BEFORE</div>
+                  <div class="size-num">4.2<span class="size-unit">MB</span></div>
+                </div>
+                <div class="size-arrow">→</div>
+                <div class="size-box after">
+                  <div class="size-label">AFTER</div>
+                  <div class="size-num">780<span class="size-unit">KB</span></div>
+                </div>
+              </div>
+              <div class="save-pill">✓ 約81%減・画質そのまま</div>
+            </div>
+          </div>
+          <div class="screenshot-caption">
+            <h4>ドロップするだけで自動圧縮</h4>
+            <p>大きな画像も目標サイズ以下にサッと軽量化。数値はイメージ例です。</p>
+          </div>
+        </div>
+
+        <div class="screenshot-card">
+          <div class="screenshot-mockup">
+            <div class="tool-mock">
+              <div class="tool-head">🎯 目標サイズ 1950KB以下</div>
+              <div class="size-compare" style="flex-direction:column; gap:8px;">
+                <div class="size-box after" style="width:100%; display:flex; align-items:center; gap:10px; text-align:left; padding:10px 14px;">
+                  <span style="font-size:11px; color:#4a7c2a; font-weight:700; background:#e8f5e0; padding:2px 8px; border-radius:10px;">✓ 圧縮成功</span>
+                  <span style="font-size:12px; color:#7d6e5b;">2.8MB → <strong style="color:#3a2e22;">1.1MB</strong></span>
+                </div>
+                <div class="size-box after" style="width:100%; display:flex; align-items:center; gap:10px; text-align:left; padding:10px 14px;">
+                  <span style="font-size:11px; color:#4a7c2a; font-weight:700; background:#e8f5e0; padding:2px 8px; border-radius:10px;">✓ 圧縮成功</span>
+                  <span style="font-size:12px; color:#7d6e5b;">5.6MB → <strong style="color:#3a2e22;">1.7MB</strong></span>
+                </div>
+                <div class="size-box" style="width:100%; display:flex; align-items:center; gap:10px; text-align:left; padding:10px 14px;">
+                  <span style="font-size:11px; color:#666; font-weight:700; background:#eee; padding:2px 8px; border-radius:10px;">そのまま</span>
+                  <span style="font-size:12px; color:#7d6e5b;">640KB → <strong style="color:#3a2e22;">640KB</strong></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="screenshot-caption">
+            <h4>複数枚をまとめて処理</h4>
+            <p>目標サイズ以下の画像はそのまま。まとめてZIPで保存もできます。</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="section">
+      <div class="section-title">仕組み</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">STEP 01</div>
+          <div class="step-icon">📥</div>
+          <h4>ドラッグ＆ドロップ</h4>
+          <p>画像をまとめてブラウザに放り込む</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 02</div>
+          <div class="step-icon">🎨</div>
+          <h4>Canvasで再描画</h4>
+          <p>画像を読み込み品質を段階調整</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 03</div>
+          <div class="step-icon">🎯</div>
+          <h4>目標サイズまで圧縮</h4>
+          <p>設定した容量以下になるまで自動調整</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 04</div>
+          <div class="step-icon">💾</div>
+          <h4>保存</h4>
+          <p>1枚ずつでもまとめてでもダウンロード</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TECH DETAIL -->
+    <div class="section">
+      <div class="section-title">技術的なポイント</div>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <h4>🎨 Canvas APIで画質を保つ圧縮</h4>
+          <p>ブラウザ標準のCanvas APIで画像を再描画し、JPEGの品質を少しずつ下げながら目標サイズに近づけます。見た目の劣化を抑えつつ、しっかり容量を削減できるのがポイントです。</p>
+          <span class="tech-tag">Canvas toBlob()</span>
+        </div>
+        <div class="tech-card">
+          <h4>📐 品質調整とリサイズの2段構え</h4>
+          <p>品質を下げても目標サイズに届かない場合は、画像を段階的に縮小して再圧縮。大きすぎる画像でも確実に容量制限内に収まるよう工夫しています。</p>
+          <span class="tech-tag">段階的リサイズ</span>
+        </div>
+        <div class="tech-card">
+          <h4>🔄 透過なしPNGはJPGへ自動変換</h4>
+          <p>透明部分のないPNGは、そのままだと縮みにくいため自動でJPGに変換。透過が必要な画像はPNGのまま保持するので、用途に応じて最適な形式を選びます。</p>
+          <span class="tech-tag">アルファ値判定</span>
+        </div>
+        <div class="tech-card">
+          <h4>🔒 アップロード一切なしで安全</h4>
+          <p>画像の処理はすべて自分のブラウザの中だけで完結します。外部のサーバーに画像を送らないので、商品画像の情報が外に漏れる心配がありません。</p>
+          <span class="tech-tag">ローカル処理のみ</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="section">
+      <div class="section-title">導入効果</div>
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="result-num">0<span style="font-size: 20px;">円</span></div>
+          <div class="result-label">外部サービス不要でコストゼロ</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">複数枚</div>
+          <div class="result-label">まとめて一括で自動圧縮</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">即完了</div>
+          <div class="result-label">ドロップするだけで軽量化</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTE -->
+    <div class="section">
+      <div class="section-title">補足</div>
+      <div class="tech-card" style="max-width: 100%;">
+        <h4>💻 インストール不要でどの環境でも使える</h4>
+        <p>このツールはHTMLファイル1枚だけで動くので、ソフトのインストールは一切不要です。ファイルをダブルクリックしてブラウザで開くだけ。macOSでもWindowsでも同じように使え、Canvas APIは主要なブラウザにすべて標準搭載されているため、環境を選ばず動作します。</p>
+        <span class="tech-tag">HTML1枚で完結</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

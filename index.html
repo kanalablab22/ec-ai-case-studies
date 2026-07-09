@@ -419,7 +419,7 @@
   <!-- STATS -->
   <div class="stats">
     <div class="stat-card">
-      <div class="stat-value">16</div>
+      <div class="stat-value">28</div>
       <div class="stat-label">自動化ツール稼働中</div>
     </div>
     <div class="stat-card">
@@ -772,6 +772,246 @@
           <p class="card-desc">楽天R-Karteの参照元・検索キーワードデータを毎朝自動取得しローカルDBに蓄積。Claude Codeに聞くだけで流入経路やキーワードランキングを即回答。RMS管理画面を開く手間をゼロに。</p>
           <div class="card-footer">
             <span class="card-result">アクセス分析の確認 即時回答</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 在庫自動監視 -->
+      <a id="card-17" href="inventory-monitor.html" class="card" data-category="monitoring" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">17</span>
+          <span class="card-category">Monitoring</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">在庫監視</span>
+            <span class="tag">Slack通知</span>
+            <span class="tag">AI入荷分析</span>
+          </div>
+          <h3 class="card-title">在庫自動監視 &amp; 入荷分析</h3>
+          <p class="card-desc">売れ筋商品の在庫を1日5回自動チェックし、残りわずかになったらSlackへ即アラート。さらにAIが社内の入荷連絡を探し出し、次回入荷の判断材料まで通知に添えます。</p>
+          <div class="card-footer">
+            <span class="card-result">在庫切れリスクを自動キャッチ</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 競合ウォッチ -->
+      <a id="card-18" href="competitor-watch.html" class="card" data-category="monitoring" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">18</span>
+          <span class="card-category">Monitoring</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">競合モニタリング</span>
+            <span class="tag">自動巡回</span>
+            <span class="tag">Slack通知</span>
+          </div>
+          <h3 class="card-title">競合ウォッチ 自動検知</h3>
+          <p class="card-desc">気になる競合商品の価格・サムネイル・レビュー・クーポンを毎朝自動で巡回し、前回から変化があった項目だけをMac通知やSlack DMでお知らせ。変化がなければ静かにしているので、通知が来たら競合に動きがあったとすぐ分かります。</p>
+          <div class="card-footer">
+            <span class="card-result">4項目を毎朝自動監視</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 日次売上レポート -->
+      <a id="card-19" href="daily-sales-report.html" class="card" data-category="system" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">19</span>
+          <span class="card-category">System</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">自動集計</span>
+            <span class="tag">Slack通知</span>
+            <span class="tag">BigQuery</span>
+          </div>
+          <h3 class="card-title">日次売上レポート 自動配信</h3>
+          <p class="card-desc">BigQueryに蓄積された売上データを毎朝自動で集計し、店舗別の売上サマリーをSlackへ自動配信。当日売上・貢献利益・累積・予算比まで計算済みで、通知を開くだけで進捗が把握できます。</p>
+          <div class="card-footer">
+            <span class="card-result">毎朝Slackに自動配信</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- クーポン配布終了 自動監視 -->
+      <a id="card-20" href="coupon-end-monitor.html" class="card" data-category="monitoring" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">20</span>
+          <span class="card-category">Monitoring</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">監視</span>
+            <span class="tag">Slack通知</span>
+            <span class="tag">クーポン運用</span>
+          </div>
+          <h3 class="card-title">クーポン配布終了 自動監視</h3>
+          <p class="card-desc">発行中のクーポンを1時間ごとに自動巡回し、配布上限への到達・期限終了・新規発行を検知。配布終了と残りわずかの予告だけをSlackへ通知し、売上機会の損失を防ぎます。</p>
+          <div class="card-footer">
+            <span class="card-result">配布終了を即Slack通知</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 画像圧縮ツール -->
+      <a id="card-21" href="image-compressor.html" class="card" data-category="automation" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">21</span>
+          <span class="card-category">Automation</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">Canvas API</span>
+            <span class="tag">画像最適化</span>
+            <span class="tag">ブラウザ完結</span>
+          </div>
+          <h3 class="card-title">画像圧縮ツール</h3>
+          <p class="card-desc">楽天RMSの画像容量制限に対応するため、画像をブラウザ上でドラッグ＆ドロップするだけで自動的に軽量化。画質を保ちつつファイルサイズを削減し、複数枚をまとめて一括処理できます。処理はすべてブラウザ内で完結します。</p>
+          <div class="card-footer">
+            <span class="card-result">外部サービス不要でコストゼロ</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 楽天バナー自動リサイズ -->
+      <a id="card-22" href="banner-resizer.html" class="card" data-category="automation" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">22</span>
+          <span class="card-category">Automation</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">画像処理</span>
+            <span class="tag">作業自動化</span>
+            <span class="tag">Downloads監視</span>
+          </div>
+          <h3 class="card-title">楽天バナー自動リサイズ</h3>
+          <p class="card-desc">1枚のバナー画像から楽天の各掲載枠サイズへワンクリックで自動リサイズし、RMS上限以下へ自動圧縮。Downloadsフォルダを常時監視し、画像が保存されると自動でリサイズ画面が立ち上がる常駐型の仕組みです。</p>
+          <div class="card-footer">
+            <span class="card-result">1枚から全サイズ自動生成</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- コンテンツ画像リサイズ -->
+      <a id="card-23" href="content-image-resize.html" class="card" data-category="automation" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">23</span>
+          <span class="card-category">Automation</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">画像加工</span>
+            <span class="tag">作業効率化</span>
+            <span class="tag">ブラウザツール</span>
+          </div>
+          <h3 class="card-title">コンテンツ画像リサイズ</h3>
+          <p class="card-desc">楽天コンテンツページ用の画像を、ブラウザ上で規定の1600×900pxにまとめてリサイズ。ドラッグ＆ドロップするだけで縦横比を保ったまま余白を自動調整し、RMSルールに沿ったファイル名で一括保存できます。</p>
+          <div class="card-footer">
+            <span class="card-result">ドラッグ＆ドロップで一括リサイズ</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 売れ筋ダッシュボード -->
+      <a id="card-24" href="bestseller-dashboard.html" class="card" data-category="system" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">24</span>
+          <span class="card-category">System</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">データ取得</span>
+            <span class="tag">可視化</span>
+            <span class="tag">自動更新</span>
+          </div>
+          <h3 class="card-title">売れ筋ダッシュボード 自動更新</h3>
+          <p class="card-desc">市場の売れ筋商品データを定期的に取得してJSONに整形し、Webダッシュボードで自動表示。取得からJSON化・アップロード・表示までを全自動化し、開くだけで常に最新の売れ筋トレンドが一目で確認できます。</p>
+          <div class="card-footer">
+            <span class="card-result">開くだけで常に最新</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- AI議事録アプリ -->
+      <a id="card-25" href="meeting-notes-app.html" class="card" data-category="ai" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">25</span>
+          <span class="card-category">AI</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">AI要約</span>
+            <span class="tag">文字起こし</span>
+            <span class="tag">議事録自動化</span>
+          </div>
+          <h3 class="card-title">AI議事録アプリ</h3>
+          <p class="card-desc">会議の音声をアップロードするだけで、文字起こし→AI要約→議事録生成までを自動化するWebアプリ。要約・決定事項・ToDoまで自動整理し、Google Docs保存やPDF出力までワンストップで完結します。</p>
+          <div class="card-footer">
+            <span class="card-result">議事録作成を自動化</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 商品名変更 効果測定 -->
+      <a id="card-26" href="product-name-tracker.html" class="card" data-category="monitoring" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">26</span>
+          <span class="card-category">Analysis</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">効果測定</span>
+            <span class="tag">前後比較</span>
+            <span class="tag">BigQuery</span>
+          </div>
+          <h3 class="card-title">商品名変更 効果測定</h3>
+          <p class="card-desc">商品名を変更した前後で、アクセス人数・転換率・売上がどう変わったかを自動で前後比較・可視化。店舗全体比でセールや季節のノイズを補正し、商品名改修そのものの効果を数字で検証します。</p>
+          <div class="card-footer">
+            <span class="card-result">改修効果を数字で自動検証</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- サムネイル変更 効果測定 -->
+      <a id="card-27" href="thumbnail-ab-test.html" class="card" data-category="monitoring" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">27</span>
+          <span class="card-category">Analysis</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">効果測定</span>
+            <span class="tag">BigQuery</span>
+            <span class="tag">前後比較</span>
+          </div>
+          <h3 class="card-title">サムネイル変更 効果測定</h3>
+          <p class="card-desc">サムネイル画像を変更した前後で、クリック率・アクセス人数・転換率・売上の変化を自動で前後比較。店舗全体トレンドで補正し、セールや季節のノイズを除いた「サムネそのものの効果」を数字で裏づけます。</p>
+          <div class="card-footer">
+            <span class="card-result">効果を数字で裏づけ</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- アフィリエイト売上 分析 -->
+      <a id="card-28" href="affiliate-sales.html" class="card" data-category="monitoring" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">28</span>
+          <span class="card-category">Analysis</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">売上集計</span>
+            <span class="tag">可視化</span>
+            <span class="tag">複数店舗</span>
+          </div>
+          <h3 class="card-title">アフィリエイト売上 分析</h3>
+          <p class="card-desc">楽天アフィリエイト経由の売上を1コマンドで自動集計・可視化。複数店舗の売上・件数・成果報酬をまとめて合算し、今月と今年累計をひと目で把握できます。広告費とのバランス判断にも活用できます。</p>
+          <div class="card-footer">
+            <span class="card-result">複数店舗を即集計</span>
           </div>
         </div>
       </a>

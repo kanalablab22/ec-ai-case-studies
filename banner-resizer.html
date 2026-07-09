@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>楽天バナー自動リサイズ | EC × AI LAB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fafaf8;
+      --surface: #ffffff;
+      --surface-alt: #f5f5f0;
+      --border: rgba(0,0,0,0.07);
+      --text: #1a1a1a;
+      --text-secondary: #555555;
+      --text-muted: #999999;
+      --green: #2d8a56;
+      --green-bg: rgba(45,138,86,0.08);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Noto Sans JP', 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250,250,248,0.9);
+      backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    /* ===== HERO ===== */
+    .detail-hero {
+      margin-top: 64px;
+      padding: 80px 48px 60px;
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .detail-hero .badge {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--green);
+      background: var(--green-bg);
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .detail-hero h1 {
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+
+    .detail-hero .lead {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 640px;
+      line-height: 1.9;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 32px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ===== CONTENT ===== */
+    .detail-content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 48px 100px;
+    }
+
+    .section {
+      margin-bottom: 64px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ===== PROBLEM / SOLUTION ===== */
+    .ps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .ps-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+
+    .ps-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ps-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ps-card li {
+      font-size: 15px;
+      color: var(--text-secondary);
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .ps-card li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .ps-card.solution li::before {
+      background: var(--green);
+    }
+
+    /* ===== SCREENSHOT AREA ===== */
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .screenshot-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .screenshot-card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .screenshot-mockup {
+      aspect-ratio: 16 / 10;
+      background: #1a1a2e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .terminal-mock {
+      background: #1a1a2e;
+      padding: 20px 24px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    }
+
+    .terminal-mock .terminal-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .terminal-mock .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .terminal-mock .terminal-dot.red { background: #ff5f56; }
+    .terminal-mock .terminal-dot.yellow { background: #ffbd2e; }
+    .terminal-mock .terminal-dot.green { background: #27c93f; }
+
+    .terminal-mock .terminal-body {
+      font-size: 11px;
+      color: #a0aec0;
+      line-height: 1.8;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .terminal-mock .terminal-body .prompt {
+      color: #68d391;
+    }
+
+    .terminal-mock .terminal-body .command {
+      color: #e2e8f0;
+    }
+
+    .terminal-mock .terminal-body .output {
+      color: #a0aec0;
+    }
+
+    .terminal-mock .terminal-body .highlight {
+      color: #63b3ed;
+      font-weight: 600;
+    }
+
+    .terminal-mock .terminal-body .success {
+      color: #68d391;
+    }
+
+    /* ===== BANNER RESIZE MOCK ===== */
+    .resize-mock {
+      background: #232336;
+      width: 100%;
+      height: 100%;
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    .resize-mock .rm-source {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .resize-mock .rm-thumb {
+      width: 76px;
+      height: 76px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #bf0000 0%, #ff6a3d 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+    }
+
+    .resize-mock .rm-source-label {
+      font-size: 11px;
+      color: #cbd5e0;
+      line-height: 1.6;
+    }
+    .resize-mock .rm-source-label b { color: #fff; font-weight: 700; }
+
+    .resize-mock .rm-arrow {
+      text-align: center;
+      color: #63b3ed;
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .resize-mock .rm-outputs {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .resize-mock .rm-bar {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 7px;
+      padding: 7px 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .resize-mock .rm-swatch {
+      border-radius: 4px;
+      background: linear-gradient(135deg, #bf0000 0%, #ff6a3d 100%);
+      flex-shrink: 0;
+      height: 15px;
+    }
+    .resize-mock .rm-swatch.s1 { width: 60px; }
+    .resize-mock .rm-swatch.s2 { width: 46px; }
+    .resize-mock .rm-swatch.s3 { width: 26px; height: 26px; }
+
+    .resize-mock .rm-size {
+      font-size: 11px;
+      color: #e2e8f0;
+      font-weight: 600;
+      font-family: 'SF Mono','Menlo',monospace;
+    }
+    .resize-mock .rm-kb {
+      font-size: 10px;
+      color: #68d391;
+      margin-left: auto;
+      font-family: 'SF Mono','Menlo',monospace;
+    }
+
+    .screenshot-caption {
+      padding: 20px 24px;
+    }
+
+    .screenshot-caption h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .screenshot-caption p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .flow-steps {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .flow-step {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-step:first-child {
+      border-radius: var(--radius) 0 0 var(--radius);
+    }
+
+    .flow-step:last-child {
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: '\2192';
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 24px;
+      height: 24px;
+      background: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .flow-step .step-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .flow-step .step-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .flow-step h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .flow-step p {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== TECH DETAIL ===== */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .tech-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .tech-card h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tech-card p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .tech-card .tech-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--surface-alt);
+      color: var(--text-secondary);
+      margin-top: 10px;
+    }
+
+    /* ===== RESULT ===== */
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+    }
+
+    .result-card .result-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+
+    .result-card .result-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .detail-hero { padding: 60px 20px 40px; }
+      .detail-hero h1 { font-size: 28px; }
+      .detail-content { padding: 0 20px 80px; }
+      .ps-grid { grid-template-columns: 1fr; }
+      .screenshot-grid { grid-template-columns: 1fr; }
+      .flow-steps { flex-direction: column; gap: 12px; }
+      .flow-step { border-radius: var(--radius) !important; }
+      .flow-step:not(:last-child)::after { display: none; }
+      .result-grid { grid-template-columns: 1fr; }
+      .tech-grid { grid-template-columns: 1fr; }
+      .meta-row { gap: 20px; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">EC × AI LAB</a>
+    <a href="index.html#card-22" class="nav-back">&larr; 事例一覧に戻る</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="detail-hero">
+    <span class="badge">AUTOMATION</span>
+    <h1>楽天バナー<br>自動リサイズ</h1>
+    <p class="lead">
+      1枚のバナー画像から、楽天の各掲載枠サイズへワンクリックで自動リサイズ。
+      Downloadsフォルダを常時監視し、画像が入ると自動でリサイズ画面が立ち上がる仕組みを実現しました。
+    </p>
+    <div class="meta-row">
+      <div class="meta-item">
+        <span class="meta-label">カテゴリ</span>
+        <span class="meta-value">画像処理・作業自動化</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">技術スタック</span>
+        <span class="meta-value">Canvas API / Python / launchd</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">対応枠</span>
+        <span class="meta-value">1440×280 / 1080×210 / 1600×900 ほか</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">対応OS</span>
+        <span class="meta-value">macOS / Windows</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="detail-content">
+
+    <!-- PROBLEM / SOLUTION -->
+    <div class="section">
+      <div class="section-title">課題と解決策</div>
+      <div class="ps-grid">
+        <div class="ps-card">
+          <h3>😰 Before（課題）</h3>
+          <ul>
+            <li>1枚のバナーを掲載枠ごとに、画像編集ソフトで何度も手作業リサイズ</li>
+            <li>枠に合わせた余白の追加や、被写体の位置調整がサイズ違いのたびに発生</li>
+            <li>楽天RMSのファイルサイズ上限（1950KB以下）を超えないよう毎回チェックが必要</li>
+          </ul>
+        </div>
+        <div class="ps-card solution">
+          <h3>🎉 After（解決）</h3>
+          <ul>
+            <li>1枚の元画像から、各掲載枠サイズへワンクリックで一括書き出し</li>
+            <li>ドラッグ＆ズームで位置調整、余白色も選べて仕上がりを自分でコントロール</li>
+            <li>指定KB以下へ自動圧縮。まとめてZIP保存で、そのままRMSにアップできる状態に</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREENSHOTS -->
+    <div class="section">
+      <div class="section-title">実際の動作イメージ</div>
+      <div class="screenshot-grid">
+
+        <div class="screenshot-card">
+          <div class="screenshot-mockup">
+            <div class="resize-mock">
+              <div class="rm-source">
+                <div class="rm-thumb">🖼️</div>
+                <div class="rm-source-label">
+                  元画像 1枚<br>
+                  <b>banner_sale.png</b>
+                </div>
+              </div>
+              <div class="rm-arrow">↓ 自動リサイズ</div>
+              <div class="rm-outputs">
+                <div class="rm-bar">
+                  <span class="rm-swatch s1"></span>
+                  <span class="rm-size">1440 × 280</span>
+                  <span class="rm-kb">842KB ✓</span>
+                </div>
+                <div class="rm-bar">
+                  <span class="rm-swatch s2"></span>
+                  <span class="rm-size">1080 × 210</span>
+                  <span class="rm-kb">521KB ✓</span>
+                </div>
+                <div class="rm-bar">
+                  <span class="rm-swatch s3"></span>
+                  <span class="rm-size">1600 × 900</span>
+                  <span class="rm-kb">1,733KB ✓</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="screenshot-caption">
+            <h4>1枚から各サイズへ一括書き出し</h4>
+            <p>元画像1枚を読み込めば、複数の掲載枠サイズへ自動リサイズ。各サイズが上限KB以下に収まった状態で出力されます。</p>
+          </div>
+        </div>
+
+        <div class="screenshot-card">
+          <div class="screenshot-mockup">
+            <div class="terminal-mock">
+              <div class="terminal-bar">
+                <span class="terminal-dot red"></span>
+                <span class="terminal-dot yellow"></span>
+                <span class="terminal-dot green"></span>
+              </div>
+              <div class="terminal-body">
+                <span class="prompt">$</span> <span class="command">python3 watcher.py</span><br>
+                <span class="output">🚀 Downloadsフォルダの監視を開始</span><br>
+                <span class="output">📡 待機中... (localhost:8797 / PC内限定)</span><br>
+                <span class="output">📥 検知: <span class="highlight">banner_sale.png</span></span><br>
+                <span class="success">🖼️ リサイズツールを自動で起動</span><br>
+                <span class="success">✅ 画像を読み込み済みの状態で表示</span><br>
+                <span class="output">==================================================</span><br>
+                <span class="success">📐 あとはサイズを選んで書き出すだけ！</span>
+              </div>
+            </div>
+          </div>
+          <div class="screenshot-caption">
+            <h4>Downloads監視で自動起動</h4>
+            <p>画像がDownloadsに入ると常駐ウォッチャーが検知し、リサイズ画面が自動で立ち上がって画像読み込み済みに。</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="section">
+      <div class="section-title">仕組み</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">STEP 01</div>
+          <div class="step-icon">📥</div>
+          <h4>画像を保存</h4>
+          <p>生成AIなどからバナー画像をDownloadsへ</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 02</div>
+          <div class="step-icon">👀</div>
+          <h4>自動検知</h4>
+          <p>常駐ウォッチャーが対象画像を検知</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 03</div>
+          <div class="step-icon">🖼️</div>
+          <h4>ツール自動起動</h4>
+          <p>画像を読み込み済みでリサイズ画面が開く</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 04</div>
+          <div class="step-icon">📦</div>
+          <h4>一括書き出し</h4>
+          <p>各サイズへ圧縮＆ZIP保存で完了</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TECH DETAIL -->
+    <div class="section">
+      <div class="section-title">技術的なポイント</div>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <h4>🖥️ ブラウザだけで画像処理</h4>
+          <p>リサイズも圧縮もブラウザのCanvas機能だけで完結。専用ソフトのインストール不要で、画像はPCの外に一切送られません。手動モードなら常駐ツールが止まっていても使えます。</p>
+          <span class="tech-tag">Canvas API</span>
+        </div>
+        <div class="tech-card">
+          <h4>👀 Downloads監視の常駐ウォッチャー</h4>
+          <p>PC内だけで動く小さなサーバーがDownloadsフォルダを2秒おきに監視。対象の画像が入るとリサイズ画面を自動で開き、その画像を読み込ませます。外部からはアクセスできません。</p>
+          <span class="tech-tag">Python http.server</span>
+        </div>
+        <div class="tech-card">
+          <h4>🎯 ファイル名で賢く判定</h4>
+          <p>生成AIらしいファイル名だけに反応するよう調整。スクリーンショットやツール自身の書き出しには反応しないので、余計な画面が開く心配がありません。</p>
+          <span class="tech-tag">パターンマッチ</span>
+        </div>
+        <div class="tech-card">
+          <h4>🔁 ログイン時に自動起動</h4>
+          <p>ウォッチャーはPC起動時に自動でスタンバイ。macOSはログイン項目、Windowsはスタートアップに登録するだけ。普段は存在を意識せず使えます。</p>
+          <span class="tech-tag">ログイン項目 / スタートアップ</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="section">
+      <div class="section-title">導入効果</div>
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="result-num">1<span style="font-size: 20px;">枚</span></div>
+          <div class="result-label">元画像から全サイズを生成</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">0<span style="font-size: 20px;">操作</span></div>
+          <div class="result-label">保存するだけでツールが起動</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">自動</div>
+          <div class="result-label">RMS上限KB以下へ圧縮</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTE -->
+    <div class="section">
+      <div class="section-title">補足</div>
+      <div class="tech-card" style="max-width: 100%;">
+        <h4>💻 macOS / Windows 両対応</h4>
+        <p>本ツールはmacOSとWindowsのどちらでも使えます。macOSはログイン項目、Windowsはスタートアップに起動ファイルを登録するだけで、Downloads監視が常駐します。リサイズ画面はブラウザで動くため、OSを問わずそのまま同じ操作感で利用できます。画像はすべてPC内だけで処理され、外部に送信されることはありません。</p>
+        <span class="tech-tag">クロスプラットフォーム対応</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
