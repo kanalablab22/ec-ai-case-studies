@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>アフィリエイト売上 分析 | EC × AI LAB</title>
+  <title>アフィリエイト売上 ダッシュボード | EC × AI LAB</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -507,28 +507,28 @@
 
   <!-- HERO -->
   <div class="detail-hero">
-    <span class="badge">ANALYSIS</span>
-    <h1>アフィリエイト売上<br>分析</h1>
+    <span class="badge">DASHBOARD</span>
+    <h1>アフィリエイト売上<br>ダッシュボード</h1>
     <p class="lead">
-      楽天アフィリエイト経由の売上を自動で集計・可視化。どの経路からの売上が伸びているかを把握し、
-      広告費とのバランス判断に活用できる仕組みを実現しました。
+      楽天アフィリエイト経由の売上を自動で取得・集計し、会社アカウント限定のWebダッシュボードで社内共有。
+      月別・日別の売上を前年同月比（昨対）と並べて表示し、ワンクリックで最新の状態に更新できる仕組みを実現しました。
     </p>
     <div class="meta-row">
       <div class="meta-item">
         <span class="meta-label">カテゴリ</span>
-        <span class="meta-value">売上集計・可視化</span>
+        <span class="meta-value">売上集計・ダッシュボード</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">技術スタック</span>
-        <span class="meta-value">Python / Playwright / Chrome Profile</span>
+        <span class="meta-value">Python / Playwright / Google Apps Script</span>
       </div>
       <div class="meta-item">
-        <span class="meta-label">集計単位</span>
-        <span class="meta-value">今月 &amp; 今年累計 / 日別</span>
+        <span class="meta-label">比較軸</span>
+        <span class="meta-value">前年同月比（昨対）対応</span>
       </div>
       <div class="meta-item">
-        <span class="meta-label">対応店舗</span>
-        <span class="meta-value">複数店舗対応</span>
+        <span class="meta-label">公開範囲</span>
+        <span class="meta-value">会社アカウント限定・社内共有</span>
       </div>
     </div>
   </div>
@@ -551,9 +551,9 @@
         <div class="ps-card solution">
           <h3>🎉 After（解決）</h3>
           <ul>
-            <li>「アフィリエイトの売上とって」と頼むだけで今月＋今年累計が一目で分かる</li>
-            <li>複数店舗をまとめて取得し、売上・件数・成果報酬を自動で合算</li>
-            <li>成果報酬（=支払う費用）も並べて表示、広告費とのバランス判断がすぐできる</li>
+            <li>取得した売上を、会社アカウント限定のWebダッシュボードでいつでも社内共有</li>
+            <li>月別・日別の売上を前年同月比（昨対）と並べて表示、伸びも落ちも一目で分かる</li>
+            <li>ワンクリック（またはAIに一言）で取得から更新まで自動、成果報酬も並べて確認できる</li>
           </ul>
         </div>
       </div>
@@ -565,30 +565,42 @@
       <div class="screenshot-grid">
 
         <div class="screenshot-card">
-          <div class="screenshot-mockup">
-            <div class="terminal-mock">
-              <div class="terminal-bar">
-                <span class="terminal-dot red"></span>
-                <span class="terminal-dot yellow"></span>
-                <span class="terminal-dot green"></span>
+          <div class="screenshot-mockup" style="background:#f4f6f4;">
+            <div style="width:100%;height:100%;padding:14px 16px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span>
+                <span style="font-size:11px;font-weight:800;color:#1a1a1a;">アフィリエイト売上ダッシュボード</span>
               </div>
-              <div class="terminal-body">
-                <span class="prompt">$</span> <span class="command">python3 affiliate_report.py all</span><br>
-                <span class="output">🚀 アフィリエイト売上の取得を開始します</span><br>
-                <span class="output">🏪 店舗: <span class="highlight">Shop A</span> レポートを集計中...</span><br>
-                <span class="success">✅ Shop A: 月別成果テーブルを取得</span><br>
-                <span class="output">🏪 店舗: <span class="highlight">Shop B</span> レポートを集計中...</span><br>
-                <span class="success">✅ Shop B: 月別成果テーブルを取得</span><br>
-                <span class="output">🏪 店舗: <span class="highlight">Shop C</span> レポートを集計中...</span><br>
-                <span class="success">✅ Shop C: 月別成果テーブルを取得</span><br>
-                <span class="output">==================================================</span><br>
-                <span class="success">📊 完了！ 3店舗を集計 → summary.json に保存</span>
+              <div style="display:flex;gap:6px;">
+                <div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:6px 8px;">
+                  <div style="font-size:7px;color:#999;">今月の売上</div>
+                  <div style="font-size:11px;font-weight:800;color:#1a1a1a;">¥1,284,600</div>
+                  <div style="font-size:7px;color:#2d8a56;font-weight:700;">昨対 118.4%</div>
+                </div>
+                <div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:6px 8px;">
+                  <div style="font-size:7px;color:#999;">売上件数</div>
+                  <div style="font-size:11px;font-weight:800;color:#1a1a1a;">312件</div>
+                  <div style="font-size:7px;color:#2d8a56;font-weight:700;">昨対 109.2%</div>
+                </div>
+                <div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:6px 8px;">
+                  <div style="font-size:7px;color:#999;">成果報酬</div>
+                  <div style="font-size:11px;font-weight:800;color:#1a1a1a;">¥38,530</div>
+                  <div style="font-size:7px;color:#999;font-weight:700;">売上の約3%</div>
+                </div>
+              </div>
+              <div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:8px 10px 6px;display:flex;align-items:flex-end;justify-content:space-around;">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="display:flex;align-items:flex-end;gap:2px;height:52px;"><div style="width:6px;height:30px;background:#c9ddd0;border-radius:2px 2px 0 0;"></div><div style="width:6px;height:34px;background:#2d8a56;border-radius:2px 2px 0 0;"></div></div><div style="font-size:7px;color:#999;">2月</div></div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="display:flex;align-items:flex-end;gap:2px;height:52px;"><div style="width:6px;height:40px;background:#c9ddd0;border-radius:2px 2px 0 0;"></div><div style="width:6px;height:44px;background:#2d8a56;border-radius:2px 2px 0 0;"></div></div><div style="font-size:7px;color:#999;">3月</div></div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="display:flex;align-items:flex-end;gap:2px;height:52px;"><div style="width:6px;height:28px;background:#c9ddd0;border-radius:2px 2px 0 0;"></div><div style="width:6px;height:38px;background:#2d8a56;border-radius:2px 2px 0 0;"></div></div><div style="font-size:7px;color:#999;">4月</div></div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:2px;"><div style="font-size:9px;line-height:1;">👑</div><div style="display:flex;align-items:flex-end;gap:2px;height:44px;"><div style="width:6px;height:42px;background:#c9ddd0;border-radius:2px 2px 0 0;"></div><div style="width:6px;height:50px;background:#2d8a56;border-radius:2px 2px 0 0;"></div></div><div style="font-size:7px;color:#2d8a56;font-weight:700;">5月</div></div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="display:flex;align-items:flex-end;gap:2px;height:52px;"><div style="width:6px;height:36px;background:#c9ddd0;border-radius:2px 2px 0 0;"></div><div style="width:6px;height:32px;background:#2d8a56;border-radius:2px 2px 0 0;"></div></div><div style="font-size:7px;color:#999;">6月</div></div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="display:flex;align-items:flex-end;gap:2px;height:52px;"><div style="width:6px;height:22px;background:#c9ddd0;border-radius:2px 2px 0 0;"></div><div style="width:6px;height:40px;background:#2d8a56;border-radius:2px 2px 0 0;"></div></div><div style="font-size:7px;color:#999;">7月</div></div>
               </div>
             </div>
           </div>
           <div class="screenshot-caption">
-            <h4>複数店舗をまとめて集計</h4>
-            <p>1コマンドで複数店舗のアフィリエイトレポートを巡回し、月別の成果データを自動で抽出します。</p>
+            <h4>会社アカウント限定のダッシュボード</h4>
+            <p>月別・日別の売上を前年同月比（昨対）と並べて表示。最高売上の月は👑でハイライトされます。（緑＝今年／薄緑＝昨年）</p>
           </div>
         </div>
 
@@ -601,22 +613,20 @@
                 <span class="terminal-dot green"></span>
               </div>
               <div class="terminal-body">
-                <span class="highlight">■ 楽天アフィリエイト経由の売上サマリ</span><br>
-                <span class="output">──────────────────────────────</span><br>
-                <span class="output">【今月（途中）】</span><br>
-                <span class="output">Shop A  売上 ¥1,284,600  312件  報酬 ¥38,530</span><br>
-                <span class="output">Shop B  売上 &nbsp;&nbsp;¥862,400  198件  報酬 ¥25,870</span><br>
-                <span class="output">Shop C  売上 &nbsp;&nbsp;¥417,900  &nbsp;94件  報酬 ¥12,530</span><br>
-                <span class="success">3店計 &nbsp;売上 ¥2,564,900  604件  報酬 ¥76,930</span><br>
-                <span class="output">──────────────────────────────</span><br>
-                <span class="output">【今年累計】</span><br>
-                <span class="success">3店計 売上 ¥18,342,100  4,271件  報酬 ¥550,260</span>
+                <span class="prompt">$</span> <span class="command">python3 dashboard_update.py</span><br>
+                <span class="output">🚀 アフィリエイト売上を取得中...</span><br>
+                <span class="success">✅ 月別・日別データを取得（今年＋昨年）</span><br>
+                <span class="output">🧮 前年同月比（昨対）を計算中...</span><br>
+                <span class="output">📤 Googleへ安全に送信中...（トークン認証）</span><br>
+                <span class="success">✅ ダッシュボードを更新しました</span><br>
+                <span class="output">==================================================</span><br>
+                <span class="highlight">🔒 閲覧は会社アカウント限定・社内共有OK</span>
               </div>
             </div>
           </div>
           <div class="screenshot-caption">
-            <h4>今月＋今年累計をひと目で</h4>
-            <p>店舗ごとの売上・件数・成果報酬に加え、全店合計と今年累計まで自動で整えて表示します。</p>
+            <h4>ワンクリックで最新に更新</h4>
+            <p>取得から昨対計算・アップロードまで自動。AIに「ダッシュボード更新して」と頼むだけでもOKです。</p>
           </div>
         </div>
 
@@ -637,19 +647,19 @@
           <div class="step-num">STEP 02</div>
           <div class="step-icon">📄</div>
           <h4>レポート取得</h4>
-          <p>アフィリエイトレポート画面を自動で開く</p>
+          <p>今年＋昨年の月別・日別売上を自動取得</p>
         </div>
         <div class="flow-step">
           <div class="step-num">STEP 03</div>
-          <div class="step-icon">🧮</div>
-          <h4>集計・整形</h4>
-          <p>月別・日別の成果テーブルを抽出して合算</p>
+          <div class="step-icon">📤</div>
+          <h4>Googleへ送信</h4>
+          <p>昨対を計算しトークン認証で安全に送信</p>
         </div>
         <div class="flow-step">
           <div class="step-num">STEP 04</div>
           <div class="step-icon">📊</div>
-          <h4>サマリ表示</h4>
-          <p>今月＋今年累計を分かりやすく可視化</p>
+          <h4>社内で共有</h4>
+          <p>会社アカウント限定ダッシュボードに反映</p>
         </div>
       </div>
     </div>
@@ -659,24 +669,24 @@
       <div class="section-title">技術的なポイント</div>
       <div class="tech-grid">
         <div class="tech-card">
-          <h4>📊 ダッシュボードの死角を埋める</h4>
-          <p>アフィリエイト経由の売上は普段のダッシュボードには含まれていません。この抜けていた数字を管理画面から直接拾い、全体像を正しく把握できるようにしました。</p>
-          <span class="tech-tag">売上の全体可視化</span>
+          <h4>📈 前年同月比を自動表示</h4>
+          <p>取得時に昨年の実績もあわせて取り込み、月別・日別ともに「今年 vs 昨年」のペア表示に。KPIカード・グラフ・表に昨対の割合が出るので、伸びも落ちも一目で分かります。</p>
+          <span class="tech-tag">昨対（YoY）対応</span>
         </div>
         <div class="tech-card">
-          <h4>🧮 テーブルを自動で読み解く</h4>
-          <p>レポート画面のテーブルから「月別成果」「日別成果」を自動で判別して抽出。売上金額・売上件数・成果報酬をきれいに整理して合算します。</p>
-          <span class="tech-tag">テーブル自動抽出</span>
+          <h4>🎨 見やすいダッシュボードデザイン</h4>
+          <p>フォレストグリーン基調で、KPIカード・グラフ・データ表を整理。最高売上の月はクリーム色＋👑でハイライトし、売上セルにはミニバーを添えて大小が直感的に伝わります。</p>
+          <span class="tech-tag">Google Apps Script</span>
         </div>
         <div class="tech-card">
-          <h4>🔑 認証情報はキーチェーン管理</h4>
-          <p>ログイン情報はファイルに平文で持たず、macOSキーチェーンから読み取り専用で取得。安全性を保ったまま自動ログインを実現しています。</p>
+          <h4>🔒 会社アカウント限定で安全に共有</h4>
+          <p>ダッシュボードの閲覧は自社ドメインのGoogleアカウントを持つ人だけ。データ送信はトークン認証で、認証情報はmacOSキーチェーン管理・平文保存なし。URLを共有するだけで社内に安全に配れます。</p>
+          <span class="tech-tag">社内限定 + トークン認証</span>
+        </div>
+        <div class="tech-card">
+          <h4>⚡ ワンクリック更新</h4>
+          <p>コマンドのダブルクリック、またはAIに「ダッシュボード更新して」と一言頼むだけ。取得→昨対計算→送信→表示までを全自動で行い、URLは変わらないのでブックマークしておけばいつでも最新です。</p>
           <span class="tech-tag">Keychain（読み取り専用）</span>
-        </div>
-        <div class="tech-card">
-          <h4>🏪 店舗ごとにセッション分離</h4>
-          <p>店舗ごとに独立したブラウザプロファイルを用意し、アカウントのセッションが混ざらない設計。複数店舗を安全にまとめて集計できます。</p>
-          <span class="tech-tag">Chrome Profile 分離</span>
         </div>
       </div>
     </div>
@@ -686,16 +696,16 @@
       <div class="section-title">導入効果</div>
       <div class="result-grid">
         <div class="result-card">
-          <div class="result-num">1<span style="font-size: 20px;">コマンド</span></div>
-          <div class="result-label">複数店舗をまとめて集計</div>
+          <div class="result-num">社内<span style="font-size: 20px;">共有</span></div>
+          <div class="result-label">会社アカウント限定で誰でも閲覧</div>
         </div>
         <div class="result-card">
-          <div class="result-num">即把握</div>
-          <div class="result-label">今月＋今年累計をひと目で</div>
+          <div class="result-num">昨対</div>
+          <div class="result-label">今年 vs 昨年をひと目で比較</div>
         </div>
         <div class="result-card">
-          <div class="result-num">費用<span style="font-size: 20px;">対比</span></div>
-          <div class="result-label">成果報酬と売上をセット表示</div>
+          <div class="result-num">1<span style="font-size: 20px;">クリック</span></div>
+          <div class="result-label">取得から更新まで自動</div>
         </div>
       </div>
     </div>
