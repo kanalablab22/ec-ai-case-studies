@@ -427,6 +427,10 @@
       .detail-content { padding: 0 20px 80px; }
       .ps-grid { grid-template-columns: 1fr; }
       .screenshot-grid { grid-template-columns: 1fr; }
+      .screenshot-mockup.dash-mock { aspect-ratio: auto; }
+      .dash-mock .dash-mock-inner { height: auto; padding: 14px 16px; gap: 10px; }
+      .dash-mock .dash-chart { min-height: 150px; }
+      .dash-mock .dash-chart svg { height: 110px; }
       .flow-steps { flex-direction: column; gap: 12px; }
       .flow-step { border-radius: var(--radius) !important; }
       .flow-step:not(:last-child)::after { display: none; }
@@ -580,6 +584,76 @@
           <h4>Sheets記録</h4>
           <p>Google Sheetsに自動書き込み</p>
         </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD (発展) -->
+    <div class="section">
+      <div class="section-title">発展：順位ダッシュボードで可視化</div>
+      <p style="font-size:15px;color:var(--text-secondary);margin-bottom:24px;max-width:720px;">
+        毎朝ためた順位データは行数が増えるほど表では追いづらくなります。そこで、蓄積したデータをそのままグラフで見られるWebダッシュボードを追加しました。
+        社内アカウントでURLを開くだけで、キーワードごとの順位推移をいつでも確認できます。
+      </p>
+      <div class="screenshot-grid">
+
+        <div class="screenshot-card">
+          <div class="screenshot-mockup dash-mock" style="background:#f7f4ee;">
+            <div class="dash-mock-inner" style="width:100%;height:100%;padding:20px 24px;display:flex;flex-direction:column;gap:14px;font-family:'Noto Sans JP',sans-serif;">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="width:5px;height:20px;background:#2d8a56;border-radius:2px;"></span>
+                <span style="font-size:16px;font-weight:800;color:#1a1a1a;">検索順位ダッシュボード</span>
+                <span style="margin-left:auto;font-size:11px;color:#555;background:#fff;border:1px solid rgba(0,0,0,0.06);padding:4px 10px;border-radius:10px;">商品：ミニ財布</span>
+              </div>
+              <div style="display:flex;gap:10px;">
+                <div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:9px;padding:10px 12px;">
+                  <div style="font-size:11px;color:#999;">最高順位</div>
+                  <div style="font-size:19px;font-weight:800;color:#2d8a56;">3位</div>
+                </div>
+                <div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:9px;padding:10px 12px;">
+                  <div style="font-size:11px;color:#999;">追跡キーワード</div>
+                  <div style="font-size:19px;font-weight:800;">24語</div>
+                </div>
+                <div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:9px;padding:10px 12px;">
+                  <div style="font-size:11px;color:#999;">30日で改善</div>
+                  <div style="font-size:19px;font-weight:800;color:#2d8a56;">＋9位</div>
+                </div>
+              </div>
+              <div class="dash-chart" style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:9px;padding:12px 14px;position:relative;">
+                <div style="font-size:11px;color:#999;margin-bottom:6px;">順位推移（上が上位）</div>
+                <svg viewBox="0 0 240 74" style="width:100%;height:calc(100% - 84px);display:block;">
+                  <line x1="0" y1="12" x2="240" y2="12" stroke="#eee" stroke-width="1"></line>
+                  <line x1="0" y1="34" x2="240" y2="34" stroke="#eee" stroke-width="1"></line>
+                  <line x1="0" y1="56" x2="240" y2="56" stroke="#eee" stroke-width="1"></line>
+                  <polyline points="6,58 40,52 74,46 108,40 142,30 176,26 210,18 234,14" fill="none" stroke="#2d8a56" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"></polyline>
+                  <polyline points="6,42 40,44 74,36 108,34 142,26 176,30 210,22 234,20" fill="none" stroke="#a8862f" stroke-width="1.8" stroke-dasharray="4 3" stroke-linecap="round"></polyline>
+                  <circle cx="234" cy="14" r="3" fill="#2d8a56"></circle>
+                </svg>
+                <div style="display:flex;gap:16px;margin-top:4px;">
+                  <span style="font-size:11px;color:#2d8a56;font-weight:700;">— 自然検索</span>
+                  <span style="font-size:11px;color:#a8862f;font-weight:700;">--- PR枠</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="screenshot-caption">
+            <h4>キーワードごとの順位推移をグラフで</h4>
+            <p>自然検索は実線、PR枠は点線で重ねて表示。圏外だった日も分かるので、対策を打った前後の変化を追えます。（表示例）</p>
+          </div>
+        </div>
+
+        <div class="screenshot-card" style="display:flex;align-items:stretch;">
+          <div class="ps-card solution" style="border:none;border-radius:0;width:100%;">
+            <h3>📊 ダッシュボードでできること</h3>
+            <ul>
+              <li>商品を選ぶと、その商品で追っている全キーワードの順位を1画面で比較できる</li>
+              <li>キーワードを選べば、自然検索とPR枠を重ねて推移を確認できる</li>
+              <li>圏外の日はグラフの最下部に表示、記録が欠けた日もそのまま分かる</li>
+              <li>1日に複数回はかった日は最後の1件を採用し、グラフが乱れないよう整えている</li>
+              <li>担当範囲ごとにボードを分けて共有できるので、必要な人に必要なデータだけ渡せる</li>
+            </ul>
+          </div>
+        </div>
+
       </div>
     </div>
 
