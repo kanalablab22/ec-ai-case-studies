@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FY26上期 自動化ツール実績 | EC × AI LAB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fafaf8;
+      --surface: #ffffff;
+      --surface-alt: #f5f5f0;
+      --border: rgba(0,0,0,0.07);
+      --text: #1a1a1a;
+      --text-secondary: #555555;
+      --text-muted: #999999;
+      --green: #2d8a56;
+      --green-bg: rgba(45,138,86,0.08);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Noto Sans JP', 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250,250,248,0.9);
+      backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    /* ===== HERO ===== */
+    .detail-hero {
+      margin-top: 64px;
+      padding: 80px 48px 60px;
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .detail-hero .badge {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--green);
+      background: var(--green-bg);
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .detail-hero h1 {
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+
+    .detail-hero .lead {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 640px;
+      line-height: 1.9;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 32px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ===== CONTENT ===== */
+    .detail-content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 48px 100px;
+    }
+
+    .section {
+      margin-bottom: 64px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ===== PROBLEM / SOLUTION ===== */
+    .ps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .ps-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+
+    .ps-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ps-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ps-card li {
+      font-size: 15px;
+      color: var(--text-secondary);
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .ps-card li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .ps-card.solution li::before {
+      background: var(--green);
+    }
+
+    /* ===== SCREENSHOT AREA ===== */
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .screenshot-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .screenshot-card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .screenshot-mockup {
+      aspect-ratio: 16 / 10;
+      background: #1a1a2e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .terminal-mock {
+      background: #1a1a2e;
+      padding: 20px 24px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    }
+
+    .terminal-mock .terminal-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .terminal-mock .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .terminal-mock .terminal-dot.red { background: #ff5f56; }
+    .terminal-mock .terminal-dot.yellow { background: #ffbd2e; }
+    .terminal-mock .terminal-dot.green { background: #27c93f; }
+
+    .terminal-mock .terminal-body {
+      font-size: 11px;
+      color: #a0aec0;
+      line-height: 1.8;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .terminal-mock .terminal-body .prompt {
+      color: #68d391;
+    }
+
+    .terminal-mock .terminal-body .command {
+      color: #e2e8f0;
+    }
+
+    .terminal-mock .terminal-body .output {
+      color: #a0aec0;
+    }
+
+    .terminal-mock .terminal-body .highlight {
+      color: #63b3ed;
+      font-weight: 600;
+    }
+
+    .terminal-mock .terminal-body .success {
+      color: #68d391;
+    }
+
+    .chat-mock {
+      background: #2d2d3f;
+      padding: 20px 24px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    .chat-mock .chat-user {
+      background: rgba(99, 179, 237, 0.15);
+      border-radius: 12px 12px 4px 12px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #bee3f8;
+      align-self: flex-end;
+      max-width: 80%;
+    }
+
+    .chat-mock .chat-ai {
+      background: rgba(104, 211, 145, 0.12);
+      border-radius: 12px 12px 12px 4px;
+      padding: 10px 14px;
+      font-size: 11px;
+      color: #c6f6d5;
+      align-self: flex-start;
+      max-width: 85%;
+      line-height: 1.7;
+    }
+
+    .chat-mock .chat-ai .rank {
+      color: #68d391;
+      font-weight: 600;
+    }
+
+    .screenshot-caption {
+      padding: 20px 24px;
+    }
+
+    .screenshot-caption h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .screenshot-caption p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .flow-steps {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .flow-step {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-step:first-child {
+      border-radius: var(--radius) 0 0 var(--radius);
+    }
+
+    .flow-step:last-child {
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: '\2192';
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 24px;
+      height: 24px;
+      background: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .flow-step .step-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .flow-step .step-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .flow-step h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .flow-step p {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== TECH DETAIL ===== */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .tech-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .tech-card h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tech-card p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .tech-card .tech-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--surface-alt);
+      color: var(--text-secondary);
+      margin-top: 10px;
+    }
+
+    /* ===== RESULT ===== */
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+    }
+
+    .result-card .result-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+
+    .result-card .result-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .detail-hero { padding: 60px 20px 40px; }
+      .detail-hero h1 { font-size: 28px; }
+      .detail-content { padding: 0 20px 80px; }
+      .ps-grid { grid-template-columns: 1fr; }
+      .screenshot-grid { grid-template-columns: 1fr; }
+      .flow-steps { flex-direction: column; gap: 12px; }
+      .flow-step { border-radius: var(--radius) !important; }
+      .flow-step:not(:last-child)::after { display: none; }
+      .result-grid { grid-template-columns: 1fr; }
+      .tech-grid { grid-template-columns: 1fr; }
+      .meta-row { gap: 20px; }
+    }
+
+    /* ===== 上期実績ページ用 ===== */
+    .mchart { display: flex; flex-direction: column; gap: 10px; }
+    .mrow { display: grid; grid-template-columns: 76px 1fr 52px; align-items: center; gap: 14px; }
+    .mlabel { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+    .mbarwrap { background: var(--surface-alt); border-radius: 6px; height: 24px; overflow: hidden; }
+    .mbar { height: 100%; border-radius: 6px;
+            background: linear-gradient(90deg, rgba(45,138,86,0.9), rgba(45,138,86,0.55)); }
+    .mbar.pre { background: rgba(0,0,0,0.13); }
+    .mcount { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; text-align: right; }
+    .mnote { margin-top: 14px; font-size: 12px; color: var(--text-muted); line-height: 1.9; }
+
+    .tool-group { margin-bottom: 30px; }
+    .tool-group:last-child { margin-bottom: 0; }
+    .tool-month { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px;
+                  padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .tool-month strong { font-size: 15px; font-weight: 800; letter-spacing: 0.04em; }
+    .tool-month span { font-size: 11.5px; color: var(--text-muted); font-weight: 600; }
+    .tool-list { display: flex; flex-direction: column; gap: 8px; }
+    a.tool-row { display: grid; grid-template-columns: 34px 1fr auto; gap: 14px; align-items: center;
+                 background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+                 padding: 13px 16px; text-decoration: none; color: inherit;
+                 transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    a.tool-row:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+    .tool-no { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; color: var(--text-muted); }
+    .tool-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+    .tool-name { font-size: 14.5px; font-weight: 700; line-height: 1.5; }
+    .tool-res { font-size: 11.5px; font-weight: 600; color: var(--green); }
+    .tool-cat { flex-shrink: 0; font-size: 10.5px; font-weight: 600; color: var(--text-secondary);
+                background: var(--surface-alt); border-radius: 20px; padding: 4px 10px; white-space: nowrap; }
+    @media (max-width: 600px) {
+      .mrow { grid-template-columns: 56px 1fr 40px; gap: 10px; }
+      a.tool-row { grid-template-columns: 26px 1fr; gap: 10px; padding: 12px 13px; }
+      .tool-cat { display: none; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">EC × AI LAB</a>
+    <a href="index.html" class="nav-back">事例一覧（全43件）&rarr;</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="detail-hero">
+    <span class="badge">FY26 上期</span>
+    <h1>上期に作った<br>自動化ツール 41件</h1>
+    <p class="lead">
+      2026年3月から8月までの上期に、楽天運営の現場で作って動かしてきた自動化ツールの一覧です。
+      すべて自社運営の業務で実際に使っているもので、1件ずつ課題・仕組み・効果まで事例ページにまとめています。
+      行をクリックすると、その事例の詳細が開きます。
+    </p>
+    <div class="meta-row">
+      <div class="meta-item">
+        <span class="meta-label">対象期間</span>
+        <span class="meta-value">2026年3月〜8月（FY26上期）</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">ツール数</span>
+        <span class="meta-value">41件</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">内訳</span>
+        <span class="meta-value">監視・分析14・業務自動化11・システム連携9・AI活用7</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">最終更新</span>
+        <span class="meta-value">2026年9月3日</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="detail-content">
+
+    <!-- SUMMARY -->
+    <div class="section">
+      <div class="section-title">上期のまとめ</div>
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="result-num">41<span style="font-size: 20px;">件</span></div>
+          <div class="result-label">上期に稼働させた自動化ツール</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">6<span style="font-size: 20px;">ヶ月</span></div>
+          <div class="result-label">3月〜8月のすべての月で新規稼働</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">4<span style="font-size: 20px;">分野</span></div>
+          <div class="result-label">監視・自動化・システム・AI活用</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MONTHLY -->
+    <div class="section">
+      <div class="section-title">月別の内訳</div>
+      <div class="tech-card" style="max-width: 100%;">
+        <div class="mchart">
+        <div class="mrow">
+          <div class="mlabel">3月</div>
+          <div class="mbarwrap"><div class="mbar" style="width: 100.0%;"></div></div>
+          <div class="mcount">14件</div>
+        </div>
+        <div class="mrow">
+          <div class="mlabel">4月</div>
+          <div class="mbarwrap"><div class="mbar" style="width: 35.7%;"></div></div>
+          <div class="mcount">5件</div>
+        </div>
+        <div class="mrow">
+          <div class="mlabel">5月</div>
+          <div class="mbarwrap"><div class="mbar" style="width: 14.3%;"></div></div>
+          <div class="mcount">2件</div>
+        </div>
+        <div class="mrow">
+          <div class="mlabel">6月</div>
+          <div class="mbarwrap"><div class="mbar" style="width: 21.4%;"></div></div>
+          <div class="mcount">3件</div>
+        </div>
+        <div class="mrow">
+          <div class="mlabel">7月</div>
+          <div class="mbarwrap"><div class="mbar" style="width: 50.0%;"></div></div>
+          <div class="mcount">7件</div>
+        </div>
+        <div class="mrow">
+          <div class="mlabel">8月</div>
+          <div class="mbarwrap"><div class="mbar" style="width: 57.1%;"></div></div>
+          <div class="mcount">8件</div>
+        </div>
+        <div class="mrow">
+          <div class="mlabel">上期前</div>
+          <div class="mbarwrap"><div class="mbar pre" style="width: 14.3%;"></div></div>
+          <div class="mcount">2件</div>
+        </div>
+        </div>
+        <div class="mnote">
+          3月は業務の棚卸しをして、毎日くり返している作業をまとめて仕組みに置き換えた月です。
+          そのあとは広告・在庫・順位のような「見張り」と、数字を貯めるダッシュボードへ広がり、
+          8月は新商品の発売準備に合わせて監視系をまとめて増やしました。
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORY -->
+    <div class="section">
+      <div class="section-title">分野別の内訳</div>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <h4>👀 監視・分析　14件</h4>
+          <p>広告費・在庫・順位・レビュー・競合など、目を離せないものを機械に見張らせる仕組みです。変化があったときだけSlackに届くので、確認のために画面を開く時間がなくなりました。</p>
+          <span class="tech-tag">例：RPP広告 予算リアルタイム監視／レビュー自動監視ボット／楽天検索順位 自動追跡</span>
+        </div>
+        <div class="tech-card">
+          <h4>⚙️ 業務自動化　11件</h4>
+          <p>画像・動画・CSVの変換や、応募・登録のような繰り返し作業を置き換えたものです。点数が増えても作業時間がほとんど変わらないのが強みです。</p>
+          <span class="tech-tag">例：楽天CSV自動スケジューラー／RMSコンテンツページ自動作成／WebP → JPG 自動変換ツール</span>
+        </div>
+        <div class="tech-card">
+          <h4>🔗 システム連携　9件</h4>
+          <p>数字を貯めて、見に行ける場所を作る仕組みです。売上・アクセス・アフィリエイトの数字が毎日そろっている状態を保ち、判断のたびに集計しなくて済むようにしました。</p>
+          <span class="tech-tag">例：R-Karteアクセス分析 自動蓄積／日次売上レポート 自動配信／売れ筋ダッシュボード 自動更新</span>
+        </div>
+        <div class="tech-card">
+          <h4>🤖 AI活用　7件</h4>
+          <p>AIに読ませる・書かせる・作らせるところを業務に組み込んだものです。分析レポートや画像生成など、これまで外注か手作業だった部分を社内で回せるようにしました。</p>
+          <span class="tech-tag">例：商品ページ AI総合分析／YouTuberリストアップ自動化／楽天サムネイルアドバイザー</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- HIGHLIGHT -->
+    <div class="section">
+      <div class="section-title">とくに効果が出たもの</div>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <h4>💰 広告費の使いすぎを止めた</h4>
+          <p>RPP広告の消化額をリアルタイムで見張る仕組みと、CPCの分析・調整を自動化した仕組みを組み合わせて、
+          予算超過を出さない運用にしました。入札の見直しも、目安CPCの動きに合わせて機械側で回しています。</p>
+          <span class="tech-tag">予算超過インシデント 0件／CPC変更作業 90%自動化</span>
+        </div>
+        <div class="tech-card">
+          <h4>📊 毎朝、数字がそろっている状態にした</h4>
+          <p>日次売上レポートを毎朝Slackへ自動配信し、売れ筋・アクセス・アフィリエイトの数字はダッシュボードで
+          常に最新になっています。会議や相談のたびに集計する時間がなくなりました。</p>
+          <span class="tech-tag">集計作業なしで毎朝共有</span>
+        </div>
+        <div class="tech-card">
+          <h4>🔬 打ち手を数字で検証できるようにした</h4>
+          <p>商品名やサムネイルを変えたあとの売上・アクセス・CVRを自動で追いかけて、勝ち負けを判定します。
+          「なんとなく良くなった気がする」で終わらせず、次の改修に活かせる形で残しています。</p>
+          <span class="tech-tag">改修効果を自動で判定</span>
+        </div>
+        <div class="tech-card">
+          <h4>🖼 制作まわりの手作業を置き換えた</h4>
+          <p>画像のリサイズ・圧縮・変換、バナーの各サイズ書き出し、縦動画の生成、セール告知バナーの生成まで、
+          点数が増えても時間が変わらない形にしました。外部サービスの費用もかけていません。</p>
+          <span class="tech-tag">外部サービス費用 0円</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIST -->
+    <div class="section">
+      <div class="section-title">上期に作った41件（作成月順）</div>
+      <div class="tool-group">
+        <div class="tool-month"><strong>2026年 8月</strong><span>8件</span></div>
+        <div class="tool-list">
+          <a class="tool-row" href="reel-video.html">
+            <span class="tool-no">30</span>
+            <span class="tool-body">
+              <span class="tool-name">Instagramリール 縦動画 自動生成</span>
+              <span class="tool-res">✓ 編集アプリの手作業ゼロ</span>
+            </span>
+            <span class="tool-cat">業務自動化</span>
+          </a>
+          <a class="tool-row" href="ai-staff-dashboard.html">
+            <span class="tool-no">31</span>
+            <span class="tool-body">
+              <span class="tool-name">AI社員ダッシュボード</span>
+              <span class="tool-res">✓ 27件の自動化を1画面で管理</span>
+            </span>
+            <span class="tool-cat">システム連携</span>
+          </a>
+          <a class="tool-row" href="influencer-page.html">
+            <span class="tool-no">36</span>
+            <span class="tool-body">
+              <span class="tool-name">インフルエンサー紹介ページ制作</span>
+              <span class="tool-res">✓ 写真52点を一括変換</span>
+            </span>
+            <span class="tool-cat">業務自動化</span>
+          </a>
+          <a class="tool-row" href="labo-board.html">
+            <span class="tool-no">37</span>
+            <span class="tool-body">
+              <span class="tool-name">出展準備ボード（チェック共有）</span>
+              <span class="tool-res">✓ 進捗確認のやりとり 0回</span>
+            </span>
+            <span class="tool-cat">システム連携</span>
+          </a>
+          <a class="tool-row" href="csv-date-fix.html">
+            <span class="tool-no">38</span>
+            <span class="tool-body">
+              <span class="tool-name">楽天CSV 日付ゼロ埋め自動修正</span>
+              <span class="tool-res">✓ 日付エラー 0件</span>
+            </span>
+            <span class="tool-cat">業務自動化</span>
+          </a>
+          <a class="tool-row" href="bookmark-tracker.html">
+            <span class="tool-no">39</span>
+            <span class="tool-body">
+              <span class="tool-name">お気に入り登録数 自動トラッキング</span>
+              <span class="tool-res">✓ データの欠け 0日</span>
+            </span>
+            <span class="tool-cat">監視・分析</span>
+          </a>
+          <a class="tool-row" href="ad-agreement-monitor.html">
+            <span class="tool-no">40</span>
+            <span class="tool-body">
+              <span class="tool-name">広告購入の同意 自動監視</span>
+              <span class="tool-res">✓ 同意期限の取りこぼし 0件</span>
+            </span>
+            <span class="tool-cat">監視・分析</span>
+          </a>
+          <a class="tool-row" href="restock-monitor.html">
+            <span class="tool-no">41</span>
+            <span class="tool-body">
+              <span class="tool-name">入荷監視（在庫復活の即時通知）</span>
+              <span class="tool-res">✓ 入荷を30分以内に検知</span>
+            </span>
+            <span class="tool-cat">監視・分析</span>
+          </a>
+        </div>
+      </div>
+      <div class="tool-group">
+        <div class="tool-month"><strong>2026年 7月</strong><span>7件</span></div>
+        <div class="tool-list">
+          <a class="tool-row" href="competitor-watch.html">
+            <span class="tool-no">18</span>
+            <span class="tool-body">
+              <span class="tool-name">競合ウォッチ 自動検知</span>
+              <span class="tool-res">✓ 4項目を毎朝自動監視</span>
+            </span>
+            <span class="tool-cat">監視・分析</span>
+          </a>
+          <a class="tool-row" href="coupon-end-monitor.html">
+            <span class="tool-no">20</span>
+            <span class="tool-body">
+              <span class="tool-name">クーポン配布終了 自動監視</span>
+              <span class="tool-res">✓ 配布終了を即Slack通知</span>
+            </span>
+            <span class="tool-cat">監視・分析</span>
+          </a>
+          <a class="tool-row" href="shusei-shiji.html">
+            <span class="tool-no">29</span>
+            <span class="tool-body">
+              <span class="tool-name">修正指示ツール（LPレビュー共有ボード）</span>
+              <span class="tool-res">✓ 外部サービス費用 0円</span>
+            </span>
+            <span class="tool-cat">システム連携</span>
+          </a>
+          <a class="tool-row" href="virtual-dressing.html">
+            <span class="tool-no">32</span>
+            <span class="tool-body">
+              <span class="tool-name">着せ替えプロンプトメーカー</span>
+              <span class="tool-res">✓ 撮影なしで着用カットを量産</span>
+            </span>
+            <span class="tool-cat">AI活用</span>
+          </a>
+          <a class="tool-row" href="sale-banner.html">
+            <span class="tool-no">33</span>
+            <span class="tool-body">
+              <span class="tool-name">セール告知バナー AI生成</span>
+              <span class="tool-res">✓ 1枚あたり数分・待ち時間ゼロ</span>
+            </span>
+            <span class="tool-cat">AI活用</span>
+          </a>
+          <a class="tool-row" href="product-name-dashboard.html">
+            <span class="tool-no">34</span>
+            <span class="tool-body">
+              <span class="tool-name">商品名テスト ダッシュボード</span>
+              <span class="tool-res">✓ 判定の見逃し 0件</span>
+            </span>
+            <span class="tool-cat">システム連携</span>
+          </a>
+          <a class="tool-row" href="dashboard-hub.html">
+            <span class="tool-no">35</span>
+            <span class="tool-body">
+              <span class="tool-name">ダッシュボードまとめ</span>
+              <span class="tool-res">✓ 見る画面を1URLに集約</span>
+            </span>
+            <span class="tool-cat">システム連携</span>
+          </a>
+        </div>
+      </div>
+      <div class="tool-group">
+        <div class="tool-month"><strong>2026年 6月</strong><span>3件</span></div>
+        <div class="tool-list">
+          <a class="tool-row" href="bestseller-dashboard.html">
+            <span class="tool-no">24</span>
+            <span class="tool-body">
+              <span class="tool-name">売れ筋ダッシュボード 自動更新</span>
+              <span class="tool-res">✓ 開くだけで常に最新</span>
+            </span>
+            <span class="tool-cat">システム連携</span>
+          </a>
+          <a class="tool-row" href="thumbnail-ab-test.html">
+            <span class="tool-no">27</span>
+            <span class="tool-body">
+              <span class="tool-name">サムネイル変更 効果測定</span>
+              <span class="tool-res">✓ 効果を数字で裏づけ</span>
+            </span>
+            <span class="tool-cat">監視・分析</span>
+          </a>
+          <a class="tool-row" href="affiliate-sales.html">
+            <span class="tool-no">28</span>
+            <span class="tool-body">
+              <span class="tool-name">アフィリエイト売上 ダッシュボード</span>
+              <span class="tool-res">✓ 社内共有ダッシュボードに自動反映</span>
+            </span>
+            <span class="tool-cat">システム連携</span>
+          </a>
+        </div>
+      </div>
+      <div class="tool-group">
+        <div class="tool-month"><strong>2026年 5月</strong><span>2件</span></div>
+        <div class="tool-list">
+          <a class="tool-row" href="banner-resizer.html">
+            <span class="tool-no">22</span>
+            <span class="tool-body">
+              <span class="tool-name">楽天バナー自動リサイズ</span>
+              <span class="tool-res">✓ 1枚から全サイズ自動生成</span>
+            </span>
+            <span class="tool-cat">業務自動化</span>
+          </a>
+          <a class="tool-row" href="product-name-tracker.html">
+            <span class="tool-no">26</span>
+            <span class="tool-body">
+              <span class="tool-name">商品名変更 効果測定</span>
+              <span class="tool-res">✓ 改修効果を数字で自動検証</span>
+            </span>
+            <span class="tool-cat">監視・分析</span>
+          </a>
+        </div>
+      </div>
+      <div class="tool-group">
+        <div class="tool-month"><strong>2026年 4月</strong><span>5件</span></div>
+        <div class="tool-list">
+          <a class="tool-row" href="cpc-analysis.html">
+            <span class="tool-no">15</span>
+            <span class="tool-body">
+              <span class="tool-name">RPP CPC自動分析 & 自動調整</span>
+              <span class="tool-res">✓ CPC変更作業 90%自動化</span>
+            </span>
+            <span class="tool-cat">監視・分析</span>
+          </a>
+          <a class="tool-row" href="rkarte-analysis.html">
+            <span class="tool-no">16</span>
+            <span class="tool-body">
+              <span class="tool-name">R-Karteアクセス分析 自動蓄積</span>
+              <span class="tool-res">✓ アクセス分析の確認 即時回答</span>
+            </span>
+            <span class="tool-cat">システム連携</span>
+          </a>
+          <a class="tool-row" href="inventory-monitor.html">
+            <span class="tool-no">17</span>
+            <span class="tool-body">
+              <span class="tool-name">在庫自動監視 &amp; 入荷分析</span>
+              <span class="tool-res">✓ 在庫切れリスクを自動キャッチ</span>
+            </span>
+            <span class="tool-cat">監視・分析</span>
+          </a>
+          <a class="tool-row" href="image-compressor.html">
+            <span class="tool-no">21</span>
+            <span class="tool-body">
+              <span class="tool-name">画像圧縮ツール</span>
+              <span class="tool-res">✓ 外部サービス不要でコストゼロ</span>
+            </span>
+            <span class="tool-cat">業務自動化</span>
+          </a>
+          <a class="tool-row" href="content-image-resize.html">
+            <span class="tool-no">23</span>
+            <span class="tool-body">
+              <span class="tool-name">コンテンツ画像リサイズ</span>
+              <span class="tool-res">✓ ドラッグ＆ドロップで一括リサイズ</span>
+            </span>
+            <span class="tool-cat">業務自動化</span>
+          </a>
+        </div>
+      </div>
+      <div class="tool-group">
+        <div class="tool-month"><strong>2026年 3月</strong><span>14件</span></div>
+        <div class="tool-list">
+          <a class="tool-row" href="rpp-monitoring.html">
+            <span class="tool-no">01</span>
+            <span class="tool-body">
+              <span class="tool-name">RPP広告 予算リアルタイム監視</span>
+              <span class="tool-res">✓ 予算超過インシデント 0件</span>
+            </span>
+            <span class="tool-cat">監視・分析</span>
+          </a>
+          <a class="tool-row" href="product-analysis.html">
+            <span class="tool-no">02</span>
+            <span class="tool-body">
+              <span class="tool-name">商品ページ AI総合分析</span>
+              <span class="tool-res">✓ 分析コスト 1/10に削減</span>
+            </span>
+            <span class="tool-cat">AI活用</span>
+          </a>
+          <a class="tool-row" href="review-monitor.html">
+            <span class="tool-no">03</span>
+            <span class="tool-body">
+              <span class="tool-name">レビュー自動監視ボット</span>
+              <span class="tool-res">✓ レビュー対応速度 5倍向上</span>
+            </span>
+            <span class="tool-cat">監視・分析</span>
+          </a>
+          <a class="tool-row" href="rms-content.html">
+            <span class="tool-no">05</span>
+            <span class="tool-body">
+              <span class="tool-name">RMSコンテンツページ自動作成</span>
+              <span class="tool-res">✓ ページ作成 手作業ゼロ</span>
+            </span>
+            <span class="tool-cat">業務自動化</span>
+          </a>
+          <a class="tool-row" href="webp-converter.html">
+            <span class="tool-no">06</span>
+            <span class="tool-body">
+              <span class="tool-name">WebP → JPG 自動変換ツール</span>
+              <span class="tool-res">✓ 画像変換の手間 完全ゼロ</span>
+            </span>
+            <span class="tool-cat">業務自動化</span>
+          </a>
+          <a class="tool-row" href="coupon-sticker.html">
+            <span class="tool-no">07</span>
+            <span class="tool-body">
+              <span class="tool-name">クーポンステッカー自動貼り付け</span>
+              <span class="tool-res">✓ 画像加工の手間 完全ゼロ</span>
+            </span>
+            <span class="tool-cat">業務自動化</span>
+          </a>
+          <a class="tool-row" href="search-ranking.html">
+            <span class="tool-no">08</span>
+            <span class="tool-body">
+              <span class="tool-name">楽天検索順位 自動追跡</span>
+              <span class="tool-res">✓ 書き込み成功率 99%以上</span>
+            </span>
+            <span class="tool-cat">監視・分析</span>
+          </a>
+          <a class="tool-row" href="realtime-ranking.html">
+            <span class="tool-no">09</span>
+            <span class="tool-body">
+              <span class="tool-name">リアルタイムランキング監視</span>
+              <span class="tool-res">✓ 1位獲得を即時検知</span>
+            </span>
+            <span class="tool-cat">監視・分析</span>
+          </a>
+          <a class="tool-row" href="daily-ranking.html">
+            <span class="tool-no">10</span>
+            <span class="tool-body">
+              <span class="tool-name">デイリーランキング自動スクショ</span>
+              <span class="tool-res">✓ 毎朝自動で記録蓄積</span>
+            </span>
+            <span class="tool-cat">監視・分析</span>
+          </a>
+          <a class="tool-row" href="youtuber-list.html">
+            <span class="tool-no">11</span>
+            <span class="tool-body">
+              <span class="tool-name">YouTuberリストアップ自動化</span>
+              <span class="tool-res">✓ リサーチ工数 大幅削減</span>
+            </span>
+            <span class="tool-cat">AI活用</span>
+          </a>
+          <a class="tool-row" href="premium-partner.html">
+            <span class="tool-no">12</span>
+            <span class="tool-body">
+              <span class="tool-name">プレミアムパートナー自動応募</span>
+              <span class="tool-res">✓ 応募作業 15分→2分</span>
+            </span>
+            <span class="tool-cat">業務自動化</span>
+          </a>
+          <a class="tool-row" href="thumbnail-advisor.html">
+            <span class="tool-no">13</span>
+            <span class="tool-body">
+              <span class="tool-name">楽天サムネイルアドバイザー</span>
+              <span class="tool-res">✓ サムネ改善を即座に可視化</span>
+            </span>
+            <span class="tool-cat">AI活用</span>
+          </a>
+          <a class="tool-row" href="amazon-image-checker.html">
+            <span class="tool-no">14</span>
+            <span class="tool-body">
+              <span class="tool-name">Amazon商品画像チェッカー</span>
+              <span class="tool-res">✓ 画像チェック工数 大幅削減</span>
+            </span>
+            <span class="tool-cat">AI活用</span>
+          </a>
+          <a class="tool-row" href="daily-sales-report.html">
+            <span class="tool-no">19</span>
+            <span class="tool-body">
+              <span class="tool-name">日次売上レポート 自動配信</span>
+              <span class="tool-res">✓ 毎朝Slackに自動配信</span>
+            </span>
+            <span class="tool-cat">システム連携</span>
+          </a>
+        </div>
+      </div>
+      <div class="tool-group">
+        <div class="tool-month"><strong>2026年 2月（上期前）</strong><span>1件</span></div>
+        <div class="tool-list">
+          <a class="tool-row" href="meeting-notes-app.html">
+            <span class="tool-no">25</span>
+            <span class="tool-body">
+              <span class="tool-name">AI議事録アプリ</span>
+              <span class="tool-res">✓ 議事録作成を自動化</span>
+            </span>
+            <span class="tool-cat">AI活用</span>
+          </a>
+        </div>
+      </div>
+      <div class="tool-group">
+        <div class="tool-month"><strong>2026年 1月（上期前）</strong><span>1件</span></div>
+        <div class="tool-list">
+          <a class="tool-row" href="csv-scheduler.html">
+            <span class="tool-no">04</span>
+            <span class="tool-body">
+              <span class="tool-name">楽天CSV自動スケジューラー</span>
+              <span class="tool-res">✓ 深夜作業 完全ゼロ</span>
+            </span>
+            <span class="tool-cat">業務自動化</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTE -->
+    <div class="section">
+      <div class="section-title">対象期間の考え方</div>
+      <div class="tech-card" style="max-width: 100%;">
+        <h4>📌 集計の条件</h4>
+        <p>上期はforestの半期区分にあわせて2026年3月1日〜8月31日としています。
+        このうち楽天CSV自動スケジューラー（1月）とAI議事録アプリ（2月）は上期が始まる直前に作ったものですが、
+        上期を通して使い続け、改修も重ねているため一覧に含めました（グラフでは「上期前」として分けています）。
+        9月に作った2件（RPP CPC追随ボード・レビュー投稿率トラッカー）は下期の成果なので、この一覧には入れていません。
+        店舗名と商品の固有名は、社外にも共有できるよう一般的な表記にしています。</p>
+        <span class="tech-tag">2026年3月1日〜8月31日</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
