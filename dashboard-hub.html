@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ダッシュボードまとめ | EC × AI LAB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fafaf8;
+      --surface: #ffffff;
+      --surface-alt: #f5f5f0;
+      --border: rgba(0,0,0,0.07);
+      --text: #1a1a1a;
+      --text-secondary: #555555;
+      --text-muted: #999999;
+      --green: #2d8a56;
+      --green-bg: rgba(45,138,86,0.08);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Noto Sans JP', 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250,250,248,0.9);
+      backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    /* ===== HERO ===== */
+    .detail-hero {
+      margin-top: 64px;
+      padding: 80px 48px 60px;
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .detail-hero .badge {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--green);
+      background: var(--green-bg);
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .detail-hero h1 {
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+
+    .detail-hero .lead {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 640px;
+      line-height: 1.9;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 32px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ===== CONTENT ===== */
+    .detail-content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 48px 100px;
+    }
+
+    .section {
+      margin-bottom: 64px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ===== PROBLEM / SOLUTION ===== */
+    .ps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .ps-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+
+    .ps-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ps-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ps-card li {
+      font-size: 15px;
+      color: var(--text-secondary);
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .ps-card li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .ps-card.solution li::before {
+      background: var(--green);
+    }
+
+    /* ===== SCREENSHOT AREA ===== */
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .screenshot-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .screenshot-card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .screenshot-mockup {
+      aspect-ratio: 16 / 10;
+      background: #1a1a2e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .terminal-mock {
+      background: #1a1a2e;
+      padding: 20px 24px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    }
+
+    .terminal-mock .terminal-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .terminal-mock .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .terminal-mock .terminal-dot.red { background: #ff5f56; }
+    .terminal-mock .terminal-dot.yellow { background: #ffbd2e; }
+    .terminal-mock .terminal-dot.green { background: #27c93f; }
+
+    .terminal-mock .terminal-body {
+      font-size: 11px;
+      color: #a0aec0;
+      line-height: 1.8;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .terminal-mock .terminal-body .prompt {
+      color: #68d391;
+    }
+
+    .terminal-mock .terminal-body .command {
+      color: #e2e8f0;
+    }
+
+    .terminal-mock .terminal-body .output {
+      color: #a0aec0;
+    }
+
+    .terminal-mock .terminal-body .highlight {
+      color: #63b3ed;
+      font-weight: 600;
+    }
+
+    .terminal-mock .terminal-body .success {
+      color: #68d391;
+    }
+
+    .chat-mock {
+      background: #2d2d3f;
+      padding: 20px 24px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    .chat-mock .chat-user {
+      background: rgba(99, 179, 237, 0.15);
+      border-radius: 12px 12px 4px 12px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #bee3f8;
+      align-self: flex-end;
+      max-width: 80%;
+    }
+
+    .chat-mock .chat-ai {
+      background: rgba(104, 211, 145, 0.12);
+      border-radius: 12px 12px 12px 4px;
+      padding: 10px 14px;
+      font-size: 11px;
+      color: #c6f6d5;
+      align-self: flex-start;
+      max-width: 85%;
+      line-height: 1.7;
+    }
+
+    .chat-mock .chat-ai .rank {
+      color: #68d391;
+      font-weight: 600;
+    }
+
+    .screenshot-caption {
+      padding: 20px 24px;
+    }
+
+    .screenshot-caption h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .screenshot-caption p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .flow-steps {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .flow-step {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-step:first-child {
+      border-radius: var(--radius) 0 0 var(--radius);
+    }
+
+    .flow-step:last-child {
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: '\2192';
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 24px;
+      height: 24px;
+      background: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .flow-step .step-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .flow-step .step-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .flow-step h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .flow-step p {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== TECH DETAIL ===== */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .tech-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .tech-card h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tech-card p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .tech-card .tech-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--surface-alt);
+      color: var(--text-secondary);
+      margin-top: 10px;
+    }
+
+    /* ===== RESULT ===== */
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+    }
+
+    .result-card .result-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+
+    .result-card .result-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .detail-hero { padding: 60px 20px 40px; }
+      .detail-hero h1 { font-size: 28px; }
+      .detail-content { padding: 0 20px 80px; }
+      .ps-grid { grid-template-columns: 1fr; }
+      .screenshot-grid { grid-template-columns: 1fr; }
+      .flow-steps { flex-direction: column; gap: 12px; }
+      .flow-step { border-radius: var(--radius) !important; }
+      .flow-step:not(:last-child)::after { display: none; }
+      .result-grid { grid-template-columns: 1fr; }
+      .tech-grid { grid-template-columns: 1fr; }
+      .meta-row { gap: 20px; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">EC × AI LAB</a>
+    <a href="index.html#card-35" class="nav-back">&larr; 事例一覧に戻る</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="detail-hero">
+    <span class="badge">SYSTEM</span>
+    <h1>ダッシュボードまとめ<br>（タブ切り替え）</h1>
+    <p class="lead">
+      バラバラに増えていったダッシュボードを、タブで切り替えて1ページで見られる「入れ物」にまとめました。ブックマークは1つだけ、URLを探す時間がなくなります。
+    </p>
+    <div class="meta-row">
+      <div class="meta-item">
+        <span class="meta-label">カテゴリ</span>
+        <span class="meta-value">ダッシュボード統合</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">技術スタック</span>
+        <span class="meta-value">Google Apps Script / 埋め込み表示</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">まとめた画面</span>
+        <span class="meta-value">3ボード（売上・順位・商品名）</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">データ保持</span>
+        <span class="meta-value">なし（表示専用）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="detail-content">
+
+    <!-- PROBLEM / SOLUTION -->
+    <div class="section">
+      <div class="section-title">課題と解決策</div>
+      <div class="ps-grid">
+        <div class="ps-card">
+          <h3>😰 Before（課題）</h3>
+          <ul>
+            <li>ダッシュボードが増えるほど、URLがどこにあるか分からなくなっていた</li>
+            <li>見たい画面ごとにブックマークを探す手間があった</li>
+            <li>人に共有するときに、3つのリンクを送る必要があった</li>
+            <li>どんなボードがあるのか、チームに把握されていなかった</li>
+          </ul>
+        </div>
+        <div class="ps-card solution">
+          <h3>🎉 After（解決）</h3>
+          <ul>
+            <li>1つのURLからタブで切り替えるだけで、3つのボードを行き来できる</li>
+            <li>配るリンクは1本。共有もブックマークもシンプルになった</li>
+            <li>最初に押したタブだけを読み込むので、開くのが軽い</li>
+            <li>タブが並んでいることで「どんなボードがあるか」が自然に伝わる</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREENSHOTS -->
+    <div class="section">
+      <div class="section-title">実際の動作イメージ</div>
+      <div class="screenshot-grid">
+
+        <div class="screenshot-card">
+          <div class="screenshot-mockup" style="background:#fafdfa;"><div style="width:100%;height:100%;padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;align-items:center;gap:8px;"><span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:11px;font-weight:800;color:#1a1a1a;">ダッシュボードまとめ</span></div><div style="display:flex;gap:3px;align-items:flex-end;"><div style="font-size:7px;font-weight:700;padding:4px 7px;border-radius:6px 6px 0 0;background:#fff;color:#1a1a1a;border:1px solid rgba(0,0,0,0.06);border-bottom:1px solid #fff;">💰 アフィリ売上</div><div style="font-size:7px;font-weight:700;padding:4px 7px;border-radius:6px 6px 0 0;background:rgba(0,0,0,0.03);color:#999;border:1px solid rgba(0,0,0,0.06);border-bottom:1px solid rgba(0,0,0,0.06);">📈 検索順位</div><div style="font-size:7px;font-weight:700;padding:4px 7px;border-radius:6px 6px 0 0;background:rgba(0,0,0,0.03);color:#999;border:1px solid rgba(0,0,0,0.06);border-bottom:1px solid rgba(0,0,0,0.06);">🏷️ 商品名改修</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:0 7px 7px 7px;padding:8px 9px;display:flex;flex-direction:column;gap:6px;"><div style="font-size:8px;font-weight:800;color:#1a1a1a;">アフィリエイト売上ダッシュボード</div><div style="display:flex;align-items:center;gap:5px;"><span style="width:3px;height:10px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:7px;color:#555;flex:1;">今月の売上</span><span style="font-size:7.5px;font-weight:800;color:#1a1a1a;">¥1,284,600</span></div><div style="display:flex;align-items:center;gap:5px;"><span style="width:3px;height:10px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:7px;color:#555;flex:1;">成果件数</span><span style="font-size:7.5px;font-weight:800;color:#1a1a1a;">312件</span></div><div style="display:flex;align-items:center;gap:5px;"><span style="width:3px;height:10px;background:#c08a3e;border-radius:2px;"></span><span style="font-size:7px;color:#555;flex:1;">前月比</span><span style="font-size:7.5px;font-weight:800;color:#1a1a1a;">+18%</span></div><div style="display:flex;align-items:center;gap:5px;"><span style="width:3px;height:10px;background:#999;border-radius:2px;"></span><span style="font-size:7px;color:#555;flex:1;">更新</span><span style="font-size:7.5px;font-weight:800;color:#1a1a1a;">毎日 9:25</span></div></div></div></div>
+          <div class="screenshot-caption">
+            <h4>タブで3つのボードを行き来</h4>
+            <p>上のタブを押すと、その場で中身が切り替わります。右上の「別タブで開く」で単独の大画面にもできます。（表示例）</p>
+          </div>
+        </div>
+
+        <div class="screenshot-card">
+          <div class="screenshot-mockup" style="background:#fafdfa;"><div style="width:100%;height:100%;padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;align-items:center;gap:8px;"><span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:11px;font-weight:800;color:#1a1a1a;">読み込みの流れ</span></div><div style="display:flex;gap:5px;"><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">タブ数</div><div style="font-size:11px;font-weight:800;">3</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">初期読込</div><div style="font-size:11px;font-weight:800;color:#2d8a56;">1つだけ</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">データ保持</div><div style="font-size:11px;font-weight:800;">なし</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">追加</div><div style="font-size:11px;font-weight:800;color:#2d8a56;">1行</div></div></div><div style="flex:1;display:flex;flex-direction:column;gap:4px;"><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#e8f0e9;display:flex;align-items:center;justify-content:center;font-size:8px;">💰</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">アフィリエイト売上<span style="color:#999;font-weight:400;"> ／ 開いた時点で読み込み</span></div></div><span style="font-size:6px;color:#2d8a56;background:rgba(45,138,86,0.1);padding:2px 5px;border-radius:8px;font-weight:700;">読込済</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#f2f2f0;display:flex;align-items:center;justify-content:center;font-size:8px;">📈</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">検索順位<span style="color:#999;font-weight:400;"> ／ タブを押すまで待機</span></div></div><span style="font-size:6px;color:#999;background:rgba(0,0,0,0.05);padding:2px 5px;border-radius:8px;font-weight:700;">待機中</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#f2f2f0;display:flex;align-items:center;justify-content:center;font-size:8px;">🏷️</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">商品名改修<span style="color:#999;font-weight:400;"> ／ タブを押すまで待機</span></div></div><span style="font-size:6px;color:#999;background:rgba(0,0,0,0.05);padding:2px 5px;border-radius:8px;font-weight:700;">待機中</span></div></div></div></div>
+          <div class="screenshot-caption">
+            <h4>押したときに初めて読み込む</h4>
+            <p>3つ同時に動かすと重くなるので、タブを最初に押したときにだけ読み込みが始まる作りにしています。（表示例）</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="section">
+      <div class="section-title">仕組み</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">STEP 01</div>
+          <div class="step-icon">🗂</div>
+          <h4>枠だけを用意</h4>
+          <p>データを持たない入れ物ページを作る</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 02</div>
+          <div class="step-icon">🔗</div>
+          <h4>既存ボードを登録</h4>
+          <p>URLとタブ名を1行ずつ登録</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 03</div>
+          <div class="step-icon">⏳</div>
+          <h4>押したら読み込む</h4>
+          <p>選んだタブだけを遅延読み込み</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 04</div>
+          <div class="step-icon">🚀</div>
+          <h4>1本のURLで共有</h4>
+          <p>社内アカウントで開ける状態に</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TECH DETAIL -->
+    <div class="section">
+      <div class="section-title">技術的なポイント</div>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <h4>🪟 埋め込みを許可する1行</h4>
+          <p>枠の中に表示するには、表示される側のコードに埋め込み許可の設定が必要です。この1行が抜けているとそのタブだけ真っ白になるので、3つすべてに入れてそろえました。</p>
+          <span class="tech-tag">真っ白の原因を先に潰す</span>
+        </div>
+        <div class="tech-card">
+          <h4>⏳ 遅延読み込みで軽くする</h4>
+          <p>開いた瞬間に3つ全部を動かすと、待ち時間が3倍になります。押されたタブだけ読み込む方式にして、普段よく見るボードがすぐ出るようにしました。</p>
+          <span class="tech-tag">体感速度を優先</span>
+        </div>
+        <div class="tech-card">
+          <h4>📦 データを持たない設計</h4>
+          <p>このページ自体は数字を1つも持っていません。中身の修正は元のボード側だけで済むので、「まとめページも直さないといけない」という二重メンテを避けられます。</p>
+          <span class="tech-tag">二重メンテを避ける</span>
+        </div>
+        <div class="tech-card">
+          <h4>➕ タブ追加は1行</h4>
+          <p>設定の配列にタブ名・アイコン・URLを1つ足すだけでタブが増えます。ボードが増えても、入れ物側の作業はほぼゼロで済みます。</p>
+          <span class="tech-tag">拡張しやすさ</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="section">
+      <div class="section-title">導入効果</div>
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="result-num">3<span style="font-size: 20px;">→1</span></div>
+          <div class="result-label">見る画面を1つのURLに集約</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">1<span style="font-size: 20px;">行</span></div>
+          <div class="result-label">タブ追加にかかる作業</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">0<span style="font-size: 20px;">件</span></div>
+          <div class="result-label">まとめページ側のデータ修正</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTE -->
+    <div class="section">
+      <div class="section-title">補足</div>
+      <div class="tech-card" style="max-width: 100%;">
+        <h4>💡 増えたものを束ねる係も必要</h4>
+        <p>自動化は作るほど増えていくので、どこかで「入り口をまとめる」作業が必要になります。数字を作るツールとは別に、見に行く場所を1つにする役の仕組みを置いておくと、使われ続けるダッシュボードになります。画面はダミーの表示例です。</p>
+        <span class="tech-tag">運用設計</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

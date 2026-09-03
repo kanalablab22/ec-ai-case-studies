@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>レビュー投稿率トラッカー | EC × AI LAB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fafaf8;
+      --surface: #ffffff;
+      --surface-alt: #f5f5f0;
+      --border: rgba(0,0,0,0.07);
+      --text: #1a1a1a;
+      --text-secondary: #555555;
+      --text-muted: #999999;
+      --green: #2d8a56;
+      --green-bg: rgba(45,138,86,0.08);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Noto Sans JP', 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250,250,248,0.9);
+      backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    /* ===== HERO ===== */
+    .detail-hero {
+      margin-top: 64px;
+      padding: 80px 48px 60px;
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .detail-hero .badge {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--green);
+      background: var(--green-bg);
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .detail-hero h1 {
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+
+    .detail-hero .lead {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 640px;
+      line-height: 1.9;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 32px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ===== CONTENT ===== */
+    .detail-content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 48px 100px;
+    }
+
+    .section {
+      margin-bottom: 64px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ===== PROBLEM / SOLUTION ===== */
+    .ps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .ps-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+
+    .ps-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ps-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ps-card li {
+      font-size: 15px;
+      color: var(--text-secondary);
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .ps-card li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .ps-card.solution li::before {
+      background: var(--green);
+    }
+
+    /* ===== SCREENSHOT AREA ===== */
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .screenshot-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .screenshot-card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .screenshot-mockup {
+      aspect-ratio: 16 / 10;
+      background: #1a1a2e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .terminal-mock {
+      background: #1a1a2e;
+      padding: 20px 24px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    }
+
+    .terminal-mock .terminal-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .terminal-mock .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .terminal-mock .terminal-dot.red { background: #ff5f56; }
+    .terminal-mock .terminal-dot.yellow { background: #ffbd2e; }
+    .terminal-mock .terminal-dot.green { background: #27c93f; }
+
+    .terminal-mock .terminal-body {
+      font-size: 11px;
+      color: #a0aec0;
+      line-height: 1.8;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .terminal-mock .terminal-body .prompt {
+      color: #68d391;
+    }
+
+    .terminal-mock .terminal-body .command {
+      color: #e2e8f0;
+    }
+
+    .terminal-mock .terminal-body .output {
+      color: #a0aec0;
+    }
+
+    .terminal-mock .terminal-body .highlight {
+      color: #63b3ed;
+      font-weight: 600;
+    }
+
+    .terminal-mock .terminal-body .success {
+      color: #68d391;
+    }
+
+    .chat-mock {
+      background: #2d2d3f;
+      padding: 20px 24px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    .chat-mock .chat-user {
+      background: rgba(99, 179, 237, 0.15);
+      border-radius: 12px 12px 4px 12px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #bee3f8;
+      align-self: flex-end;
+      max-width: 80%;
+    }
+
+    .chat-mock .chat-ai {
+      background: rgba(104, 211, 145, 0.12);
+      border-radius: 12px 12px 12px 4px;
+      padding: 10px 14px;
+      font-size: 11px;
+      color: #c6f6d5;
+      align-self: flex-start;
+      max-width: 85%;
+      line-height: 1.7;
+    }
+
+    .chat-mock .chat-ai .rank {
+      color: #68d391;
+      font-weight: 600;
+    }
+
+    .screenshot-caption {
+      padding: 20px 24px;
+    }
+
+    .screenshot-caption h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .screenshot-caption p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .flow-steps {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .flow-step {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-step:first-child {
+      border-radius: var(--radius) 0 0 var(--radius);
+    }
+
+    .flow-step:last-child {
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: '\2192';
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 24px;
+      height: 24px;
+      background: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .flow-step .step-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .flow-step .step-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .flow-step h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .flow-step p {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== TECH DETAIL ===== */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .tech-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .tech-card h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tech-card p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .tech-card .tech-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--surface-alt);
+      color: var(--text-secondary);
+      margin-top: 10px;
+    }
+
+    /* ===== RESULT ===== */
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+    }
+
+    .result-card .result-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+
+    .result-card .result-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .detail-hero { padding: 60px 20px 40px; }
+      .detail-hero h1 { font-size: 28px; }
+      .detail-content { padding: 0 20px 80px; }
+      .ps-grid { grid-template-columns: 1fr; }
+      .screenshot-grid { grid-template-columns: 1fr; }
+      .flow-steps { flex-direction: column; gap: 12px; }
+      .flow-step { border-radius: var(--radius) !important; }
+      .flow-step:not(:last-child)::after { display: none; }
+      .result-grid { grid-template-columns: 1fr; }
+      .tech-grid { grid-template-columns: 1fr; }
+      .meta-row { gap: 20px; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">EC × AI LAB</a>
+    <a href="index.html#card-43" class="nav-back">&larr; 事例一覧に戻る</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="detail-hero">
+    <span class="badge">ANALYSIS</span>
+    <h1>レビュー投稿率<br>トラッカー</h1>
+    <p class="lead">
+      新作バッグ3型のレビュー投稿率を毎日記録するツールです。楽天のレビューページと注文データを突き合わせて、「直近30日の新規レビュー ÷ 同じ期間の注文件数」で算出します。
+    </p>
+    <div class="meta-row">
+      <div class="meta-item">
+        <span class="meta-label">カテゴリ</span>
+        <span class="meta-value">KPI追跡・ダッシュボード</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">技術スタック</span>
+        <span class="meta-value">Python / BigQuery連携 / HTML</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">KPI</span>
+        <span class="meta-value">レビュー投稿率 10%</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">実行</span>
+        <span class="meta-value">毎日11時に自動</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="detail-content">
+
+    <!-- PROBLEM / SOLUTION -->
+    <div class="section">
+      <div class="section-title">課題と解決策</div>
+      <div class="ps-grid">
+        <div class="ps-card">
+          <h3>😰 Before（課題）</h3>
+          <ul>
+            <li>レビュー件数は見られても、注文に対する割合が分からなかった</li>
+            <li>レビュー依頼の施策が効いているのか、判断する材料がなかった</li>
+            <li>件数だけを見ると、売れている商品ほど多く見えてしまった</li>
+            <li>手で数えると、対象期間の取り方が毎回ぶれた</li>
+          </ul>
+        </div>
+        <div class="ps-card solution">
+          <h3>🎉 After（解決）</h3>
+          <ul>
+            <li>投稿率を毎日同じ定義で記録し、推移で見られるようになった</li>
+            <li>分母が少ない期間は「参考値」と表示して、ブレを読み違えない</li>
+            <li>参考にしたい既存商品と並べて比較できる</li>
+            <li>毎日自動で走り、ダッシュボードが最新になっている</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREENSHOTS -->
+    <div class="section">
+      <div class="section-title">実際の動作イメージ</div>
+      <div class="screenshot-grid">
+
+        <div class="screenshot-card">
+          <div class="screenshot-mockup" style="background:#fafdfa;"><div style="width:100%;height:100%;padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;align-items:center;gap:8px;"><span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:11px;font-weight:800;color:#1a1a1a;">レビュー投稿率（直近30日）</span></div><div style="display:flex;gap:4px;padding:0 6px;"><div style="flex:4;font-size:6.5px;color:#999;font-weight:700;">商品</div><div style="flex:2;font-size:6.5px;color:#999;font-weight:700;">レビュー</div><div style="flex:2;font-size:6.5px;color:#999;font-weight:700;">注文</div><div style="flex:2;font-size:6.5px;color:#999;font-weight:700;">投稿率</div><div style="flex:3;font-size:6.5px;color:#999;font-weight:700;">判定</div></div><div style="flex:1;display:flex;flex-direction:column;gap:3px;"><div style="display:flex;gap:4px;padding:4px 6px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;"><div style="flex:4;font-size:7px;color:#1a1a1a;font-weight:500;">キルティング</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">14件</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">162件</div><div style="flex:2;font-size:7px;color:#c08a3e;font-weight:700;">8.6%</div><div style="flex:3;font-size:7px;color:#c08a3e;font-weight:700;">KPI未達</div></div><div style="display:flex;gap:4px;padding:4px 6px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;"><div style="flex:4;font-size:7px;color:#1a1a1a;font-weight:500;">2wayショルダー</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">9件</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">78件</div><div style="flex:2;font-size:7px;color:#2d8a56;font-weight:700;">11.5%</div><div style="flex:3;font-size:7px;color:#2d8a56;font-weight:700;">達成</div></div><div style="display:flex;gap:4px;padding:4px 6px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;"><div style="flex:4;font-size:7px;color:#1a1a1a;font-weight:500;">ミニボストン</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">2件</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">14件</div><div style="flex:2;font-size:7px;color:#999;font-weight:700;">14.3%</div><div style="flex:3;font-size:7px;color:#999;font-weight:700;">参考値</div></div><div style="display:flex;gap:4px;padding:4px 6px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;"><div style="flex:4;font-size:7px;color:#999;font-weight:700;">参考商品</div><div style="flex:2;font-size:7px;color:#999;font-weight:700;">41件</div><div style="flex:2;font-size:7px;color:#999;font-weight:700;">395件</div><div style="flex:2;font-size:7px;color:#999;font-weight:700;">10.4%</div><div style="flex:3;font-size:7px;color:#999;font-weight:700;">比較用</div></div></div><div style="font-size:6.5px;color:#999;">注文20件未満のあいだは投稿率がブレるため「参考値」と表示</div></div></div>
+          <div class="screenshot-caption">
+            <h4>KPIに対して足りているかで見る</h4>
+            <p>件数ではなく投稿率で並べ、KPIの10%に対して足りているかを判定します。（表示例）</p>
+          </div>
+        </div>
+
+        <div class="screenshot-card">
+          <div class="screenshot-mockup" style="background:#fafdfa;"><div style="width:100%;height:100%;padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;align-items:center;gap:8px;"><span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:11px;font-weight:800;color:#1a1a1a;">集計の流れ</span></div><div style="display:flex;gap:5px;"><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">KPI</div><div style="font-size:11px;font-weight:800;">10%</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">期間</div><div style="font-size:11px;font-weight:800;">直近30日</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">実行</div><div style="font-size:11px;font-weight:800;color:#2d8a56;">毎日11時</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">通知</div><div style="font-size:11px;font-weight:800;color:#999;">なし</div></div></div><div style="flex:1;display:flex;flex-direction:column;gap:4px;"><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#f2f2f0;display:flex;align-items:center;justify-content:center;font-size:8px;">🔎</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">商品IDを引く<span style="color:#999;font-weight:400;"> ／ レビューURL用のIDを取得してキャッシュ</span></div></div><span style="font-size:6px;color:#999;background:rgba(0,0,0,0.05);padding:2px 5px;border-radius:8px;font-weight:700;">STEP1</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#f2f2f0;display:flex;align-items:center;justify-content:center;font-size:8px;">📄</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">レビューを読む<span style="color:#999;font-weight:400;"> ／ 件数・★平均・投稿日を集める</span></div></div><span style="font-size:6px;color:#999;background:rgba(0,0,0,0.05);padding:2px 5px;border-radius:8px;font-weight:700;">STEP2</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#f2f2f0;display:flex;align-items:center;justify-content:center;font-size:8px;">🧮</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">注文件数を取る<span style="color:#999;font-weight:400;"> ／ データ基盤から同期間の件数を取得</span></div></div><span style="font-size:6px;color:#999;background:rgba(0,0,0,0.05);padding:2px 5px;border-radius:8px;font-weight:700;">STEP3</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#e8f0e9;display:flex;align-items:center;justify-content:center;font-size:8px;">📊</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">記録して描画<span style="color:#999;font-weight:400;"> ／ 日次スナップショットとダッシュボード</span></div></div><span style="font-size:6px;color:#2d8a56;background:rgba(45,138,86,0.1);padding:2px 5px;border-radius:8px;font-weight:700;">STEP4</span></div></div></div></div>
+          <div class="screenshot-caption">
+            <h4>レビューと注文を突き合わせる</h4>
+            <p>公開ページのレビュー情報と、データ基盤の注文件数を組み合わせて投稿率を出します。（表示例）</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="section">
+      <div class="section-title">仕組み</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">STEP 01</div>
+          <div class="step-icon">🔎</div>
+          <h4>商品IDを取得</h4>
+          <p>レビューページ用のIDを引いて保存</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 02</div>
+          <div class="step-icon">📄</div>
+          <h4>レビューを集計</h4>
+          <p>件数・★平均・投稿日を読み取る</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 03</div>
+          <div class="step-icon">🧮</div>
+          <h4>注文件数と割る</h4>
+          <p>同じ期間の注文件数で投稿率を算出</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 04</div>
+          <div class="step-icon">📊</div>
+          <h4>毎日記録</h4>
+          <p>スナップショットとダッシュボードを更新</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TECH DETAIL -->
+    <div class="section">
+      <div class="section-title">技術的なポイント</div>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <h4>📐 定義を先に固定する</h4>
+          <p>「直近30日の新規レビュー ÷ 同じ期間の注文件数」と決めて、毎日同じ計算で記録します。定義がぶれると推移が意味を持たなくなるので、最初に固めておきました。累計での投稿率も並行して残しています。</p>
+          <span class="tech-tag">指標の再現性</span>
+        </div>
+        <div class="tech-card">
+          <h4>⚠️ 少ない分母は参考値と表示</h4>
+          <p>注文が1件でレビューが1件なら投稿率は100%になってしまいます。分母が20件に届かないあいだは「参考値」と明示して、数字をそのまま信じないようにしました。</p>
+          <span class="tech-tag">誤読を防ぐ</span>
+        </div>
+        <div class="tech-card">
+          <h4>🔗 公開情報とデータ基盤を組み合わせる</h4>
+          <p>レビュー側は公開ページの読み取りだけでログイン不要、注文件数はデータ基盤から取得します。取得元を分けることで、どちらかが変わっても片方だけ直せば済みます。</p>
+          <span class="tech-tag">取得元を分ける</span>
+        </div>
+        <div class="tech-card">
+          <h4>🤫 あえて通知しない</h4>
+          <p>レビューは購入から数日〜数週間遅れて投稿されるので、日々の上下に反応しても意味がありません。Slack通知は付けず、2〜4週間のスパンでダッシュボードを見る運用にしています。</p>
+          <span class="tech-tag">見るリズムに合わせる</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="section">
+      <div class="section-title">導入効果</div>
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="result-num">10<span style="font-size: 20px;">%</span></div>
+          <div class="result-label">追いかけているKPI</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">30<span style="font-size: 20px;">日</span></div>
+          <div class="result-label">投稿率を算出する期間</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">毎日<span style="font-size: 20px;">更新</span></div>
+          <div class="result-label">同じ定義で自動記録</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTE -->
+    <div class="section">
+      <div class="section-title">補足</div>
+      <div class="tech-card" style="max-width: 100%;">
+        <h4>💡 割合で見ないと施策の効果は分からない</h4>
+        <p>レビュー件数は売れている商品ほど自然に増えるので、件数だけを見ていると施策の効果と勢いの区別がつきません。注文に対する割合で見ることで、依頼のしかたを変えた効果が読めるようになります。画面はダミーの表示例です。</p>
+        <span class="tech-tag">指標の選び方</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

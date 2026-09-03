@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>出展準備ボード（チェック共有） | EC × AI LAB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fafaf8;
+      --surface: #ffffff;
+      --surface-alt: #f5f5f0;
+      --border: rgba(0,0,0,0.07);
+      --text: #1a1a1a;
+      --text-secondary: #555555;
+      --text-muted: #999999;
+      --green: #2d8a56;
+      --green-bg: rgba(45,138,86,0.08);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Noto Sans JP', 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250,250,248,0.9);
+      backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    /* ===== HERO ===== */
+    .detail-hero {
+      margin-top: 64px;
+      padding: 80px 48px 60px;
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .detail-hero .badge {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--green);
+      background: var(--green-bg);
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .detail-hero h1 {
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+
+    .detail-hero .lead {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 640px;
+      line-height: 1.9;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 32px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ===== CONTENT ===== */
+    .detail-content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 48px 100px;
+    }
+
+    .section {
+      margin-bottom: 64px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ===== PROBLEM / SOLUTION ===== */
+    .ps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .ps-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+
+    .ps-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ps-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ps-card li {
+      font-size: 15px;
+      color: var(--text-secondary);
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .ps-card li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .ps-card.solution li::before {
+      background: var(--green);
+    }
+
+    /* ===== SCREENSHOT AREA ===== */
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .screenshot-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .screenshot-card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .screenshot-mockup {
+      aspect-ratio: 16 / 10;
+      background: #1a1a2e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .terminal-mock {
+      background: #1a1a2e;
+      padding: 20px 24px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    }
+
+    .terminal-mock .terminal-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .terminal-mock .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .terminal-mock .terminal-dot.red { background: #ff5f56; }
+    .terminal-mock .terminal-dot.yellow { background: #ffbd2e; }
+    .terminal-mock .terminal-dot.green { background: #27c93f; }
+
+    .terminal-mock .terminal-body {
+      font-size: 11px;
+      color: #a0aec0;
+      line-height: 1.8;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .terminal-mock .terminal-body .prompt {
+      color: #68d391;
+    }
+
+    .terminal-mock .terminal-body .command {
+      color: #e2e8f0;
+    }
+
+    .terminal-mock .terminal-body .output {
+      color: #a0aec0;
+    }
+
+    .terminal-mock .terminal-body .highlight {
+      color: #63b3ed;
+      font-weight: 600;
+    }
+
+    .terminal-mock .terminal-body .success {
+      color: #68d391;
+    }
+
+    .chat-mock {
+      background: #2d2d3f;
+      padding: 20px 24px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    .chat-mock .chat-user {
+      background: rgba(99, 179, 237, 0.15);
+      border-radius: 12px 12px 4px 12px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #bee3f8;
+      align-self: flex-end;
+      max-width: 80%;
+    }
+
+    .chat-mock .chat-ai {
+      background: rgba(104, 211, 145, 0.12);
+      border-radius: 12px 12px 12px 4px;
+      padding: 10px 14px;
+      font-size: 11px;
+      color: #c6f6d5;
+      align-self: flex-start;
+      max-width: 85%;
+      line-height: 1.7;
+    }
+
+    .chat-mock .chat-ai .rank {
+      color: #68d391;
+      font-weight: 600;
+    }
+
+    .screenshot-caption {
+      padding: 20px 24px;
+    }
+
+    .screenshot-caption h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .screenshot-caption p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .flow-steps {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .flow-step {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-step:first-child {
+      border-radius: var(--radius) 0 0 var(--radius);
+    }
+
+    .flow-step:last-child {
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: '\2192';
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 24px;
+      height: 24px;
+      background: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .flow-step .step-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .flow-step .step-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .flow-step h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .flow-step p {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== TECH DETAIL ===== */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .tech-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .tech-card h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tech-card p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .tech-card .tech-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--surface-alt);
+      color: var(--text-secondary);
+      margin-top: 10px;
+    }
+
+    /* ===== RESULT ===== */
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+    }
+
+    .result-card .result-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+
+    .result-card .result-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .detail-hero { padding: 60px 20px 40px; }
+      .detail-hero h1 { font-size: 28px; }
+      .detail-content { padding: 0 20px 80px; }
+      .ps-grid { grid-template-columns: 1fr; }
+      .screenshot-grid { grid-template-columns: 1fr; }
+      .flow-steps { flex-direction: column; gap: 12px; }
+      .flow-step { border-radius: var(--radius) !important; }
+      .flow-step:not(:last-child)::after { display: none; }
+      .result-grid { grid-template-columns: 1fr; }
+      .tech-grid { grid-template-columns: 1fr; }
+      .meta-row { gap: 20px; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">EC × AI LAB</a>
+    <a href="index.html#card-37" class="nav-back">&larr; 事例一覧に戻る</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="detail-hero">
+    <span class="badge">SYSTEM</span>
+    <h1>出展準備ボード<br>（チェック共有）</h1>
+    <p class="lead">
+      イベント出展の準備を、社内の全員で同じ画面を見ながら進めるためのボードです。誰かが入れたチェックとメモが、他の人の画面にも反映されます。
+    </p>
+    <div class="meta-row">
+      <div class="meta-item">
+        <span class="meta-label">カテゴリ</span>
+        <span class="meta-value">進行管理・共有ボード</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">技術スタック</span>
+        <span class="meta-value">Google Apps Script / スプレッドシート</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">管理項目</span>
+        <span class="meta-value">準備タスク19件・参加条件10項目</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">同期</span>
+        <span class="meta-value">25秒ごとに自動更新</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="detail-content">
+
+    <!-- PROBLEM / SOLUTION -->
+    <div class="section">
+      <div class="section-title">課題と解決策</div>
+      <div class="ps-grid">
+        <div class="ps-card">
+          <h3>😰 Before（課題）</h3>
+          <ul>
+            <li>準備の進捗が個人のメモに散らばっていて、全体像が見えなかった</li>
+            <li>「あれはもう終わったの？」という確認のやりとりが発生していた</li>
+            <li>読むだけの資料では、進捗を書き込めなかった</li>
+            <li>締め切りまでの残り日数を、その都度数えていた</li>
+          </ul>
+        </div>
+        <div class="ps-card solution">
+          <h3>🎉 After（解決）</h3>
+          <ul>
+            <li>チェックとメモがリアルタイムで全員に共有される</li>
+            <li>誰がいつ更新したかが画面に出るので、確認のやりとりが不要になった</li>
+            <li>タスクごとにメモを残せて、そのまま自動保存される</li>
+            <li>締め切りまでのカウントダウンが自動で表示される</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREENSHOTS -->
+    <div class="section">
+      <div class="section-title">実際の動作イメージ</div>
+      <div class="screenshot-grid">
+
+        <div class="screenshot-card">
+          <div class="screenshot-mockup" style="background:#fafdfa;"><div style="width:100%;height:100%;padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;align-items:center;gap:8px;"><span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:11px;font-weight:800;color:#1a1a1a;">出展準備ボード</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:6px 8px;"><div style="display:flex;justify-content:space-between;font-size:6.5px;color:#999;"><span>準備タスク 19件のうち</span><span>58%</span></div><div style="height:4px;background:rgba(0,0,0,0.06);border-radius:3px;margin-top:3px;"><div style="width:58%;height:100%;background:#2d8a56;border-radius:3px;"></div></div></div><div style="flex:1;display:flex;flex-direction:column;gap:3px;"><div style="display:flex;align-items:center;gap:5px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;padding:4px 6px;"><span style="width:9px;height:9px;border-radius:2px;border:1px solid #2d8a56;background:#2d8a56;color:#fff;font-size:6px;display:flex;align-items:center;justify-content:center;">✓</span><span style="flex:1;font-size:7px;color:#999;text-decoration:line-through;">出展申込フォームの提出</span><span style="font-size:6px;color:#999;">カナ</span></div><div style="display:flex;align-items:center;gap:5px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;padding:4px 6px;"><span style="width:9px;height:9px;border-radius:2px;border:1px solid #2d8a56;background:#2d8a56;color:#fff;font-size:6px;display:flex;align-items:center;justify-content:center;">✓</span><span style="flex:1;font-size:7px;color:#999;text-decoration:line-through;">紹介する商品の選定</span><span style="font-size:6px;color:#999;">カナ</span></div><div style="display:flex;align-items:center;gap:5px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;padding:4px 6px;"><span style="width:9px;height:9px;border-radius:2px;border:1px solid rgba(0,0,0,0.18);background:#fff;color:#fff;font-size:6px;display:flex;align-items:center;justify-content:center;"></span><span style="flex:1;font-size:7px;color:#1a1a1a;">サンプル品の手配</span><span style="font-size:6px;color:#999;">—</span></div><div style="display:flex;align-items:center;gap:5px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;padding:4px 6px;"><span style="width:9px;height:9px;border-radius:2px;border:1px solid rgba(0,0,0,0.18);background:#fff;color:#fff;font-size:6px;display:flex;align-items:center;justify-content:center;"></span><span style="flex:1;font-size:7px;color:#1a1a1a;">当日の持ち物リスト作成</span><span style="font-size:6px;color:#999;">—</span></div></div></div></div>
+          <div class="screenshot-caption">
+            <h4>チェックが全員に共有される</h4>
+            <p>済んだタスクには取り消し線が入り、更新した人と時刻が表示されます。25秒ごとに自動で読み直します。（表示例）</p>
+          </div>
+        </div>
+
+        <div class="screenshot-card">
+          <div class="screenshot-mockup" style="background:#fafdfa;"><div style="width:100%;height:100%;padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;align-items:center;gap:8px;"><span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:11px;font-weight:800;color:#1a1a1a;">画面の構成</span></div><div style="display:flex;gap:5px;"><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">準備タスク</div><div style="font-size:11px;font-weight:800;">19件</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">参加条件</div><div style="font-size:11px;font-weight:800;">10項目</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">締切まで</div><div style="font-size:11px;font-weight:800;color:#c08a3e;">44日</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">同期</div><div style="font-size:11px;font-weight:800;color:#2d8a56;">25秒</div></div></div><div style="flex:1;display:flex;flex-direction:column;gap:4px;"><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#e8f0e9;display:flex;align-items:center;justify-content:center;font-size:8px;">✅</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">準備タスク<span style="color:#999;font-weight:400;"> ／ チェック＋メモ（自動保存）</span></div></div><span style="font-size:6px;color:#2d8a56;background:rgba(45,138,86,0.1);padding:2px 5px;border-radius:8px;font-weight:700;">共有</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#e8f0e9;display:flex;align-items:center;justify-content:center;font-size:8px;">📋</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">参加条件<span style="color:#999;font-weight:400;"> ／ 10項目のチェック</span></div></div><span style="font-size:6px;color:#2d8a56;background:rgba(45,138,86,0.1);padding:2px 5px;border-radius:8px;font-weight:700;">共有</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#f2f2f0;display:flex;align-items:center;justify-content:center;font-size:8px;">⏳</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">カウントダウン<span style="color:#999;font-weight:400;"> ／ 開いた日から自動計算</span></div></div><span style="font-size:6px;color:#999;background:rgba(0,0,0,0.05);padding:2px 5px;border-radius:8px;font-weight:700;">自動</span></div></div></div></div>
+          <div class="screenshot-caption">
+            <h4>準備と条件を1画面に</h4>
+            <p>タスクのチェック、参加条件の確認、締め切りまでの残り日数を同じ画面にまとめています。（表示例）</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="section">
+      <div class="section-title">仕組み</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">STEP 01</div>
+          <div class="step-icon">📋</div>
+          <h4>項目を登録</h4>
+          <p>タスクと参加条件をボードに登録</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 02</div>
+          <div class="step-icon">✅</div>
+          <h4>各自がチェック</h4>
+          <p>済んだものにチェックとメモ</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 03</div>
+          <div class="step-icon">🔄</div>
+          <h4>自動で同期</h4>
+          <p>25秒ごとに全員の画面へ反映</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 04</div>
+          <div class="step-icon">⏳</div>
+          <h4>残り日数を表示</h4>
+          <p>締め切りまでを自動カウント</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TECH DETAIL -->
+    <div class="section">
+      <div class="section-title">技術的なポイント</div>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <h4>🔐 権限を配らずに共有する</h4>
+          <p>「自分として実行」の設定にしておくと、見る人にスプレッドシートの共有権限を渡さなくても読み書きができます。権限管理の手間なく、社内の全員に配れる状態になります。</p>
+          <span class="tech-tag">権限管理の手間を削る</span>
+        </div>
+        <div class="tech-card">
+          <h4>🔄 25秒ごとの自動読み直し</h4>
+          <p>共有ボードは、他の人の更新が見えないと意味がありません。画面を開いたままでも定期的に読み直すので、「更新を押さないと最新にならない」を避けられます。</p>
+          <span class="tech-tag">リアルタイム性</span>
+        </div>
+        <div class="tech-card">
+          <h4>🗃 保存先が自動で作られる</h4>
+          <p>初回アクセス時にデータ用のスプレッドシートが自動で作られます。事前に用意するものがないので、似たボードを別のイベント用に立ち上げるのも簡単です。</p>
+          <span class="tech-tag">立ち上げが速い</span>
+        </div>
+        <div class="tech-card">
+          <h4>✎ メモは開閉式</h4>
+          <p>全部のメモを開いて表示すると画面が長くなるので、必要なときだけ開く形にしました。入力するとそのまま保存されるので、保存ボタンの押し忘れもありません。</p>
+          <span class="tech-tag">画面の見やすさ</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="section">
+      <div class="section-title">導入効果</div>
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="result-num">29<span style="font-size: 20px;">項目</span></div>
+          <div class="result-label">タスクと参加条件を一元管理</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">25<span style="font-size: 20px;">秒</span></div>
+          <div class="result-label">全員の画面へ自動反映</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">0<span style="font-size: 20px;">回</span></div>
+          <div class="result-label">進捗確認のやりとり</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTE -->
+    <div class="section">
+      <div class="section-title">補足</div>
+      <div class="tech-card" style="max-width: 100%;">
+        <h4>💡 読み物と作業台は分ける</h4>
+        <p>同じ内容でも、読むだけの資料と、書き込みながら進める作業台は役割が違います。個人用の読み物版と、全員で共有する作業台版の両方を用意して、使い分けられるようにしました。画面はダミーの表示例です。</p>
+        <span class="tech-tag">共有の設計</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
