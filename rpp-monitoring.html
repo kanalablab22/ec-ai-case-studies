@@ -457,7 +457,7 @@
       </div>
       <div class="meta-item">
         <span class="meta-label">技術スタック</span>
-        <span class="meta-value">Python / Playwright / Slack API</span>
+        <span class="meta-value">Python / Playwright / Slack API / Proxmox VM</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">監視頻度</span>
@@ -465,7 +465,7 @@
       </div>
       <div class="meta-item">
         <span class="meta-label">稼働状況</span>
-        <span class="meta-value">24/7 稼働中</span>
+        <span class="meta-value">3店舗・サーバー常駐で24/7</span>
       </div>
     </div>
   </div>
@@ -578,6 +578,35 @@
           <div class="step-icon">🔔</div>
           <h4>Slack通知</h4>
           <p>アラート条件に該当したらSlackに即通知</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 05</div>
+          <div class="step-icon">🔁</div>
+          <h4>自動再ログイン</h4>
+          <p>セッション切れを検知したら自動でログインし直し、監視を継続</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFRA -->
+    <div class="section">
+      <div class="section-title">サーバー常駐化（2026年8月）</div>
+      <div class="ps-grid">
+        <div class="ps-card">
+          <h3>😰 Before（課題）</h3>
+          <ul>
+            <li>担当者のMac上で動いていたため、PCを閉じると監視も止まっていた</li>
+            <li>楽天側のシステムエラー画面はURLが正常なままのため、セッション切れとして検知できなかった</li>
+            <li>実際に週末の2日間、検知は27回起きていたのに自動ログインが1度も走らず、監視が実質止まっていた（金曜18時に15,540円あったGRAVの残予算が、週明けには0円になっていた）</li>
+          </ul>
+        </div>
+        <div class="ps-card solution">
+          <h3>🎉 After（解決）</h3>
+          <ul>
+            <li>社内のProxmoxサーバー上のVMへ3店舗すべてを移設。担当者のPCの状態に左右されず、夜間・休日も動き続ける</li>
+            <li>セッションの判定をURLだけでなく画面の本文まで見るように修正し、システムエラー画面も検知できるようにした</li>
+            <li>プロセスが落ちても60秒後に自動復帰する設定にし、1サイクルで自力で立て直せることを確認済み</li>
+          </ul>
         </div>
       </div>
     </div>
