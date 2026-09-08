@@ -71,6 +71,24 @@
     }
     .nav-back:hover { color: var(--text); }
 
+
+    .live-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      padding: 12px 22px;
+      background: var(--green);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: opacity 0.2s;
+    }
+    .live-link:hover { opacity: 0.85; }
+    .live-link:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+
     /* ===== HERO ===== */
     .detail-hero {
       margin-top: 64px;
@@ -532,6 +550,7 @@
         <span class="meta-value">Mac / Windows・ブラウザで完結</span>
       </div>
     </div>
+    <a class="live-link" href="https://kanalablab22.github.io/virtual-dressing-room/" target="_blank" rel="noopener">実際のツールを開く &rarr;</a>
   </div>
 
   <!-- CONTENT -->
