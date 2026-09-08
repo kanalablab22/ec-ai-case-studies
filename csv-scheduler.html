@@ -70,6 +70,25 @@
     }
     .nav-back:hover { color: var(--text); }
 
+
+    .live-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      padding: 12px 22px;
+      background: var(--green);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: opacity 0.2s;
+    }
+    .live-link:hover { opacity: 0.85; }
+    .live-link:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+    .live-note { font-size: 12px; color: var(--text-muted); margin-top: 10px; }
+
     /* ===== HERO ===== */
     .detail-hero {
       margin-top: 64px;
@@ -539,6 +558,8 @@
         <span class="meta-value">専用VMで常駐・複数名で運用</span>
       </div>
     </div>
+    <a class="live-link" href="http://10.0.1.47:3000" target="_blank" rel="noopener">管理画面を開く &rarr;</a>
+    <p class="live-note">社内LANからのみアクセスできます。</p>
   </div>
 
   <!-- CONTENT -->
