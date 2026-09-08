@@ -71,6 +71,25 @@
     }
     .nav-back:hover { color: var(--text); }
 
+
+    .live-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      padding: 12px 22px;
+      background: var(--green);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: opacity 0.2s;
+    }
+    .live-link:hover { opacity: 0.85; }
+    .live-link:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+    .live-note { font-size: 12px; color: var(--text-muted); margin-top: 10px; }
+
     /* ===== HERO ===== */
     .detail-hero {
       margin-top: 64px;
@@ -532,6 +551,8 @@
         <span class="meta-value">60秒ごとに自動反映</span>
       </div>
     </div>
+    <a class="live-link" href="https://claude.ai/code/artifact/41bd323a-9288-4e67-9eda-9deaec8223c4" target="_blank" rel="noopener">実際の画面を見る &rarr;</a>
+    <p class="live-note">共有用に書き出したもので、表示は2026年7月15日時点の状態です。実物はローカルで60秒ごとに自動更新されます。</p>
   </div>
 
   <!-- CONTENT -->
