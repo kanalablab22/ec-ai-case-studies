@@ -528,15 +528,15 @@
       </div>
       <div class="meta-item">
         <span class="meta-label">技術スタック</span>
-        <span class="meta-value">Node.js / 楽天RMS / FTP</span>
+        <span class="meta-value">Node.js / SQLite / SFTP / Proxmox VM</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">対応店舗</span>
-        <span class="meta-value">複数店舗一元管理</span>
+        <span class="meta-value">GRAV・Camp／Pin-Eagle・ショップチャンネル</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">稼働状況</span>
-        <span class="meta-value">運用中</span>
+        <span class="meta-value">専用VMで常駐・複数名で運用</span>
       </div>
     </div>
   </div>
@@ -560,8 +560,9 @@
           <h3>🎉 After（解決）</h3>
           <ul>
             <li>事前にCSV登録＆時刻指定するだけで完了</li>
-            <li>指定時刻に自動でFTPアップロード実行</li>
+            <li>指定時刻に自動でSFTPアップロード実行</li>
             <li>バリデーション機能でアップロードミスを防止</li>
+            <li>専用サーバーで常駐しているので、自分のPCを開いていなくても実行される</li>
           </ul>
         </div>
       </div>
@@ -652,8 +653,32 @@
         <div class="flow-step">
           <div class="step-num">STEP 04</div>
           <div class="step-icon">🚀</div>
-          <h4>自動FTPアップロード</h4>
+          <h4>自動SFTPアップロード</h4>
           <p>指定時刻にRMSへ自動アップロード</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFRA -->
+    <div class="section">
+      <div class="section-title">サーバー常駐化と他メンバーへの展開（2026年8月）</div>
+      <div class="ps-grid">
+        <div class="ps-card">
+          <h3>😰 Before（課題）</h3>
+          <ul>
+            <li>自分のMac上で動かしていたため、PCを閉じている時間帯の予約は実行できなかった</li>
+            <li>他の店舗の担当者に渡す想定になっておらず、全員が同じ画面・同じ通知先を共有してしまう作りだった</li>
+            <li>店舗ごとに通知先を分ける仕組みがなく、複数名での運用に耐えられなかった</li>
+          </ul>
+        </div>
+        <div class="ps-card solution">
+          <h3>🎉 After（解決）</h3>
+          <ul>
+            <li>社内Proxmoxの専用VMへ移設し、ブラウザからアクセスするだけで使える形に。PCの状態に関係なく予約が実行される</li>
+            <li>ログイン機能と権限を実装し、担当店舗のデータだけが見える状態に。ショップチャンネル担当者へ展開して実運用に入っている</li>
+            <li>通知の宛先を店舗ごとに分離。認証情報はOSの認証ストアで管理し、暗号化して保存する方式に統一</li>
+            <li>毎晩23:30に「今夜の予約」をSlackへ自動配信。社外にいても予約の有無を確認できる</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -671,8 +696,8 @@
           <div class="result-label">自動実行の成功率</div>
         </div>
         <div class="result-card">
-          <div class="result-num">複数店舗</div>
-          <div class="result-label">一元管理で効率化</div>
+          <div class="result-num">3<span style="font-size: 20px;">店舗</span></div>
+          <div class="result-label">複数名で共有して運用</div>
         </div>
       </div>
     </div>
