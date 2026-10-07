@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RPP CPC追随ボード | EC × AI LAB</title>
+  <title>週間ランキング自動記録 | EC × AI LAB</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -502,33 +502,18 @@
 
   <nav>
     <a href="index.html" class="nav-logo">EC × AI LAB</a>
-    <a href="index.html#card-42" class="nav-back">&larr; 事例一覧に戻る</a>
+    <a href="index.html#card-49" class="nav-back">&larr; 事例一覧に戻る</a>
   </nav>
 
   <!-- HERO -->
   <div class="detail-hero">
-    <span class="badge">OPTIMIZATION</span>
-    <h1>RPP CPC追随ボード<br>（自動追随の状態盤）</h1>
+    <span class="badge">MONITORING</span>
+    <h1>週間ランキング<br>自動記録</h1>
     <p class="lead">
-      楽天の目安CPCが下がったキーワードは自動で追随して入札を下げ、目安が戻れば元の基準まで自分で戻す。その状態を1枚で見られる盤面です。何が起きて、いま何が下げ余地なのかが分かります。現在は2店舗で稼働し、盤面も店舗ごとのタブで切り替えられます。
+      楽天の週間ランキングで、主力商品が1位だったかを毎週記録するツールです。「何週連続で1位だったか」を答えられるように、1週1行で履歴を残していきます。
     </p>
     <div class="meta-row">
-      <div class="meta-item">
-        <span class="meta-label">カテゴリ</span>
-        <span class="meta-value">広告最適化・状態可視化</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">技術スタック</span>
-        <span class="meta-value">Python / 静的HTML生成 / SVG</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">管理範囲</span>
-        <span class="meta-value">2店舗・177キーワード</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">巡回間隔</span>
-        <span class="meta-value">45分ごと</span>
-      </div>
+      <div class="meta-item"><span class="meta-label">カテゴリ</span><span class="meta-value">ランキング記録</span></div><div class="meta-item"><span class="meta-label">技術スタック</span><span class="meta-value">Python / Selenium / CSV</span></div><div class="meta-item"><span class="meta-label">実行</span><span class="meta-value">毎週水曜に自動</span></div><div class="meta-item"><span class="meta-label">記録</span><span class="meta-value">1週1行・1位の週はスクショ</span></div>
     </div>
   </div>
 
@@ -541,21 +526,11 @@
       <div class="ps-grid">
         <div class="ps-card">
           <h3>😰 Before（課題）</h3>
-          <ul>
-            <li>目安CPCが下がっても気づかず、高い入札のまま払い続けることがあった</li>
-            <li>手で下げると、目安が戻ったときに上げ直すのを忘れて機会損失になった</li>
-            <li>自動で調整すると、何が起きているのか分からず不安だった</li>
-            <li>下げ余地がどのキーワードに残っているのか、探すのに時間がかかった</li>
-          </ul>
+          <ul><li>デイリーの1位は分かっても、週間で何週連続だったかは誰も答えられなかった</li><li>週間ランキングは社内のデータ基盤にも入っておらず、APIでも取れなかった</li><li>以前の仕組みは1位の週だけ画像を残す作りで、画像がない週の意味が分からなかった</li><li>ページは最新の週しか出さないので、見逃した週は取り戻せなかった</li></ul>
         </div>
         <div class="ps-card solution">
           <h3>🎉 After（解決）</h3>
-          <ul>
-            <li>目安CPCが下がったキーワードは45分以内に自動で追随して下げる</li>
-            <li>目安が基準まで戻れば、こちらの入札も自動で基準に戻る</li>
-            <li>設定・目安・基準・下限を1本のメーターに重ねて、状態がひと目で分かる</li>
-            <li>自動追随がやったことが履歴として並ぶので、あとから確認できる</li>
-          </ul>
+          <ul><li>毎週水曜に自動で記録し、何週連続1位かをすぐ数えられる</li><li>1位・1位以外・取得失敗の3種類で必ず1行残す</li><li>1位の週はスクリーンショットも店舗ごとのフォルダに保存する</li><li>同じ集計期間は二重に記録しない</li></ul>
         </div>
       </div>
     </div>
@@ -566,18 +541,18 @@
       <div class="screenshot-grid">
 
         <div class="screenshot-card">
-          <div class="screenshot-mockup" style="background:#fafdfa;"><div style="width:100%;height:100%;padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;align-items:center;gap:8px;"><span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:11px;font-weight:800;color:#1a1a1a;">目安CPCと設定の動き</span></div><div style="display:flex;gap:8px;"><span style="display:flex;align-items:center;gap:3px;font-size:6px;color:#999;"><span style="width:10px;height:0;border-top:2px solid #2d8a56;"></span>設定CPC</span><span style="display:flex;align-items:center;gap:3px;font-size:6px;color:#999;"><span style="width:10px;height:0;border-top:1.6px dashed #c08a3e;"></span>目安CPC</span><span style="display:flex;align-items:center;gap:3px;font-size:6px;color:#999;"><span style="width:10px;height:0;border-top:1px dashed rgba(0,0,0,0.25);"></span>下限40円</span></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:6px;"><svg viewBox="0 0 200 88" style="width:100%;height:100%;"><line x1="0" y1="70" x2="200" y2="70" stroke="rgba(0,0,0,0.15)" stroke-width="1" stroke-dasharray="3 3"/><path d="M 5 16 L 40 16 L 40 48 L 70 48 L 70 48 L 105 48 L 105 30 L 140 30 L 140 30 L 175 30 L 175 30 L 195 30 L 195 30" fill="none" stroke="#c08a3e" stroke-width="1.6" stroke-dasharray="4 3"/><path d="M 5 24 L 40 24 L 40 24 L 70 24 L 70 46 L 105 46 L 105 46 L 140 46 L 140 26 L 175 26 L 175 26 L 195 26 L 195 26" fill="none" stroke="#2d8a56" stroke-width="2"/></svg></div><div style="font-size:6.5px;color:#999;">金色の点線が楽天の目安CPC、緑の実線がこちらの設定CPC。目安が下がると次の巡回で階段状に追いかけます。</div></div></div>
+          <div class="screenshot-mockup" style="background:#fafdfa;"><div style="width:100%;height:100%;padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;align-items:center;gap:8px;"><span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:11px;font-weight:800;color:#1a1a1a;">週間ランキング記録</span></div><div style="display:flex;gap:5px;"><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">連続1位</div><div style="font-size:11px;font-weight:800;color:#2d8a56;">4週</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">記録</div><div style="font-size:11px;font-weight:800;color:#1a1a1a;">毎週水曜</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">集計</div><div style="font-size:11px;font-weight:800;color:#999;">日〜土</div></div></div><div style="display:flex;gap:4px;padding:0 6px;"><div style="flex:3;font-size:6.5px;color:#999;font-weight:700;">集計期間</div><div style="flex:2;font-size:6.5px;color:#999;font-weight:700;">結果</div><div style="flex:2;font-size:6.5px;color:#999;font-weight:700;">スクショ</div><div style="flex:3;font-size:6.5px;color:#999;font-weight:700;">メモ</div></div><div style="flex:1;display:flex;flex-direction:column;gap:3px;"><div style="display:flex;gap:4px;padding:4px 6px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;"><div style="flex:3;font-size:7px;color:#1a1a1a;font-weight:500;">8/31〜9/6</div><div style="flex:2;font-size:7px;color:#2d8a56;font-weight:700;">1位</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">あり</div><div style="flex:3;font-size:7px;color:#1a1a1a;font-weight:500;">初回の記録</div></div><div style="display:flex;gap:4px;padding:4px 6px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;"><div style="flex:3;font-size:7px;color:#1a1a1a;font-weight:500;">9/7〜9/13</div><div style="flex:2;font-size:7px;color:#2d8a56;font-weight:700;">1位</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">なし</div><div style="flex:3;font-size:7px;color:#1a1a1a;font-weight:500;">翌週の「STAY」から推定</div></div><div style="display:flex;gap:4px;padding:4px 6px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;"><div style="flex:3;font-size:7px;color:#1a1a1a;font-weight:500;">9/14〜9/20</div><div style="flex:2;font-size:7px;color:#2d8a56;font-weight:700;">1位</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">あり</div><div style="flex:3;font-size:7px;color:#1a1a1a;font-weight:500;">STAY</div></div><div style="display:flex;gap:4px;padding:4px 6px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;"><div style="flex:3;font-size:7px;color:#1a1a1a;font-weight:500;">9/21〜9/27</div><div style="flex:2;font-size:7px;color:#2d8a56;font-weight:700;">1位</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">あり</div><div style="flex:3;font-size:7px;color:#1a1a1a;font-weight:500;">STAY</div></div></div><div style="font-size:6.5px;color:#999;">取れなかった週は「取得失敗」と残すので、1位でなかった週と区別できます</div></div></div>
           <div class="screenshot-caption">
-            <h4>追随のようすを階段グラフで</h4>
-            <p>値は次の観測まで一定なので、あえて階段で描いています。点に触れるとその時刻の数字が出ます。（表示例）</p>
+            <h4>1週1行で履歴が積み上がる</h4>
+            <p>結果を3種類で必ず残すので、あとから見ても抜けと圏外を取り違えません。（表示例）</p>
           </div>
         </div>
 
         <div class="screenshot-card">
-          <div class="screenshot-mockup" style="background:#fafdfa;"><div style="width:100%;height:100%;padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;align-items:center;gap:8px;"><span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:11px;font-weight:800;color:#1a1a1a;">いまの状態</span></div><div style="display:flex;gap:5px;"><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">管理</div><div style="font-size:11px;font-weight:800;">177KW</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">下げ余地</div><div style="font-size:11px;font-weight:800;color:#2d8a56;">0件</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">追随中</div><div style="font-size:11px;font-weight:800;color:#c08a3e;">6件</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">本日調整</div><div style="font-size:11px;font-weight:800;color:#2d8a56;">3件</div></div></div><div style="flex:1;display:flex;flex-direction:column;gap:4px;"><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#f5efe4;display:flex;align-items:center;justify-content:center;font-size:8px;">🟢</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">追随中<span style="color:#999;font-weight:400;"> ／ 目安が下がったので下げている状態</span></div></div><span style="font-size:6px;color:#c08a3e;background:rgba(192,138,62,0.12);padding:2px 5px;border-radius:8px;font-weight:700;">6件</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#e8f0e9;display:flex;align-items:center;justify-content:center;font-size:8px;">⬇️</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">下げ余地<span style="color:#999;font-weight:400;"> ／ 目安が設定より低い＝次の巡回で調整</span></div></div><span style="font-size:6px;color:#2d8a56;background:rgba(45,138,86,0.1);padding:2px 5px;border-radius:8px;font-weight:700;">0件</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#f2f2f0;display:flex;align-items:center;justify-content:center;font-size:8px;">🧱</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">下限<span style="color:#999;font-weight:400;"> ／ 入札下限の40円でこれ以上下げられない</span></div></div><span style="font-size:6px;color:#999;background:rgba(0,0,0,0.05);padding:2px 5px;border-radius:8px;font-weight:700;">多数</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#f2f2f0;display:flex;align-items:center;justify-content:center;font-size:8px;">⏸</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">据え置き<span style="color:#999;font-weight:400;"> ／ 目安が設定以上なので触らない</span></div></div><span style="font-size:6px;color:#999;background:rgba(0,0,0,0.05);padding:2px 5px;border-radius:8px;font-weight:700;">—</span></div></div></div></div>
+          <div class="screenshot-mockup"><div class="terminal-mock"><div class="terminal-bar"><span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span></div><div class="terminal-body"><div><span class="prompt">$</span> <span class="command">weekly_rank_log</span></div><div><span class="output">ジャンル: 名刺入れ（週間）</span></div><div><span class="output">集計期間: 日曜〜土曜 ／ 水曜更新</span></div><div><span class="output">ヘッドレスブラウザで取得中...</span></div><div><span class="highlight">結果: 1位（STAY）</span></div><div><span class="success">✓ CSVに1行追記 ／ スクショを保存</span></div></div></div></div>
           <div class="screenshot-caption">
-            <h4>状態を色と文字の両方で示す</h4>
-            <p>色だけに頼らず必ず文字ラベルを付けて、どの状態なのかを取り違えないようにしています。（表示例）</p>
+            <h4>ブラウザで開いて読み取る</h4>
+            <p>単純な取得は弾かれるため、画面のないブラウザで実際にページを開いて読み取ります。（表示例）</p>
           </div>
         </div>
 
@@ -590,27 +565,27 @@
       <div class="flow-steps">
         <div class="flow-step">
           <div class="step-num">STEP 01</div>
-          <div class="step-icon">🕒</div>
-          <h4>45分ごとに点検</h4>
-          <p>目安CPCと設定を突き合わせる</p>
+          <div class="step-icon">🗓</div>
+          <h4>水曜に起動</h4>
+          <p>更新を待ってから実行</p>
         </div>
         <div class="flow-step">
           <div class="step-num">STEP 02</div>
-          <div class="step-icon">⬇️</div>
-          <h4>下がったら追随</h4>
-          <p>目安に合わせて入札を下げる</p>
+          <div class="step-icon">🌐</div>
+          <h4>ページを開く</h4>
+          <p>画面のないブラウザで取得</p>
         </div>
         <div class="flow-step">
           <div class="step-num">STEP 03</div>
-          <div class="step-icon">⬆️</div>
-          <h4>戻ったら復帰</h4>
-          <p>基準CPCまで自動で戻す</p>
+          <div class="step-icon">🥇</div>
+          <h4>順位を判定</h4>
+          <p>1位・1位以外・失敗の3種類</p>
         </div>
         <div class="flow-step">
           <div class="step-num">STEP 04</div>
-          <div class="step-icon">📊</div>
-          <h4>盤面に反映</h4>
-          <p>状態と履歴をHTMLに書き出す</p>
+          <div class="step-icon">📝</div>
+          <h4>1行記録</h4>
+          <p>1位の週はスクショも保存</p>
         </div>
       </div>
     </div>
@@ -620,34 +595,24 @@
       <div class="section-title">技術的なポイント</div>
       <div class="tech-grid">
         <div class="tech-card">
-          <h4>📏 4つの数字を1本のメーターに</h4>
-          <p>いまの設定CPC・楽天の目安CPC・戻る先の基準CPC・入札下限の40円を、同じスケールに重ねて表示します。「どこにいて、どこまで下げられるのか」が1行で読めるようにしました。</p>
-          <span class="tech-tag">状態の可視化</span>
+          <h4>📆 楽天の週間ランキングの仕様に合わせる</h4>
+          <p>実物を確かめると、週間ランキングは水曜に更新され、中身は前の日曜〜土曜の集計でした。この仕様に合わせて水曜の更新後に動かし、集計期間をそのまま記録しています。</p>
+          <span class="tech-tag">仕様を実物で確かめる</span>
         </div>
         <div class="tech-card">
-          <h4>🪜 階段グラフで正しく見せる</h4>
-          <p>点と点を斜めにつなぐと、実際には動いていない時間まで変化しているように見えてしまいます。値は次の観測まで一定なので、階段で描いて観測間隔を正しく表現しました。</p>
-          <span class="tech-tag">グラフの誠実さ</span>
+          <h4>🧾 結果は必ず3種類のどれかで残す</h4>
+          <p>1位のときだけ記録する作りだと、記録がない週が「1位じゃなかった」のか「エラーだった」のか区別できません。失敗も含めて毎週必ず1行残すことで、履歴そのものを信頼できるようにしました。</p>
+          <span class="tech-tag">記録の抜けを見える化</span>
         </div>
         <div class="tech-card">
-          <h4>🎨 色だけに頼らない</h4>
-          <p>状態は色分けだけでなく、必ず「追随中」「下げ余地」「下限」「据え置き」の文字ラベルを添えています。色の見え方に左右されず、誰が見ても同じ読み取りになります。</p>
-          <span class="tech-tag">アクセシビリティ</span>
+          <h4>🛠 自動実行の環境差でつまずいた教訓</h4>
+          <p>手で動かすと成功するのに、自動実行では起動直後に落ちていたことがありました。自動実行の環境では別のPythonが選ばれていたのが原因で、フルパスで指定して解決しています。</p>
+          <span class="tech-tag">自動実行の落とし穴</span>
         </div>
         <div class="tech-card">
-          <h4>🗂 やったことを履歴で残す</h4>
-          <p>自動で入札を動かす仕組みは、履歴が読めないと怖くて任せられません。自動追随の実行内容と手動での変更を並べて残し、あとから「なぜこの入札なのか」を追えるようにしています。</p>
-          <span class="tech-tag">自動化を任せられる状態に</span>
-        </div>
-        <div class="tech-card">
-          <h4>🏪 店舗ごとに「下げる条件」を変える</h4>
-          <p>2店舗目は目安CPCの振れがとても大きく、数時間で10倍に跳ねてまた戻ることもありました。その瞬間の目安に合わせると事故になるため、「基準より下がった状態が2回続いたときだけ下げる」ようにしています。上げ戻しは待たずにすぐ行います。</p>
-          <span class="tech-tag">店舗のクセに合わせる</span>
-        </div>
-        <div class="tech-card">
-          <h4>🗂 店舗はタブで切り替え</h4>
-          <p>盤面は店舗ごとのタブに分け、URLの末尾で直接どちらのタブを開くかも選べます。店舗の一覧に1行足すだけで、3店舗目も同じ作りで並べられるようにしてあります。</p>
-          <span class="tech-tag">横展開しやすい作り</span>
+          <h4>🔍 取り戻せない週は推定と明記</h4>
+          <p>ページは最新の週しか出さないため、落ちていた週は取り戻せません。翌週の表示が「STAY（前週も同じ順位）」だったことから1位と読み、推定であることを記録に書いて残しました。</p>
+          <span class="tech-tag">推定は推定と書く</span>
         </div>
       </div>
     </div>
@@ -657,16 +622,16 @@
       <div class="section-title">導入効果</div>
       <div class="result-grid">
         <div class="result-card">
-          <div class="result-num">177<span style="font-size: 20px;">KW</span></div>
-          <div class="result-label">基準台帳で管理するキーワード</div>
+          <div class="result-num">毎週</div>
+          <div class="result-label">水曜に自動で記録</div>
         </div>
         <div class="result-card">
-          <div class="result-num">45<span style="font-size: 20px;">分</span></div>
-          <div class="result-label">目安の下がりを検知する間隔</div>
+          <div class="result-num">3<span style="font-size: 20px;">種類</span></div>
+          <div class="result-label">結果の残し方</div>
         </div>
         <div class="result-card">
-          <div class="result-num">自動<span style="font-size: 20px;">で復帰</span></div>
-          <div class="result-label">目安が戻れば基準CPCへ</div>
+          <div class="result-num">0<span style="font-size: 20px;">件</span></div>
+          <div class="result-label">意味の分からない空白の週</div>
         </div>
       </div>
     </div>
@@ -675,9 +640,9 @@
     <div class="section">
       <div class="section-title">補足</div>
       <div class="tech-card" style="max-width: 100%;">
-        <h4>💡 自動で動かすなら、見える状態にしておく</h4>
-        <p>入札を自動で動かす仕組みは、便利さと同じだけ不安もついてきます。いま何が起きていて、何をやったのかが読める盤面をセットで用意しておくと、安心して任せられる範囲が広がります。調整は商品管理番号単位で行っています。画面はダミーの表示例です。</p>
-        <span class="tech-tag">自動化と可視化はセット</span>
+        <h4>💡 ふと気になった問いに答えられるようにする</h4>
+        <p>「週間だったら何週連続1位だったんだろう」という素朴な疑問に、記録がなくて答えられなかったのがきっかけです。データがないなら今日から貯め始める、という小さな仕組みでも、数か月後には商品名や販促に使える実績になります。画面はダミーの表示例です。</p>
+        <span class="tech-tag">記録は今日から</span>
       </div>
     </div>
 

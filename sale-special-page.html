@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>セール特設ページ＋おみくじ | EC × AI LAB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fafaf8;
+      --surface: #ffffff;
+      --surface-alt: #f5f5f0;
+      --border: rgba(0,0,0,0.07);
+      --text: #1a1a1a;
+      --text-secondary: #555555;
+      --text-muted: #999999;
+      --green: #2d8a56;
+      --green-bg: rgba(45,138,86,0.08);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Noto Sans JP', 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250,250,248,0.9);
+      backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    /* ===== HERO ===== */
+    .detail-hero {
+      margin-top: 64px;
+      padding: 80px 48px 60px;
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .detail-hero .badge {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--green);
+      background: var(--green-bg);
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .detail-hero h1 {
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+
+    .detail-hero .lead {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 640px;
+      line-height: 1.9;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 32px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ===== CONTENT ===== */
+    .detail-content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 48px 100px;
+    }
+
+    .section {
+      margin-bottom: 64px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ===== PROBLEM / SOLUTION ===== */
+    .ps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .ps-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+
+    .ps-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ps-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ps-card li {
+      font-size: 15px;
+      color: var(--text-secondary);
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .ps-card li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .ps-card.solution li::before {
+      background: var(--green);
+    }
+
+    /* ===== SCREENSHOT AREA ===== */
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .screenshot-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .screenshot-card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .screenshot-mockup {
+      aspect-ratio: 16 / 10;
+      background: #1a1a2e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .terminal-mock {
+      background: #1a1a2e;
+      padding: 20px 24px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    }
+
+    .terminal-mock .terminal-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .terminal-mock .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .terminal-mock .terminal-dot.red { background: #ff5f56; }
+    .terminal-mock .terminal-dot.yellow { background: #ffbd2e; }
+    .terminal-mock .terminal-dot.green { background: #27c93f; }
+
+    .terminal-mock .terminal-body {
+      font-size: 11px;
+      color: #a0aec0;
+      line-height: 1.8;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .terminal-mock .terminal-body .prompt {
+      color: #68d391;
+    }
+
+    .terminal-mock .terminal-body .command {
+      color: #e2e8f0;
+    }
+
+    .terminal-mock .terminal-body .output {
+      color: #a0aec0;
+    }
+
+    .terminal-mock .terminal-body .highlight {
+      color: #63b3ed;
+      font-weight: 600;
+    }
+
+    .terminal-mock .terminal-body .success {
+      color: #68d391;
+    }
+
+    .chat-mock {
+      background: #2d2d3f;
+      padding: 20px 24px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    .chat-mock .chat-user {
+      background: rgba(99, 179, 237, 0.15);
+      border-radius: 12px 12px 4px 12px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #bee3f8;
+      align-self: flex-end;
+      max-width: 80%;
+    }
+
+    .chat-mock .chat-ai {
+      background: rgba(104, 211, 145, 0.12);
+      border-radius: 12px 12px 12px 4px;
+      padding: 10px 14px;
+      font-size: 11px;
+      color: #c6f6d5;
+      align-self: flex-start;
+      max-width: 85%;
+      line-height: 1.7;
+    }
+
+    .chat-mock .chat-ai .rank {
+      color: #68d391;
+      font-weight: 600;
+    }
+
+    .screenshot-caption {
+      padding: 20px 24px;
+    }
+
+    .screenshot-caption h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .screenshot-caption p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .flow-steps {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .flow-step {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-step:first-child {
+      border-radius: var(--radius) 0 0 var(--radius);
+    }
+
+    .flow-step:last-child {
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: '\2192';
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 24px;
+      height: 24px;
+      background: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .flow-step .step-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .flow-step .step-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .flow-step h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .flow-step p {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== TECH DETAIL ===== */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .tech-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .tech-card h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tech-card p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .tech-card .tech-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--surface-alt);
+      color: var(--text-secondary);
+      margin-top: 10px;
+    }
+
+    /* ===== RESULT ===== */
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+    }
+
+    .result-card .result-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+
+    .result-card .result-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .detail-hero { padding: 60px 20px 40px; }
+      .detail-hero h1 { font-size: 28px; }
+      .detail-content { padding: 0 20px 80px; }
+      .ps-grid { grid-template-columns: 1fr; }
+      .screenshot-grid { grid-template-columns: 1fr; }
+      .flow-steps { flex-direction: column; gap: 12px; }
+      .flow-step { border-radius: var(--radius) !important; }
+      .flow-step:not(:last-child)::after { display: none; }
+      .result-grid { grid-template-columns: 1fr; }
+      .tech-grid { grid-template-columns: 1fr; }
+      .meta-row { gap: 20px; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">EC × AI LAB</a>
+    <a href="index.html#card-47" class="nav-back">&larr; 事例一覧に戻る</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="detail-hero">
+    <span class="badge">PROMOTION</span>
+    <h1>セール特設ページ<br>＋おみくじ</h1>
+    <p class="lead">
+      お買い物マラソンなどのセール用に、楽天GOLDに置く特設ページです。クーポンの獲得ボタンは時刻どおりに出て自動で閉じ、ページの中で期間中1回だけ引けるおみくじも用意しました。
+    </p>
+    <div class="meta-row">
+      <div class="meta-item"><span class="meta-label">カテゴリ</span><span class="meta-value">販促ページ・時刻制御</span></div><div class="meta-item"><span class="meta-label">技術スタック</span><span class="meta-value">HTML / JavaScript / GAS</span></div><div class="meta-item"><span class="meta-label">クーポン</span><span class="meta-value">19本を1ページで管理</span></div><div class="meta-item"><span class="meta-label">おみくじ</span><span class="meta-value">期間中1人1回</span></div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="detail-content">
+
+    <!-- PROBLEM / SOLUTION -->
+    <div class="section">
+      <div class="section-title">課題と解決策</div>
+      <div class="ps-grid">
+        <div class="ps-card">
+          <h3>😰 Before（課題）</h3>
+          <ul><li>日付や時間で切り替わるクーポンを、時刻に合わせて手でページに出し入れしていた</li><li>開始前にページを開いて待っている人には、時刻が来てもボタンが出なかった</li><li>おみくじを作っても、実際に何回引かれたのか分からなかった</li><li>クーポンのURLがページのソースから拾われて、想定より多く取られることがあった</li></ul>
+        </div>
+        <div class="ps-card solution">
+          <h3>🎉 After（解決）</h3>
+          <ul><li>クーポンごとに出す時刻・閉じる時刻を設定すれば、あとは自動で切り替わる</li><li>開始前に開いた人にも、時刻が来た瞬間にボタンやおみくじが出る</li><li>引いた回数と受け取った回数を記録し、設定どおりの当たり方か検証できる</li><li>おみくじのURLはソースに直書きせず、外から拾われにくくした</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREENSHOTS -->
+    <div class="section">
+      <div class="section-title">実際の動作イメージ</div>
+      <div class="screenshot-grid">
+
+        <div class="screenshot-card">
+          <div class="screenshot-mockup" style="background:#fafdfa;"><div style="width:100%;height:100%;padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;align-items:center;gap:8px;"><span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:11px;font-weight:800;color:#1a1a1a;">MURAみくじ（期間中1回）</span></div><div style="display:flex;gap:5px;"><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">大大吉</div><div style="font-size:11px;font-weight:800;color:#c08a3e;">0.5%</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">大吉</div><div style="font-size:11px;font-weight:800;color:#2d8a56;">13%</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">中吉</div><div style="font-size:11px;font-weight:800;color:#2d8a56;">30%</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">小吉</div><div style="font-size:11px;font-weight:800;color:#2d8a56;">41.5%</div></div></div><div style="flex:1;display:flex;flex-direction:column;gap:4px;"><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#e8f0e9;display:flex;align-items:center;justify-content:center;font-size:8px;">🎋</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">筒を振る<span style="color:#999;font-weight:400;"> ／ 期間中ずっと表示・閉じても右下にタブ</span></div></div><span style="font-size:6px;color:#2d8a56;background:rgba(45,138,86,0.1);padding:2px 5px;border-radius:8px;font-weight:700;white-space:nowrap;">1回</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#e8f0e9;display:flex;align-items:center;justify-content:center;font-size:8px;">🎉</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">中吉 1,000円OFF<span style="color:#999;font-weight:400;"> ／ 「受け取る」でクーポン獲得へ</span></div></div><span style="font-size:6px;color:#2d8a56;background:rgba(45,138,86,0.1);padding:2px 5px;border-radius:8px;font-weight:700;white-space:nowrap;">当たり</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#f2f2f0;display:flex;align-items:center;justify-content:center;font-size:8px;">🙏</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">2回目を開いた人<span style="color:#999;font-weight:400;"> ／ 「もう引いていただきました」</span></div></div><span style="font-size:6px;color:#999;background:rgba(0,0,0,0.05);padding:2px 5px;border-radius:8px;font-weight:700;white-space:nowrap;">表示のみ</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#f5efe4;display:flex;align-items:center;justify-content:center;font-size:8px;">📝</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">記録<span style="color:#999;font-weight:400;"> ／ 引いた・受け取ったの回数だけ</span></div></div><span style="font-size:6px;color:#c08a3e;background:rgba(192,138,62,0.12);padding:2px 5px;border-radius:8px;font-weight:700;white-space:nowrap;">検証用</span></div></div><div style="font-size:6.5px;color:#999;">同じ金額帯の全品対象クーポンより必ず得になるように、当たりの中身を設計しています</div></div></div>
+          <div class="screenshot-caption">
+            <h4>期間中1回だけ引けるおみくじ</h4>
+            <p>等級ごとの確率を決めて、引いた回数の記録で設定どおりに当たっているかを確かめます。（表示例）</p>
+          </div>
+        </div>
+
+        <div class="screenshot-card">
+          <div class="screenshot-mockup" style="background:#fafdfa;"><div style="width:100%;height:100%;padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;align-items:center;gap:8px;"><span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:11px;font-weight:800;color:#1a1a1a;">クーポンの時刻管理</span></div><div style="display:flex;gap:5px;"><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">登録</div><div style="font-size:11px;font-weight:800;color:#1a1a1a;">19本</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">表示中</div><div style="font-size:11px;font-weight:800;color:#2d8a56;">9本</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">開始前</div><div style="font-size:11px;font-weight:800;color:#c08a3e;">4本</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">終了</div><div style="font-size:11px;font-weight:800;color:#999;">6本</div></div></div><div style="display:flex;gap:4px;padding:0 6px;"><div style="flex:4;font-size:6.5px;color:#999;font-weight:700;">クーポン</div><div style="flex:2;font-size:6.5px;color:#999;font-weight:700;">出す時刻</div><div style="flex:2;font-size:6.5px;color:#999;font-weight:700;">閉じる時刻</div><div style="flex:2;font-size:6.5px;color:#999;font-weight:700;">いま</div></div><div style="flex:1;display:flex;flex-direction:column;gap:3px;"><div style="display:flex;gap:4px;padding:4px 6px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;"><div style="flex:4;font-size:7px;color:#1a1a1a;font-weight:500;">スタートダッシュ</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">初日 20:00</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">22:00</div><div style="flex:2;font-size:7px;color:#999;font-weight:700;">配布終了</div></div><div style="display:flex;gap:4px;padding:4px 6px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;"><div style="flex:4;font-size:7px;color:#1a1a1a;font-weight:500;">毎日1枚 99%OFF</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">各日 0:00</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">21:00</div><div style="flex:2;font-size:7px;color:#2d8a56;font-weight:700;">受付中</div></div><div style="display:flex;gap:4px;padding:4px 6px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;"><div style="flex:4;font-size:7px;color:#1a1a1a;font-weight:500;">新作 半額</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">初日 0:00</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">最終日</div><div style="flex:2;font-size:7px;color:#2d8a56;font-weight:700;">受付中</div></div><div style="display:flex;gap:4px;padding:4px 6px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;"><div style="flex:4;font-size:7px;color:#1a1a1a;font-weight:500;">おみくじ</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">初日 20:00</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">最終日</div><div style="flex:2;font-size:7px;color:#c08a3e;font-weight:700;">開始前</div></div></div><div style="font-size:6.5px;color:#999;">開始前に開いている人のため、5秒ごとに時計を見て、時刻が来たら組み直します</div></div></div>
+          <div class="screenshot-caption">
+            <h4>時刻が来たら自動で組み直す</h4>
+            <p>クーポンごとに出す時刻と閉じる時刻を持たせ、配布終了の情報とも連動させています。（表示例）</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="section">
+      <div class="section-title">仕組み</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">STEP 01</div>
+          <div class="step-icon">🗓</div>
+          <h4>時刻を設定</h4>
+          <p>クーポンごとに出す・閉じる時刻</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 02</div>
+          <div class="step-icon">⏱</div>
+          <h4>時計で組み直す</h4>
+          <p>開始前に開いた人にも反映</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 03</div>
+          <div class="step-icon">🎋</div>
+          <h4>おみくじ</h4>
+          <p>期間中1回・結果を保持</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 04</div>
+          <div class="step-icon">📝</div>
+          <h4>回数を記録</h4>
+          <p>引いた・受け取ったを集計</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TECH DETAIL -->
+    <div class="section">
+      <div class="section-title">技術的なポイント</div>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <h4>⏱ 開いた瞬間だけで判定しない</h4>
+          <p>最初は「ページを開いた時刻」でしか判定しておらず、開始前から開いて待っている人にはおみくじが出ませんでした。開始前は5秒ごとに時計を見て、時刻が来たら自動で起動し直すように直しています。</p>
+          <span class="tech-tag">待っている人を取りこぼさない</span>
+        </div>
+        <div class="tech-card">
+          <h4>🧪 時刻をずらした試験用コピーで確認</h4>
+          <p>本番の時刻を待たずに、開始直前・開始直後・終了直前・終了直後の4通りを試験用コピーで確かめました。試験用コピーは本番には上げない運用です。</p>
+          <span class="tech-tag">本番前の検証</span>
+        </div>
+        <div class="tech-card">
+          <h4>📊 引いた回数を記録して答え合わせ</h4>
+          <p>楽天側の記録では「何人が取ったか」は分かっても「何回引かれたか」は分かりません。引いたときと受け取ったときに、IDと等級だけを記録して、設定どおりの確率で当たっているかを検証しています。</p>
+          <span class="tech-tag">設計どおりかを確かめる</span>
+        </div>
+        <div class="tech-card">
+          <h4>🙈 URLをソースに直書きしない</h4>
+          <p>最上位の当たりが想定より多く取られていたため調べると、ページのソースからURLを拾われていたとみられました。URLを直書きしない形に変えてからは、外からの取得がほぼ止まりました。</p>
+          <span class="tech-tag">実際の運用から改善</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="section">
+      <div class="section-title">導入効果</div>
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="result-num">19<span style="font-size: 20px;">本</span></div>
+          <div class="result-label">1ページで時刻管理するクーポン</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">1<span style="font-size: 20px;">回</span></div>
+          <div class="result-label">期間中に引けるおみくじ</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">5<span style="font-size: 20px;">秒</span></div>
+          <div class="result-label">開始前の時計チェック間隔</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTE -->
+    <div class="section">
+      <div class="section-title">補足</div>
+      <div class="tech-card" style="max-width: 100%;">
+        <h4>💡 楽しい仕掛けほど、数字で答え合わせをする</h4>
+        <p>おみくじは盛り上がる反面、確率どおりに当たっているか、想定外の取られ方をしていないかが見えにくい仕掛けです。引いた回数を記録して楽天側の獲得数と比べることで、次回の設計に活かせる材料が残ります。画面はダミーの表示例です。</p>
+        <span class="tech-tag">販促の検証</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

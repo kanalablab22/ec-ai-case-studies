@@ -419,7 +419,7 @@
   <!-- STATS -->
   <div class="stats">
     <div class="stat-card">
-      <div class="stat-value">43</div>
+      <div class="stat-value">52</div>
       <div class="stat-label">自動化ツール稼働中</div>
     </div>
     <div class="stat-card">
@@ -1289,9 +1289,9 @@
             <span class="tag">自動入札</span>
           </div>
           <h3 class="card-title">RPP CPC追随ボード</h3>
-          <p class="card-desc">楽天の目安CPCが下がったキーワードは45分ごとに自動で追随して下げ、目安が戻れば基準まで自動復帰。設定・目安・基準・下限を1本のメーターに重ねた状態盤で、やったことの履歴まで追えます。</p>
+          <p class="card-desc">楽天の目安CPCが下がったキーワードは45分ごとに自動で追随して下げ、目安が戻れば基準まで自動復帰。2店舗目は目安の振れが大きいため「2回続けて下がったときだけ下げる」に調整。状態盤は店舗ごとのタブで、履歴まで追えます。</p>
           <div class="card-footer">
-            <span class="card-result">143キーワードを自動追随</span>
+            <span class="card-result">2店舗・177キーワードを自動追随</span>
           </div>
         </div>
       </a>
@@ -1312,6 +1312,186 @@
           <p class="card-desc">新作バッグ3型のレビュー投稿率（KPI 10%）を毎日記録。レビューページと注文データを突き合わせて算出し、分母が少ない期間は参考値と明示して誤読を防ぎます。</p>
           <div class="card-footer">
             <span class="card-result">KPI 10%を毎日追跡</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 楽天クーポン自動作成（API発行） -->
+      <a id="card-44" href="coupon-issue.html" class="card" data-category="automation" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">44</span>
+          <span class="card-category">Automation</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">楽天クーポンAPI</span>
+            <span class="tag">画像の文字読み取り</span>
+            <span class="tag">ミス防止</span>
+          </div>
+          <h3 class="card-title">楽天クーポン自動作成（API発行）</h3>
+          <p class="card-desc">前回のクーポンを読み込んで、日付・枚数・名前だけ変えて楽天クーポンAPIで発行。次のイベント日を提案し、クーポン名・期間・画像の文字が食い違っていれば発行そのものを止めます。</p>
+          <div class="card-footer">
+            <span class="card-result">名前と日付のずれは発行させない</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- クーポン効果分析（商品別・イベント別） -->
+      <a id="card-45" href="coupon-analysis.html" class="card" data-category="monitoring" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">45</span>
+          <span class="card-category">Analysis</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">楽天受注API</span>
+            <span class="tag">商品別分析</span>
+            <span class="tag">貢献利益</span>
+          </div>
+          <h3 class="card-title">クーポン効果分析（商品別・イベント別）</h3>
+          <p class="card-desc">楽天の受注APIから注文・商品・クーポンを取り込み、どの商品に、どのイベントで使われたかを分析。推定の貢献利益まで出し、マラソンどうしのように同じイベントの回どうしで比べられます。</p>
+          <div class="card-footer">
+            <span class="card-result">注文データと完全一致で裏取り</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- クーポン配布終了 ページ自動反映 -->
+      <a id="card-46" href="coupon-soldout-feed.html" class="card" data-category="system" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">46</span>
+          <span class="card-category">System</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">楽天GOLD</span>
+            <span class="tag">FTP</span>
+            <span class="tag">監視連携</span>
+          </div>
+          <h3 class="card-title">クーポン配布終了 ページ自動反映</h3>
+          <p class="card-desc">配布終了の監視ツールが上限到達を検知すると、セール特設ページのクーポンが自動で「配布は終了しました」に切り替わります。送るのは終了したクーポンの一覧だけで、削除の命令は持たせていません。</p>
+          <div class="card-footer">
+            <span class="card-result">特設ページへの反映 人手ゼロ</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- セール特設ページ＋おみくじ -->
+      <a id="card-47" href="sale-special-page.html" class="card" data-category="automation" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">47</span>
+          <span class="card-category">Promotion</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">楽天GOLD</span>
+            <span class="tag">時刻制御</span>
+            <span class="tag">おみくじ</span>
+          </div>
+          <h3 class="card-title">セール特設ページ＋おみくじ</h3>
+          <p class="card-desc">クーポンの獲得ボタンが時刻どおりに出て、終われば自動で閉じる特設ページ。期間中1回だけ引けるおみくじ付きで、引いた回数を記録して想定どおりの当たり方かを検証できます。</p>
+          <div class="card-footer">
+            <span class="card-result">クーポン19本を1ページで時刻管理</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 新商品ローンチ通知 -->
+      <a id="card-48" href="launch-notify.html" class="card" data-category="monitoring" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">48</span>
+          <span class="card-category">Monitoring</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">GAS</span>
+            <span class="tag">スケジュール表連携</span>
+            <span class="tag">Slack通知</span>
+          </div>
+          <h3 class="card-title">新商品ローンチ通知</h3>
+          <p class="card-desc">製作スケジュール表の型番を読み、楽天で「商品説明の画像が入った」かつ「在庫がある」がそろった瞬間にSlackへ通知。ページが見えただけでは知らせないので、ローンチ前の誤通知がありません。</p>
+          <div class="card-footer">
+            <span class="card-result">「LPあり＋在庫あり」で判定</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 週間ランキング 自動記録 -->
+      <a id="card-49" href="weekly-rank-log.html" class="card" data-category="monitoring" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">49</span>
+          <span class="card-category">Monitoring</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">ヘッドレスブラウザ</span>
+            <span class="tag">CSV記録</span>
+          </div>
+          <h3 class="card-title">週間ランキング 自動記録</h3>
+          <p class="card-desc">楽天の週間ランキングを毎週水曜に自動で記録し、「何週連続1位か」を数えられるようにしました。結果は1位・1位以外・取得失敗の3種類で必ず残すので、記録の抜けと圏外を取り違えません。</p>
+          <div class="card-footer">
+            <span class="card-result">何週連続1位かを数えられる</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 滞在時間カルテ（AIの読み解き付き） -->
+      <a id="card-50" href="stay-time-karte.html" class="card" data-category="ai" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">50</span>
+          <span class="card-category">AI</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">R-Karte</span>
+            <span class="tag">AIの読み解き</span>
+            <span class="tag">自動公開</span>
+          </div>
+          <h3 class="card-title">滞在時間カルテ（AIの読み解き付き）</h3>
+          <p class="card-desc">楽天のアクセス分析から新作の滞在時間・直帰を毎日取得し、AIが変化の読み解きを書き添えてページを自動更新。集計が遅れる日も、直近3日を取り直して自分で埋め合わせます。</p>
+          <div class="card-footer">
+            <span class="card-result">AIの読み解きを1日2回自動更新</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- デイリーランキング 自動公開 -->
+      <a id="card-51" href="daily-ranking-page.html" class="card" data-category="system" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">51</span>
+          <span class="card-category">Dashboard</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">BigQuery</span>
+            <span class="tag">無人公開</span>
+            <span class="tag">対数グラフ</span>
+          </div>
+          <h3 class="card-title">デイリーランキング 自動公開</h3>
+          <p class="card-desc">ジャンル別のデイリーランキングをデータ基盤から取得し、入賞カレンダーと推移グラフのページを毎日無人で公開。1位と1000位を同じグラフで読めるよう、縦軸を対数にしています。</p>
+          <div class="card-footer">
+            <span class="card-result">1日2回 無人で公開</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 検索順位カルテ -->
+      <a id="card-52" href="rank-karte.html" class="card" data-category="monitoring" style="text-decoration:none;color:inherit;cursor:pointer;">
+        <div class="card-header">
+          <span class="card-number">52</span>
+          <span class="card-category">Analysis</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">検索順位</span>
+            <span class="tag">マトリクス表示</span>
+            <span class="tag">Google Sheets</span>
+          </div>
+          <h3 class="card-title">検索順位カルテ</h3>
+          <p class="card-desc">追跡している53キーワードの検索順位を、商品×日付のマトリクスと推移グラフで1枚に。取れなかった日は「圏外」と混ぜずに「未計測」として分けるので、順位が落ちたと読み違えません。</p>
+          <div class="card-footer">
+            <span class="card-result">53キーワードを1枚で一覧</span>
           </div>
         </div>
       </a>

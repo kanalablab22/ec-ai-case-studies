@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RPP CPC追随ボード | EC × AI LAB</title>
+  <title>デイリーランキング自動公開ページ | EC × AI LAB</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -502,33 +502,18 @@
 
   <nav>
     <a href="index.html" class="nav-logo">EC × AI LAB</a>
-    <a href="index.html#card-42" class="nav-back">&larr; 事例一覧に戻る</a>
+    <a href="index.html#card-51" class="nav-back">&larr; 事例一覧に戻る</a>
   </nav>
 
   <!-- HERO -->
   <div class="detail-hero">
-    <span class="badge">OPTIMIZATION</span>
-    <h1>RPP CPC追随ボード<br>（自動追随の状態盤）</h1>
+    <span class="badge">DASHBOARD</span>
+    <h1>デイリーランキング<br>自動公開ページ</h1>
     <p class="lead">
-      楽天の目安CPCが下がったキーワードは自動で追随して入札を下げ、目安が戻れば元の基準まで自分で戻す。その状態を1枚で見られる盤面です。何が起きて、いま何が下げ余地なのかが分かります。現在は2店舗で稼働し、盤面も店舗ごとのタブで切り替えられます。
+      自社商品が楽天のジャンル別デイリーランキングで何位だったかを、1枚のページで見られるようにしました。データの取得からページの公開まで、毎日人の手を介さずに更新されます。
     </p>
     <div class="meta-row">
-      <div class="meta-item">
-        <span class="meta-label">カテゴリ</span>
-        <span class="meta-value">広告最適化・状態可視化</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">技術スタック</span>
-        <span class="meta-value">Python / 静的HTML生成 / SVG</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">管理範囲</span>
-        <span class="meta-value">2店舗・177キーワード</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">巡回間隔</span>
-        <span class="meta-value">45分ごと</span>
-      </div>
+      <div class="meta-item"><span class="meta-label">カテゴリ</span><span class="meta-value">ダッシュボード・自動公開</span></div><div class="meta-item"><span class="meta-label">技術スタック</span><span class="meta-value">Python / BigQuery / GitHub</span></div><div class="meta-item"><span class="meta-label">更新</span><span class="meta-value">1日2回 自動公開</span></div><div class="meta-item"><span class="meta-label">表示</span><span class="meta-value">1〜1000位を対数で</span></div>
     </div>
   </div>
 
@@ -541,21 +526,11 @@
       <div class="ps-grid">
         <div class="ps-card">
           <h3>😰 Before（課題）</h3>
-          <ul>
-            <li>目安CPCが下がっても気づかず、高い入札のまま払い続けることがあった</li>
-            <li>手で下げると、目安が戻ったときに上げ直すのを忘れて機会損失になった</li>
-            <li>自動で調整すると、何が起きているのか分からず不安だった</li>
-            <li>下げ余地がどのキーワードに残っているのか、探すのに時間がかかった</li>
-          </ul>
+          <ul><li>ランキングの推移を見るには、日付ごとにページを開いて探す必要があった</li><li>毎朝の作業の中で手動更新していたので、忘れた日は古いままだった</li><li>1位と数百位を同じグラフに描くと、上位の動きがつぶれて見えなかった</li><li>セール中にどの商品が駆け上がったのか、まとめて振り返れなかった</li></ul>
         </div>
         <div class="ps-card solution">
           <h3>🎉 After（解決）</h3>
-          <ul>
-            <li>目安CPCが下がったキーワードは45分以内に自動で追随して下げる</li>
-            <li>目安が基準まで戻れば、こちらの入札も自動で基準に戻る</li>
-            <li>設定・目安・基準・下限を1本のメーターに重ねて、状態がひと目で分かる</li>
-            <li>自動追随がやったことが履歴として並ぶので、あとから確認できる</li>
-          </ul>
+          <ul><li>毎日決まった時刻に、最新のランキングがページに反映される</li><li>入賞カレンダーで、どの商品がどの日に入賞したかが一目で分かる</li><li>縦軸を対数にして、1位付近の動きも数百位の動きも同じグラフで読める</li><li>セール期間のベスト順位と、駆け上がった商品を自動でまとめる</li></ul>
         </div>
       </div>
     </div>
@@ -566,18 +541,18 @@
       <div class="screenshot-grid">
 
         <div class="screenshot-card">
-          <div class="screenshot-mockup" style="background:#fafdfa;"><div style="width:100%;height:100%;padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;align-items:center;gap:8px;"><span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:11px;font-weight:800;color:#1a1a1a;">目安CPCと設定の動き</span></div><div style="display:flex;gap:8px;"><span style="display:flex;align-items:center;gap:3px;font-size:6px;color:#999;"><span style="width:10px;height:0;border-top:2px solid #2d8a56;"></span>設定CPC</span><span style="display:flex;align-items:center;gap:3px;font-size:6px;color:#999;"><span style="width:10px;height:0;border-top:1.6px dashed #c08a3e;"></span>目安CPC</span><span style="display:flex;align-items:center;gap:3px;font-size:6px;color:#999;"><span style="width:10px;height:0;border-top:1px dashed rgba(0,0,0,0.25);"></span>下限40円</span></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:6px;"><svg viewBox="0 0 200 88" style="width:100%;height:100%;"><line x1="0" y1="70" x2="200" y2="70" stroke="rgba(0,0,0,0.15)" stroke-width="1" stroke-dasharray="3 3"/><path d="M 5 16 L 40 16 L 40 48 L 70 48 L 70 48 L 105 48 L 105 30 L 140 30 L 140 30 L 175 30 L 175 30 L 195 30 L 195 30" fill="none" stroke="#c08a3e" stroke-width="1.6" stroke-dasharray="4 3"/><path d="M 5 24 L 40 24 L 40 24 L 70 24 L 70 46 L 105 46 L 105 46 L 140 46 L 140 26 L 175 26 L 175 26 L 195 26 L 195 26" fill="none" stroke="#2d8a56" stroke-width="2"/></svg></div><div style="font-size:6.5px;color:#999;">金色の点線が楽天の目安CPC、緑の実線がこちらの設定CPC。目安が下がると次の巡回で階段状に追いかけます。</div></div></div>
+          <div class="screenshot-mockup" style="background:#fafdfa;"><div style="width:100%;height:100%;padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;align-items:center;gap:8px;"><span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:11px;font-weight:800;color:#1a1a1a;">入賞カレンダー</span></div><div style="display:flex;gap:5px;"><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">掲載</div><div style="font-size:11px;font-weight:800;color:#1a1a1a;">60点</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">1位</div><div style="font-size:11px;font-weight:800;color:#2d8a56;">2点</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">TOP10</div><div style="font-size:11px;font-weight:800;color:#2d8a56;">8点</div></div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:6px;"><div style="display:flex;gap:2px;margin-bottom:2px;"><span style="font-size:6px;color:#999;width:28px;">商品A</span><span style="flex:1;height:8px;border-radius:2px;background:#e8f0e9;"></span><span style="flex:1;height:8px;border-radius:2px;background:#b9d6c3;"></span><span style="flex:1;height:8px;border-radius:2px;background:#7fb495;"></span><span style="flex:1;height:8px;border-radius:2px;background:#2d8a56;"></span><span style="flex:1;height:8px;border-radius:2px;background:#2d8a56;"></span><span style="flex:1;height:8px;border-radius:2px;background:#1f6b41;"></span><span style="flex:1;height:8px;border-radius:2px;background:#7fb495;"></span></div><div style="display:flex;gap:2px;margin-bottom:2px;"><span style="font-size:6px;color:#999;width:28px;">商品B</span><span style="flex:1;height:8px;border-radius:2px;background:#fff;"></span><span style="flex:1;height:8px;border-radius:2px;background:#e8f0e9;"></span><span style="flex:1;height:8px;border-radius:2px;background:#e8f0e9;"></span><span style="flex:1;height:8px;border-radius:2px;background:#b9d6c3;"></span><span style="flex:1;height:8px;border-radius:2px;background:#7fb495;"></span><span style="flex:1;height:8px;border-radius:2px;background:#7fb495;"></span><span style="flex:1;height:8px;border-radius:2px;background:#b9d6c3;"></span></div><div style="display:flex;gap:2px;margin-bottom:2px;"><span style="font-size:6px;color:#999;width:28px;">商品C</span><span style="flex:1;height:8px;border-radius:2px;background:#b9d6c3;"></span><span style="flex:1;height:8px;border-radius:2px;background:#b9d6c3;"></span><span style="flex:1;height:8px;border-radius:2px;background:#fff;"></span><span style="flex:1;height:8px;border-radius:2px;background:#fff;"></span><span style="flex:1;height:8px;border-radius:2px;background:#e8f0e9;"></span><span style="flex:1;height:8px;border-radius:2px;background:#b9d6c3;"></span><span style="flex:1;height:8px;border-radius:2px;background:#7fb495;"></span></div><div style="display:flex;gap:2px;margin-bottom:2px;"><span style="font-size:6px;color:#999;width:28px;">商品D</span><span style="flex:1;height:8px;border-radius:2px;background:#fff;"></span><span style="flex:1;height:8px;border-radius:2px;background:#fff;"></span><span style="flex:1;height:8px;border-radius:2px;background:#e8f0e9;"></span><span style="flex:1;height:8px;border-radius:2px;background:#fff;"></span><span style="flex:1;height:8px;border-radius:2px;background:#e8f0e9;"></span><span style="flex:1;height:8px;border-radius:2px;background:#fff;"></span><span style="flex:1;height:8px;border-radius:2px;background:#e8f0e9;"></span></div></div><div style="font-size:6.5px;color:#999;">緑が濃いほど上位。入賞しなかった日は白マスで表示します</div></div></div>
           <div class="screenshot-caption">
-            <h4>追随のようすを階段グラフで</h4>
-            <p>値は次の観測まで一定なので、あえて階段で描いています。点に触れるとその時刻の数字が出ます。（表示例）</p>
+            <h4>入賞した日を色の濃さで</h4>
+            <p>商品×日付のマスで、どの日にどこまで上がったかを一覧にします。（表示例）</p>
           </div>
         </div>
 
         <div class="screenshot-card">
-          <div class="screenshot-mockup" style="background:#fafdfa;"><div style="width:100%;height:100%;padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;align-items:center;gap:8px;"><span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:11px;font-weight:800;color:#1a1a1a;">いまの状態</span></div><div style="display:flex;gap:5px;"><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">管理</div><div style="font-size:11px;font-weight:800;">177KW</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">下げ余地</div><div style="font-size:11px;font-weight:800;color:#2d8a56;">0件</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">追随中</div><div style="font-size:11px;font-weight:800;color:#c08a3e;">6件</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">本日調整</div><div style="font-size:11px;font-weight:800;color:#2d8a56;">3件</div></div></div><div style="flex:1;display:flex;flex-direction:column;gap:4px;"><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#f5efe4;display:flex;align-items:center;justify-content:center;font-size:8px;">🟢</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">追随中<span style="color:#999;font-weight:400;"> ／ 目安が下がったので下げている状態</span></div></div><span style="font-size:6px;color:#c08a3e;background:rgba(192,138,62,0.12);padding:2px 5px;border-radius:8px;font-weight:700;">6件</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#e8f0e9;display:flex;align-items:center;justify-content:center;font-size:8px;">⬇️</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">下げ余地<span style="color:#999;font-weight:400;"> ／ 目安が設定より低い＝次の巡回で調整</span></div></div><span style="font-size:6px;color:#2d8a56;background:rgba(45,138,86,0.1);padding:2px 5px;border-radius:8px;font-weight:700;">0件</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#f2f2f0;display:flex;align-items:center;justify-content:center;font-size:8px;">🧱</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">下限<span style="color:#999;font-weight:400;"> ／ 入札下限の40円でこれ以上下げられない</span></div></div><span style="font-size:6px;color:#999;background:rgba(0,0,0,0.05);padding:2px 5px;border-radius:8px;font-weight:700;">多数</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#f2f2f0;display:flex;align-items:center;justify-content:center;font-size:8px;">⏸</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">据え置き<span style="color:#999;font-weight:400;"> ／ 目安が設定以上なので触らない</span></div></div><span style="font-size:6px;color:#999;background:rgba(0,0,0,0.05);padding:2px 5px;border-radius:8px;font-weight:700;">—</span></div></div></div></div>
+          <div class="screenshot-mockup" style="background:#fafdfa;"><div style="width:100%;height:100%;padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;align-items:center;gap:8px;"><span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:11px;font-weight:800;color:#1a1a1a;">ジャンル別の推移（対数）</span></div><div style="display:flex;gap:8px;"><span style="display:flex;align-items:center;gap:3px;font-size:6px;color:#999;"><span style="width:10px;height:0;border-top:2px solid #0F7A50;"></span>商品A</span><span style="display:flex;align-items:center;gap:3px;font-size:6px;color:#999;"><span style="width:10px;height:0;border-top:2px solid #9C3378;"></span>商品B</span><span style="display:flex;align-items:center;gap:3px;font-size:6px;color:#999;"><span style="width:10px;height:0;border-top:2px solid #C25A15;"></span>商品C</span></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:6px;"><svg viewBox="0 0 200 80" style="width:100%;height:100%;"><g stroke="rgba(0,0,0,0.08)"><line x1="18" y1="6" x2="200" y2="6"/><line x1="18" y1="30" x2="200" y2="30"/><line x1="18" y1="54" x2="200" y2="54"/><line x1="18" y1="76" x2="200" y2="76"/></g><g font-size="6" fill="#999"><text x="0" y="8">1</text><text x="0" y="32">10</text><text x="0" y="56">100</text><text x="0" y="78">1000</text></g><path d="M22 40 L50 34 L78 26 L106 18 L134 8 L162 10 L196 14" fill="none" stroke="#0F7A50" stroke-width="2"/><path d="M22 70 L50 64 L78 58 L106 50 L134 44 L162 46 L196 40" fill="none" stroke="#9C3378" stroke-width="2"/><path d="M22 20 L50 22 L78 30 L106 36 L134 48 L162 52 L196 56" fill="none" stroke="#C25A15" stroke-width="2"/></svg></div><div style="font-size:6.5px;color:#999;">縦軸は1位が上。対数にすることで、上位の小さな動きも下位の大きな動きも読めます</div></div></div>
           <div class="screenshot-caption">
-            <h4>状態を色と文字の両方で示す</h4>
-            <p>色だけに頼らず必ず文字ラベルを付けて、どの状態なのかを取り違えないようにしています。（表示例）</p>
+            <h4>1位と1000位を同じグラフで</h4>
+            <p>ジャンルを選び、商品を最大8点まで重ねて推移を比べられます。（表示例）</p>
           </div>
         </div>
 
@@ -590,27 +565,27 @@
       <div class="flow-steps">
         <div class="flow-step">
           <div class="step-num">STEP 01</div>
-          <div class="step-icon">🕒</div>
-          <h4>45分ごとに点検</h4>
-          <p>目安CPCと設定を突き合わせる</p>
+          <div class="step-icon">🗄</div>
+          <h4>データ基盤から取得</h4>
+          <p>ジャンル別の順位を集める</p>
         </div>
         <div class="flow-step">
           <div class="step-num">STEP 02</div>
-          <div class="step-icon">⬇️</div>
-          <h4>下がったら追随</h4>
-          <p>目安に合わせて入札を下げる</p>
+          <div class="step-icon">🧱</div>
+          <h4>ページを組み立て</h4>
+          <p>カレンダーとグラフを生成</p>
         </div>
         <div class="flow-step">
           <div class="step-num">STEP 03</div>
-          <div class="step-icon">⬆️</div>
-          <h4>戻ったら復帰</h4>
-          <p>基準CPCまで自動で戻す</p>
+          <div class="step-icon">📤</div>
+          <h4>GitHubへ置く</h4>
+          <p>社内PCから自動で送る</p>
         </div>
         <div class="flow-step">
           <div class="step-num">STEP 04</div>
-          <div class="step-icon">📊</div>
-          <h4>盤面に反映</h4>
-          <p>状態と履歴をHTMLに書き出す</p>
+          <div class="step-icon">🌐</div>
+          <h4>クラウドが公開</h4>
+          <p>決まった時刻に上書き公開</p>
         </div>
       </div>
     </div>
@@ -620,34 +595,24 @@
       <div class="section-title">技術的なポイント</div>
       <div class="tech-grid">
         <div class="tech-card">
-          <h4>📏 4つの数字を1本のメーターに</h4>
-          <p>いまの設定CPC・楽天の目安CPC・戻る先の基準CPC・入札下限の40円を、同じスケールに重ねて表示します。「どこにいて、どこまで下げられるのか」が1行で読めるようにしました。</p>
-          <span class="tech-tag">状態の可視化</span>
+          <h4>🤖 取得と公開を分けて無人化</h4>
+          <p>データ基盤への接続は社内PCに、ページの公開はクラウドの自動実行に任せ、その間をGitHubで受け渡しています。クラウド側は届いたページをそのまま公開するだけなので、判断の余地がなく安定して動きます。</p>
+          <span class="tech-tag">役割を分けて安定させる</span>
         </div>
         <div class="tech-card">
-          <h4>🪜 階段グラフで正しく見せる</h4>
-          <p>点と点を斜めにつなぐと、実際には動いていない時間まで変化しているように見えてしまいます。値は次の観測まで一定なので、階段で描いて観測間隔を正しく表現しました。</p>
-          <span class="tech-tag">グラフの誠実さ</span>
+          <h4>📐 縦軸を対数にする</h4>
+          <p>1位〜10位の動きと、100位〜1000位の動きは、桁が違います。普通の目盛りだと上位の変化がつぶれてしまうので、対数の目盛りにして、どの順位帯の動きも同じように読めるようにしました。</p>
+          <span class="tech-tag">グラフの選び方</span>
         </div>
         <div class="tech-card">
-          <h4>🎨 色だけに頼らない</h4>
-          <p>状態は色分けだけでなく、必ず「追随中」「下げ余地」「下限」「据え置き」の文字ラベルを添えています。色の見え方に左右されず、誰が見ても同じ読み取りになります。</p>
-          <span class="tech-tag">アクセシビリティ</span>
+          <h4>🕒 いつ時点のデータかを必ず表示</h4>
+          <p>社内PCが止まっていた日は、ページが前日のままになります。その場合も「いつ時点のデータか」をページに表示しているので、古い数字を最新と取り違える事故になりません。</p>
+          <span class="tech-tag">古さを隠さない</span>
         </div>
         <div class="tech-card">
-          <h4>🗂 やったことを履歴で残す</h4>
-          <p>自動で入札を動かす仕組みは、履歴が読めないと怖くて任せられません。自動追随の実行内容と手動での変更を並べて残し、あとから「なぜこの入札なのか」を追えるようにしています。</p>
-          <span class="tech-tag">自動化を任せられる状態に</span>
-        </div>
-        <div class="tech-card">
-          <h4>🏪 店舗ごとに「下げる条件」を変える</h4>
-          <p>2店舗目は目安CPCの振れがとても大きく、数時間で10倍に跳ねてまた戻ることもありました。その瞬間の目安に合わせると事故になるため、「基準より下がった状態が2回続いたときだけ下げる」ようにしています。上げ戻しは待たずにすぐ行います。</p>
-          <span class="tech-tag">店舗のクセに合わせる</span>
-        </div>
-        <div class="tech-card">
-          <h4>🗂 店舗はタブで切り替え</h4>
-          <p>盤面は店舗ごとのタブに分け、URLの末尾で直接どちらのタブを開くかも選べます。店舗の一覧に1行足すだけで、3店舗目も同じ作りで並べられるようにしてあります。</p>
-          <span class="tech-tag">横展開しやすい作り</span>
+          <h4>🔑 認証は既存の仕組みと共有</h4>
+          <p>データ基盤への認証は、ほかのレポートと同じものを使っています。ツールごとに別々に持たせると、更新のタイミングがぶつかってほかのツールまで止まってしまうためです。</p>
+          <span class="tech-tag">既存ツールを壊さない</span>
         </div>
       </div>
     </div>
@@ -657,16 +622,16 @@
       <div class="section-title">導入効果</div>
       <div class="result-grid">
         <div class="result-card">
-          <div class="result-num">177<span style="font-size: 20px;">KW</span></div>
-          <div class="result-label">基準台帳で管理するキーワード</div>
+          <div class="result-num">2<span style="font-size: 20px;">回/日</span></div>
+          <div class="result-label">無人での自動公開</div>
         </div>
         <div class="result-card">
-          <div class="result-num">45<span style="font-size: 20px;">分</span></div>
-          <div class="result-label">目安の下がりを検知する間隔</div>
+          <div class="result-num">1000<span style="font-size: 20px;">位</span></div>
+          <div class="result-label">まで対数で表示</div>
         </div>
         <div class="result-card">
-          <div class="result-num">自動<span style="font-size: 20px;">で復帰</span></div>
-          <div class="result-label">目安が戻れば基準CPCへ</div>
+          <div class="result-num">0<span style="font-size: 20px;">回</span></div>
+          <div class="result-label">毎日の手動更新</div>
         </div>
       </div>
     </div>
@@ -675,9 +640,9 @@
     <div class="section">
       <div class="section-title">補足</div>
       <div class="tech-card" style="max-width: 100%;">
-        <h4>💡 自動で動かすなら、見える状態にしておく</h4>
-        <p>入札を自動で動かす仕組みは、便利さと同じだけ不安もついてきます。いま何が起きていて、何をやったのかが読める盤面をセットで用意しておくと、安心して任せられる範囲が広がります。調整は商品管理番号単位で行っています。画面はダミーの表示例です。</p>
-        <span class="tech-tag">自動化と可視化はセット</span>
+        <h4>💡 「忘れても更新される」が一番の価値</h4>
+        <p>最初は毎朝の作業の中で更新していましたが、忘れた日はそのまま古くなっていました。人の作業に乗せず、決まった時刻に勝手に新しくなる形にしたことで、見たいときにいつでも最新が見られるページになりました。画面はダミーの表示例です。</p>
+        <span class="tech-tag">人の作業に乗せない</span>
       </div>
     </div>
 

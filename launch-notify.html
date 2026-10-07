@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RPP CPC追随ボード | EC × AI LAB</title>
+  <title>新商品ローンチ通知 | EC × AI LAB</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -502,33 +502,18 @@
 
   <nav>
     <a href="index.html" class="nav-logo">EC × AI LAB</a>
-    <a href="index.html#card-42" class="nav-back">&larr; 事例一覧に戻る</a>
+    <a href="index.html#card-48" class="nav-back">&larr; 事例一覧に戻る</a>
   </nav>
 
   <!-- HERO -->
   <div class="detail-hero">
-    <span class="badge">OPTIMIZATION</span>
-    <h1>RPP CPC追随ボード<br>（自動追随の状態盤）</h1>
+    <span class="badge">MONITORING</span>
+    <h1>新商品ローンチ通知</h1>
     <p class="lead">
-      楽天の目安CPCが下がったキーワードは自動で追随して入札を下げ、目安が戻れば元の基準まで自分で戻す。その状態を1枚で見られる盤面です。何が起きて、いま何が下げ余地なのかが分かります。現在は2店舗で稼働し、盤面も店舗ごとのタブで切り替えられます。
+      新商品の製作スケジュール表に載っている型番を見張り、楽天で実際に販売が始まったらチームのSlackへ知らせるツールです。スプレッドシートの拡張機能（GAS）だけで動くので、サーバーは要りません。
     </p>
     <div class="meta-row">
-      <div class="meta-item">
-        <span class="meta-label">カテゴリ</span>
-        <span class="meta-value">広告最適化・状態可視化</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">技術スタック</span>
-        <span class="meta-value">Python / 静的HTML生成 / SVG</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">管理範囲</span>
-        <span class="meta-value">2店舗・177キーワード</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">巡回間隔</span>
-        <span class="meta-value">45分ごと</span>
-      </div>
+      <div class="meta-item"><span class="meta-label">カテゴリ</span><span class="meta-value">監視・通知</span></div><div class="meta-item"><span class="meta-label">技術スタック</span><span class="meta-value">Google Apps Script / Slack</span></div><div class="meta-item"><span class="meta-label">判定</span><span class="meta-value">LPあり かつ 在庫あり</span></div><div class="meta-item"><span class="meta-label">通知先</span><span class="meta-value">チームのチャンネル</span></div>
     </div>
   </div>
 
@@ -541,21 +526,11 @@
       <div class="ps-grid">
         <div class="ps-card">
           <h3>😰 Before（課題）</h3>
-          <ul>
-            <li>目安CPCが下がっても気づかず、高い入札のまま払い続けることがあった</li>
-            <li>手で下げると、目安が戻ったときに上げ直すのを忘れて機会損失になった</li>
-            <li>自動で調整すると、何が起きているのか分からず不安だった</li>
-            <li>下げ余地がどのキーワードに残っているのか、探すのに時間がかかった</li>
-          </ul>
+          <ul><li>新商品がいつ販売開始になったのか、売り場を見に行かないと分からなかった</li><li>スケジュール表の予定と、実際の販売開始がずれることがあった</li><li>楽天では販売前から商品ページを公開しているため、ページの有無では判断できなかった</li><li>新色の追加は元のページが販売中のままなので、さらに気づきにくかった</li></ul>
         </div>
         <div class="ps-card solution">
           <h3>🎉 After（解決）</h3>
-          <ul>
-            <li>目安CPCが下がったキーワードは45分以内に自動で追随して下げる</li>
-            <li>目安が基準まで戻れば、こちらの入札も自動で基準に戻る</li>
-            <li>設定・目安・基準・下限を1本のメーターに重ねて、状態がひと目で分かる</li>
-            <li>自動追随がやったことが履歴として並ぶので、あとから確認できる</li>
-          </ul>
+          <ul><li>販売開始の条件がそろった時点で、チームのチャンネルへ自動で通知が届く</li><li>ローンチの定義を「LPが入っている かつ 在庫がある」に固定して、誤通知をなくした</li><li>新色は、監視を始めてから初めて在庫ありになったカラーで知らせる</li><li>スケジュール表に型番が入れば、自動で監視対象に加わる</li></ul>
         </div>
       </div>
     </div>
@@ -566,18 +541,18 @@
       <div class="screenshot-grid">
 
         <div class="screenshot-card">
-          <div class="screenshot-mockup" style="background:#fafdfa;"><div style="width:100%;height:100%;padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;align-items:center;gap:8px;"><span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:11px;font-weight:800;color:#1a1a1a;">目安CPCと設定の動き</span></div><div style="display:flex;gap:8px;"><span style="display:flex;align-items:center;gap:3px;font-size:6px;color:#999;"><span style="width:10px;height:0;border-top:2px solid #2d8a56;"></span>設定CPC</span><span style="display:flex;align-items:center;gap:3px;font-size:6px;color:#999;"><span style="width:10px;height:0;border-top:1.6px dashed #c08a3e;"></span>目安CPC</span><span style="display:flex;align-items:center;gap:3px;font-size:6px;color:#999;"><span style="width:10px;height:0;border-top:1px dashed rgba(0,0,0,0.25);"></span>下限40円</span></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:6px;"><svg viewBox="0 0 200 88" style="width:100%;height:100%;"><line x1="0" y1="70" x2="200" y2="70" stroke="rgba(0,0,0,0.15)" stroke-width="1" stroke-dasharray="3 3"/><path d="M 5 16 L 40 16 L 40 48 L 70 48 L 70 48 L 105 48 L 105 30 L 140 30 L 140 30 L 175 30 L 175 30 L 195 30 L 195 30" fill="none" stroke="#c08a3e" stroke-width="1.6" stroke-dasharray="4 3"/><path d="M 5 24 L 40 24 L 40 24 L 70 24 L 70 46 L 105 46 L 105 46 L 140 46 L 140 26 L 175 26 L 175 26 L 195 26 L 195 26" fill="none" stroke="#2d8a56" stroke-width="2"/></svg></div><div style="font-size:6.5px;color:#999;">金色の点線が楽天の目安CPC、緑の実線がこちらの設定CPC。目安が下がると次の巡回で階段状に追いかけます。</div></div></div>
+          <div class="screenshot-mockup" style="background:#fff;"><div style="width:100%;height:100%;padding:14px 16px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;gap:8px;"><div style="width:22px;height:22px;border-radius:5px;background:#2d8a56;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;">🎉</div><div style="flex:1;"><div style="font-size:8px;"><b style="color:#1a1a1a;">新商品ローンチ通知</b> <span style="color:#999;">10:30</span></div><div style="font-size:8px;color:#333;line-height:1.7;"><b>🎉 ローンチしました</b><br>型番 ○○○○ ／ ミニボストンバッグ<br>LP画像 8枚 ・ 在庫ありカラー 3色<br><span style='color:#2d8a56;'>商品ページを開く →</span></div></div></div><div style="display:flex;gap:8px;"><div style="width:22px;height:22px;border-radius:5px;background:#2d8a56;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;">🎨</div><div style="flex:1;"><div style="font-size:8px;"><b style="color:#1a1a1a;">新商品ローンチ通知</b> <span style="color:#999;">14:00</span></div><div style="font-size:8px;color:#333;line-height:1.7;"><b>🎨 新色が販売開始</b><br>型番 ○○○○ ／ キャメルが在庫ありになりました</div></div></div></div></div>
           <div class="screenshot-caption">
-            <h4>追随のようすを階段グラフで</h4>
-            <p>値は次の観測まで一定なので、あえて階段で描いています。点に触れるとその時刻の数字が出ます。（表示例）</p>
+            <h4>そろった瞬間にチームへ</h4>
+            <p>販売開始と新色の追加を、種類を分けて通知します。（表示例）</p>
           </div>
         </div>
 
         <div class="screenshot-card">
-          <div class="screenshot-mockup" style="background:#fafdfa;"><div style="width:100%;height:100%;padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;align-items:center;gap:8px;"><span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:11px;font-weight:800;color:#1a1a1a;">いまの状態</span></div><div style="display:flex;gap:5px;"><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">管理</div><div style="font-size:11px;font-weight:800;">177KW</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">下げ余地</div><div style="font-size:11px;font-weight:800;color:#2d8a56;">0件</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">追随中</div><div style="font-size:11px;font-weight:800;color:#c08a3e;">6件</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">本日調整</div><div style="font-size:11px;font-weight:800;color:#2d8a56;">3件</div></div></div><div style="flex:1;display:flex;flex-direction:column;gap:4px;"><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#f5efe4;display:flex;align-items:center;justify-content:center;font-size:8px;">🟢</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">追随中<span style="color:#999;font-weight:400;"> ／ 目安が下がったので下げている状態</span></div></div><span style="font-size:6px;color:#c08a3e;background:rgba(192,138,62,0.12);padding:2px 5px;border-radius:8px;font-weight:700;">6件</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#e8f0e9;display:flex;align-items:center;justify-content:center;font-size:8px;">⬇️</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">下げ余地<span style="color:#999;font-weight:400;"> ／ 目安が設定より低い＝次の巡回で調整</span></div></div><span style="font-size:6px;color:#2d8a56;background:rgba(45,138,86,0.1);padding:2px 5px;border-radius:8px;font-weight:700;">0件</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#f2f2f0;display:flex;align-items:center;justify-content:center;font-size:8px;">🧱</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">下限<span style="color:#999;font-weight:400;"> ／ 入札下限の40円でこれ以上下げられない</span></div></div><span style="font-size:6px;color:#999;background:rgba(0,0,0,0.05);padding:2px 5px;border-radius:8px;font-weight:700;">多数</span></div><div style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#f2f2f0;display:flex;align-items:center;justify-content:center;font-size:8px;">⏸</span><div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#1a1a1a;">据え置き<span style="color:#999;font-weight:400;"> ／ 目安が設定以上なので触らない</span></div></div><span style="font-size:6px;color:#999;background:rgba(0,0,0,0.05);padding:2px 5px;border-radius:8px;font-weight:700;">—</span></div></div></div></div>
+          <div class="screenshot-mockup" style="background:#fafdfa;"><div style="width:100%;height:100%;padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-family:'Noto Sans JP',sans-serif;"><div style="display:flex;align-items:center;gap:8px;"><span style="width:4px;height:15px;background:#2d8a56;border-radius:2px;"></span><span style="font-size:11px;font-weight:800;color:#1a1a1a;">ローンチ判定</span></div><div style="display:flex;gap:5px;"><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">監視中</div><div style="font-size:11px;font-weight:800;color:#1a1a1a;">5型番</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">ローンチ済み</div><div style="font-size:11px;font-weight:800;color:#2d8a56;">3</div></div><div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:5px 7px;"><div style="font-size:7px;color:#999;">準備中</div><div style="font-size:11px;font-weight:800;color:#c08a3e;">2</div></div></div><div style="display:flex;gap:4px;padding:0 6px;"><div style="flex:3;font-size:6.5px;color:#999;font-weight:700;">型番</div><div style="flex:2;font-size:6.5px;color:#999;font-weight:700;">LP画像</div><div style="flex:2;font-size:6.5px;color:#999;font-weight:700;">在庫</div><div style="flex:3;font-size:6.5px;color:#999;font-weight:700;">判定</div></div><div style="flex:1;display:flex;flex-direction:column;gap:3px;"><div style="display:flex;gap:4px;padding:4px 6px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;"><div style="flex:3;font-size:7px;color:#1a1a1a;font-weight:500;">型番A</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">8枚</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">3色</div><div style="flex:3;font-size:7px;color:#2d8a56;font-weight:700;">ローンチ</div></div><div style="display:flex;gap:4px;padding:4px 6px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;"><div style="flex:3;font-size:7px;color:#1a1a1a;font-weight:500;">型番B</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">9枚</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">5色</div><div style="flex:3;font-size:7px;color:#2d8a56;font-weight:700;">ローンチ</div></div><div style="display:flex;gap:4px;padding:4px 6px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;"><div style="flex:3;font-size:7px;color:#1a1a1a;font-weight:500;">型番C</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">0枚</div><div style="flex:2;font-size:7px;color:#999;font-weight:700;">なし</div><div style="flex:3;font-size:7px;color:#c08a3e;font-weight:700;">準備中</div></div><div style="display:flex;gap:4px;padding:4px 6px;background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:5px;"><div style="flex:3;font-size:7px;color:#1a1a1a;font-weight:500;">型番D</div><div style="flex:2;font-size:7px;color:#1a1a1a;font-weight:500;">9枚</div><div style="flex:2;font-size:7px;color:#999;font-weight:700;">なし</div><div style="flex:3;font-size:7px;color:#c08a3e;font-weight:700;">準備中</div></div></div><div style="font-size:6.5px;color:#999;">LPが入っていても在庫がなければローンチではない、という定義で判定します</div></div></div>
           <div class="screenshot-caption">
-            <h4>状態を色と文字の両方で示す</h4>
-            <p>色だけに頼らず必ず文字ラベルを付けて、どの状態なのかを取り違えないようにしています。（表示例）</p>
+            <h4>2つの条件がそろって初めてローンチ</h4>
+            <p>片方だけでは通知しないので、販売前の誤通知が起きません。（表示例）</p>
           </div>
         </div>
 
@@ -590,27 +565,27 @@
       <div class="flow-steps">
         <div class="flow-step">
           <div class="step-num">STEP 01</div>
-          <div class="step-icon">🕒</div>
-          <h4>45分ごとに点検</h4>
-          <p>目安CPCと設定を突き合わせる</p>
+          <div class="step-icon">📋</div>
+          <h4>表から型番を読む</h4>
+          <p>製作スケジュール表の担当行</p>
         </div>
         <div class="flow-step">
           <div class="step-num">STEP 02</div>
-          <div class="step-icon">⬇️</div>
-          <h4>下がったら追随</h4>
-          <p>目安に合わせて入札を下げる</p>
+          <div class="step-icon">🔎</div>
+          <h4>商品ページを確認</h4>
+          <p>LP画像と在庫を読み取る</p>
         </div>
         <div class="flow-step">
           <div class="step-num">STEP 03</div>
-          <div class="step-icon">⬆️</div>
-          <h4>戻ったら復帰</h4>
-          <p>基準CPCまで自動で戻す</p>
+          <div class="step-icon">✅</div>
+          <h4>2条件で判定</h4>
+          <p>LPあり かつ 在庫あり</p>
         </div>
         <div class="flow-step">
           <div class="step-num">STEP 04</div>
-          <div class="step-icon">📊</div>
-          <h4>盤面に反映</h4>
-          <p>状態と履歴をHTMLに書き出す</p>
+          <div class="step-icon">📣</div>
+          <h4>Slackへ通知</h4>
+          <p>チャンネルに投稿</p>
         </div>
       </div>
     </div>
@@ -620,34 +595,24 @@
       <div class="section-title">技術的なポイント</div>
       <div class="tech-grid">
         <div class="tech-card">
-          <h4>📏 4つの数字を1本のメーターに</h4>
-          <p>いまの設定CPC・楽天の目安CPC・戻る先の基準CPC・入札下限の40円を、同じスケールに重ねて表示します。「どこにいて、どこまで下げられるのか」が1行で読めるようにしました。</p>
-          <span class="tech-tag">状態の可視化</span>
+          <h4>🧭 ページの有無ではなく中身で判定</h4>
+          <p>楽天では販売前から商品ページが公開され、全カラーが売り切れ表示になっています。なので「ページが見えた」では判定できません。商品説明に商品画像が入ったかと、在庫ありのカラーがあるかの2つで判定しています。</p>
+          <span class="tech-tag">売り場の実態に合わせる</span>
         </div>
         <div class="tech-card">
-          <h4>🪜 階段グラフで正しく見せる</h4>
-          <p>点と点を斜めにつなぐと、実際には動いていない時間まで変化しているように見えてしまいます。値は次の観測まで一定なので、階段で描いて観測間隔を正しく表現しました。</p>
-          <span class="tech-tag">グラフの誠実さ</span>
+          <h4>🔁 混雑時の応答は待ってから読み直す</h4>
+          <p>楽天はアクセスが集中すると「混雑しています」のページを返すことがあります。そのときは3秒待って1回だけ読み直し、同じ商品で3回続けて失敗したときだけ警告を送ります。</p>
+          <span class="tech-tag">誤警報を出さない</span>
         </div>
         <div class="tech-card">
-          <h4>🎨 色だけに頼らない</h4>
-          <p>状態は色分けだけでなく、必ず「追随中」「下げ余地」「下限」「据え置き」の文字ラベルを添えています。色の見え方に左右されず、誰が見ても同じ読み取りになります。</p>
-          <span class="tech-tag">アクセシビリティ</span>
+          <h4>📮 送り先を分けて、失敗したら予備へ</h4>
+          <p>ローンチと新色の知らせはチームのチャンネルへ、監視開始やエラーは担当者へ送り分けています。チャンネルへの送信に失敗したときは、担当者あてに切り替えて取りこぼしを防ぎます。</p>
+          <span class="tech-tag">通知の確実さ</span>
         </div>
         <div class="tech-card">
-          <h4>🗂 やったことを履歴で残す</h4>
-          <p>自動で入札を動かす仕組みは、履歴が読めないと怖くて任せられません。自動追随の実行内容と手動での変更を並べて残し、あとから「なぜこの入札なのか」を追えるようにしています。</p>
-          <span class="tech-tag">自動化を任せられる状態に</span>
-        </div>
-        <div class="tech-card">
-          <h4>🏪 店舗ごとに「下げる条件」を変える</h4>
-          <p>2店舗目は目安CPCの振れがとても大きく、数時間で10倍に跳ねてまた戻ることもありました。その瞬間の目安に合わせると事故になるため、「基準より下がった状態が2回続いたときだけ下げる」ようにしています。上げ戻しは待たずにすぐ行います。</p>
-          <span class="tech-tag">店舗のクセに合わせる</span>
-        </div>
-        <div class="tech-card">
-          <h4>🗂 店舗はタブで切り替え</h4>
-          <p>盤面は店舗ごとのタブに分け、URLの末尾で直接どちらのタブを開くかも選べます。店舗の一覧に1行足すだけで、3店舗目も同じ作りで並べられるようにしてあります。</p>
-          <span class="tech-tag">横展開しやすい作り</span>
+          <h4>🧰 設定作業はダブルクリック1回に</h4>
+          <p>通知先の設定値をコピーして貼る作業が、エンジニアでないと難しいことが分かりました。値を画面に表示せずにコピーする小さなファイルを用意したら、一度で設定できるようになりました。</p>
+          <span class="tech-tag">使う人に合わせた設定手順</span>
         </div>
       </div>
     </div>
@@ -657,16 +622,16 @@
       <div class="section-title">導入効果</div>
       <div class="result-grid">
         <div class="result-card">
-          <div class="result-num">177<span style="font-size: 20px;">KW</span></div>
-          <div class="result-label">基準台帳で管理するキーワード</div>
+          <div class="result-num">2<span style="font-size: 20px;">条件</span></div>
+          <div class="result-label">ローンチと判定する基準</div>
         </div>
         <div class="result-card">
-          <div class="result-num">45<span style="font-size: 20px;">分</span></div>
-          <div class="result-label">目安の下がりを検知する間隔</div>
+          <div class="result-num">3<span style="font-size: 20px;">件</span></div>
+          <div class="result-label">過去のローンチで判定を検証</div>
         </div>
         <div class="result-card">
-          <div class="result-num">自動<span style="font-size: 20px;">で復帰</span></div>
-          <div class="result-label">目安が戻れば基準CPCへ</div>
+          <div class="result-num">0<span style="font-size: 20px;">台</span></div>
+          <div class="result-label">必要なサーバー</div>
         </div>
       </div>
     </div>
@@ -675,9 +640,9 @@
     <div class="section">
       <div class="section-title">補足</div>
       <div class="tech-card" style="max-width: 100%;">
-        <h4>💡 自動で動かすなら、見える状態にしておく</h4>
-        <p>入札を自動で動かす仕組みは、便利さと同じだけ不安もついてきます。いま何が起きていて、何をやったのかが読める盤面をセットで用意しておくと、安心して任せられる範囲が広がります。調整は商品管理番号単位で行っています。画面はダミーの表示例です。</p>
-        <span class="tech-tag">自動化と可視化はセット</span>
+        <h4>💡 「ローンチ」の定義を先に決める</h4>
+        <p>何をもって販売開始とするかは、人によって答えが違います。最初に「LPが入っていて、在庫がある」と言葉で決めてから作ったことで、通知が来たら本当に買える状態になっている、という信頼が生まれました。画面はダミーの表示例です。</p>
+        <span class="tech-tag">定義から作る</span>
       </div>
     </div>
 
